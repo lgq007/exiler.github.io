@@ -1,6 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>C++中的引用</title>
+    <url>/2023/07/15/C++%E4%B8%AD%E7%9A%84%E5%BC%95%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="C-中的引用"><a href="#C-中的引用" class="headerlink" title="C++中的引用"></a>C++中的引用</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​	C++是C语言的继承，它可进行过程化程序设计(面向过程)，也可以进行以继承和多态为特点的面向对象的程序设计。<strong>引用</strong> (reference)是C++对C语言的重要扩充，旨在使用一种更为安全和简洁的操作方式，弥补C语言指针(pointer)中的一些不足之处。</p>
+<span id="more"></span>
+
+<h2 id="引用的概念"><a href="#引用的概念" class="headerlink" title="引用的概念"></a>引用的概念</h2><p>​	引用就是为某一个变量(目标)起一个别名，类似于C语言结构体中用<code>typedef</code>命令为结构体起别名。也就是说它是某个已经存在的变量的另一个名字。对引用的操作与对变量名的操作可达到一样的效果。</p>
+<h2 id="引用的初始化"><a href="#引用的初始化" class="headerlink" title="引用的初始化"></a>引用的初始化</h2><p>​	变量类型标识符 &amp;引用名&#x3D; 目标变量名</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> &amp;b = a;</span><br></pre></td></tr></table></figure>
+
+<p>  上述步骤即完成了对变量a的引用，需要注意的是，<code>&amp;</code>并不是C语言中的取地址操作符，而是起到标识作用，标识所定义的变量是一个引用，引用的声明完成之后，目标变量便有了两个名称，同时指向相同的一块内存地址。</p>
+<h2 id="定义引用的注意事项"><a href="#定义引用的注意事项" class="headerlink" title="定义引用的注意事项"></a>定义引用的注意事项</h2><ul>
+<li>引用在定义时必须初始化，必须要有指向的对象。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> &amp;b;</span><br><span class="line"> b = a;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,b);</span><br><span class="line"></span><br><span class="line"><span class="comment">//[Error] &#x27;b&#x27; declared as reference but not initialized</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>引用在初始化时只能绑定左值，不能绑定临时对象、表达式结果和字面常量。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line">ref = <span class="number">10</span>;   <span class="comment">// 修改 x 的值</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> y = <span class="number">15</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; ref = y;</span><br><span class="line"><span class="type">int</span> z = ref; <span class="comment">// 可通过间接引用访问 const 限定的变量的值</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 错误，不能通过引用修改 const 限定的变量的值</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span>&amp; <span class="title">getElement</span><span class="params">(<span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arr[index];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = <span class="built_in">getElement</span>(<span class="number">2</span>); <span class="comment">// 引用函数返回的左值引用</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 修改数组元素的值</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; ref = <span class="number">5</span>;  <span class="comment">// 错误，不能引用字面常量</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = x + y; <span class="comment">// 错误，不能引用表达式结果</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> z = <span class="number">20</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = z;  <span class="comment">// 错误，不能直接引用 const 限定的变量的值。</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里要注意const左值与右值的区别:</p>
+<p>const 左值和 const 右值都是指被声明为 const 的值，至于怎么辨别左右值，主要看此时const限定的变量所起到的作用，它们之间的关系是：</p>
+<ul>
+<li>const 左值：const 左值是指被声明为 const 的左值，即不可修改的左值。它可以通过引用来访问，但不能通过引用来修改。例如：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; ref = x; <span class="comment">// 引用 const 左值</span></span><br><span class="line"><span class="type">int</span> y = ref; <span class="comment">// 通过引用访问 const 左值</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 错误，不能通过引用修改 const 左值</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>const 右值：const 右值是指被声明为 const 的右值，即不可修改的右值。它不能被引用，因为引用只能绑定到可修改的左值。例如：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = y; <span class="comment">// 错误，不能引用 const 右值</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，const 右值和 const 左值都是不可修改的，但它们的区别在于 const 左值可以通过引用访问和修改，而 const 右值不能被引用。</p>
+<h2 id="引用与指针的区别"><a href="#引用与指针的区别" class="headerlink" title="引用与指针的区别"></a>引用与指针的区别</h2><ol>
+<li>定义和初始化：指针需要通过使用星号(*)来声明和初始化，而引用则使用&amp;符号来声明和初始化。例如：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x; <span class="comment">// 指针的定义和初始化</span></span><br><span class="line"><span class="type">int</span>&amp; ref = x; <span class="comment">// 引用的定义和初始化</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>空值：指针可以被赋予空值（nullptr），表示指向空地址或无效地址。而引用必须在声明时初始化，并且不能为空。例如：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* ptr = <span class="literal">nullptr</span>; <span class="comment">// 指针赋予空值</span></span><br><span class="line"><span class="comment">// int&amp; ref; // 错误，引用必须在声明时初始化</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>可修改性：指针可以重新指向其他地址，也可以修改所指向的值。而引用在初始化后不能改变绑定的对象，只能通过引用来修改所绑定的对象的值。例如：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x;</span><br><span class="line">ptr = &amp;y; <span class="comment">// 指针重新指向另一个地址</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line"><span class="comment">// ref = &amp;y; // 错误，引用不能重新绑定到另一个对象</span></span><br><span class="line">ref = y; <span class="comment">// 通过引用修改绑定对象的值</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>空间和操作：指针占用一定的内存空间，用于存储地址信息，而引用不占用额外的内存空间，它只是变量的别名。指针可以进行指针运算和解引用操作，而引用不需要进行这些操作，它可以直接使用原始变量的操作符。例如：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x;</span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line"></span><br><span class="line">*ptr = <span class="number">10</span>; <span class="comment">// 指针解引用并修改所指向的值</span></span><br><span class="line">ref = <span class="number">15</span>; <span class="comment">// 直接通过引用修改绑定对象的值</span></span><br></pre></td></tr></table></figure>
+
+<p>总结起来，指针和引用都是用于间接访问和操作变量的机制，但它们在定义和初始化、空值、可修改性以及空间和操作上有所不同。选择使用指针还是引用取决于具体的需求和使用场景。</p>
+<h2 id="引用的应用"><a href="#引用的应用" class="headerlink" title="引用的应用"></a>引用的应用</h2><p>引用的主要应用就是把它作为函数参数，以扩厂函数传递数据的功能，引用作函数参数时是区别于值传递与地址传递的引用传递。</p>
+<p>利用引用传递可以克服值传递与地址传递中容易出现错误且可读性差的缺点，可直接操作变量，简单高效且可读性高。</p>
+<h3 id="函数参数传递："><a href="#函数参数传递：" class="headerlink" title="函数参数传递："></a>函数参数传递：</h3><p>引用可以用作函数的参数，可以通过引用传递变量，以便在函数内部修改原始变量的值。这样可以避免复制大型对象的开销，并且可以实现对变量的直接修改。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">increment</span><span class="params">(<span class="type">int</span>&amp; num)</span> </span>&#123;</span><br><span class="line">    num++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">increment</span>(x); <span class="comment">// 通过引用传递参数</span></span><br><span class="line">    cout &lt;&lt; x &lt;&lt; endl; <span class="comment">// 输出 6</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="返回值优化："><a href="#返回值优化：" class="headerlink" title="返回值优化："></a>返回值优化：</h3><p>函数可以返回引用类型，以便返回对变量的引用，而不是复制变量的值。这样可以避免复制大型对象的开销，并且可以实现对返回值的直接修改。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>&amp; <span class="title">getMax</span><span class="params">(<span class="type">int</span>&amp; a, <span class="type">int</span>&amp; b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a &gt; b) ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span>&amp; maxRef = <span class="built_in">getMax</span>(x, y); <span class="comment">// 返回引用</span></span><br><span class="line">    maxRef = <span class="number">15</span>; <span class="comment">// 修改返回的引用</span></span><br><span class="line">    cout &lt;&lt; x &lt;&lt; endl; <span class="comment">// 输出 15</span></span><br><span class="line">    cout &lt;&lt; y &lt;&lt; endl; <span class="comment">// 输出 10</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="遍历容器："><a href="#遍历容器：" class="headerlink" title="遍历容器："></a>遍历容器：</h3><p>引用可以用于遍历容器，通过引用来获取容器中的元素，以便对元素进行修改。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; nums = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span>&amp; num : nums) &#123;</span><br><span class="line">    num *= <span class="number">2</span>; <span class="comment">// 修改容器中的元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++ 入门-1</title>
     <url>/2023/08/03/C++%20%E5%85%A5%E9%97%A8-1/</url>
     <content><![CDATA[<h1 id="基本内置类型"><a href="#基本内置类型" class="headerlink" title="基本内置类型"></a>基本内置类型</h1><blockquote>
@@ -88,6 +166,8 @@
 <td align="center">更高的有效数字</td>
 </tr>
 </tbody></table>
+<span id="more"></span>
+
 <p>可以在IDE中编译运行以下代码查看本机算数类型的尺寸</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Windows_X64环境下MinGw GCC 9.2.0 32_bit为例</span></span><br><span class="line"><span class="comment">// 1Byte = 8bit</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;int * &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">int</span>*)*<span class="number">8</span>&lt;&lt;endl; <span class="comment">// 32 bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;bool &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">bool</span>)*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 8 bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;char &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">char</span>)*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 8bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;wchar_t &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">wchar_t</span>)*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 16bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;char16_t &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">char16_t</span> )*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 16bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;char32_t &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">char32_t</span> )*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 32bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;short &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">short</span> )*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 16bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;int &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">int</span> )*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 32bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;long &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">long</span> )*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 32bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;long long&quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">long</span> <span class="type">long</span>)*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 64bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;float &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">float</span>)*<span class="number">8</span>&lt;&lt;endl;  <span class="comment">// 32bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;double &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">double</span>)*<span class="number">8</span>&lt;&lt;endl; <span class="comment">// 64bits</span></span><br><span class="line">  cout&lt;&lt; <span class="string">&quot;long double &quot;</span>&lt;&lt;<span class="built_in">sizeof</span>(<span class="type">long</span> <span class="type">double</span>)*<span class="number">8</span>&lt;&lt;endl; <span class="comment">//96bits</span></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -602,84 +682,6 @@
       <tags>
         <tag>C++</tag>
         <tag>c</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++中的引用</title>
-    <url>/2023/07/15/C++%E4%B8%AD%E7%9A%84%E5%BC%95%E7%94%A8/</url>
-    <content><![CDATA[<h1 id="C-中的引用"><a href="#C-中的引用" class="headerlink" title="C++中的引用"></a>C++中的引用</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​	C++是C语言的继承，它可进行过程化程序设计(面向过程)，也可以进行以继承和多态为特点的面向对象的程序设计。<strong>引用</strong> (reference)是C++对C语言的重要扩充，旨在使用一种更为安全和简洁的操作方式，弥补C语言指针(pointer)中的一些不足之处。</p>
-<span id="more"></span>
-
-<h2 id="引用的概念"><a href="#引用的概念" class="headerlink" title="引用的概念"></a>引用的概念</h2><p>​	引用就是为某一个变量(目标)起一个别名，类似于C语言结构体中用<code>typedef</code>命令为结构体起别名。也就是说它是某个已经存在的变量的另一个名字。对引用的操作与对变量名的操作可达到一样的效果。</p>
-<h2 id="引用的初始化"><a href="#引用的初始化" class="headerlink" title="引用的初始化"></a>引用的初始化</h2><p>​	变量类型标识符 &amp;引用名&#x3D; 目标变量名</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> &amp;b = a;</span><br></pre></td></tr></table></figure>
-
-<p>  上述步骤即完成了对变量a的引用，需要注意的是，<code>&amp;</code>并不是C语言中的取地址操作符，而是起到标识作用，标识所定义的变量是一个引用，引用的声明完成之后，目标变量便有了两个名称，同时指向相同的一块内存地址。</p>
-<h2 id="定义引用的注意事项"><a href="#定义引用的注意事项" class="headerlink" title="定义引用的注意事项"></a>定义引用的注意事项</h2><ul>
-<li>引用在定义时必须初始化，必须要有指向的对象。</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> &amp;b;</span><br><span class="line"> b = a;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,b);</span><br><span class="line"></span><br><span class="line"><span class="comment">//[Error] &#x27;b&#x27; declared as reference but not initialized</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>引用在初始化时只能绑定左值，不能绑定临时对象、表达式结果和字面常量。</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line">ref = <span class="number">10</span>;   <span class="comment">// 修改 x 的值</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> y = <span class="number">15</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; ref = y;</span><br><span class="line"><span class="type">int</span> z = ref; <span class="comment">// 可通过间接引用访问 const 限定的变量的值</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 错误，不能通过引用修改 const 限定的变量的值</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span>&amp; <span class="title">getElement</span><span class="params">(<span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arr[index];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = <span class="built_in">getElement</span>(<span class="number">2</span>); <span class="comment">// 引用函数返回的左值引用</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 修改数组元素的值</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; ref = <span class="number">5</span>;  <span class="comment">// 错误，不能引用字面常量</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = x + y; <span class="comment">// 错误，不能引用表达式结果</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> z = <span class="number">20</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = z;  <span class="comment">// 错误，不能直接引用 const 限定的变量的值。</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>这里要注意const左值与右值的区别:</p>
-<p>const 左值和 const 右值都是指被声明为 const 的值，至于怎么辨别左右值，主要看此时const限定的变量所起到的作用，它们之间的关系是：</p>
-<ul>
-<li>const 左值：const 左值是指被声明为 const 的左值，即不可修改的左值。它可以通过引用来访问，但不能通过引用来修改。例如：</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; ref = x; <span class="comment">// 引用 const 左值</span></span><br><span class="line"><span class="type">int</span> y = ref; <span class="comment">// 通过引用访问 const 左值</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 错误，不能通过引用修改 const 左值</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>const 右值：const 右值是指被声明为 const 的右值，即不可修改的右值。它不能被引用，因为引用只能绑定到可修改的左值。例如：</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = y; <span class="comment">// 错误，不能引用 const 右值</span></span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是，const 右值和 const 左值都是不可修改的，但它们的区别在于 const 左值可以通过引用访问和修改，而 const 右值不能被引用。</p>
-<h2 id="引用与指针的区别"><a href="#引用与指针的区别" class="headerlink" title="引用与指针的区别"></a>引用与指针的区别</h2><ol>
-<li>定义和初始化：指针需要通过使用星号(*)来声明和初始化，而引用则使用&amp;符号来声明和初始化。例如：</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x; <span class="comment">// 指针的定义和初始化</span></span><br><span class="line"><span class="type">int</span>&amp; ref = x; <span class="comment">// 引用的定义和初始化</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>空值：指针可以被赋予空值（nullptr），表示指向空地址或无效地址。而引用必须在声明时初始化，并且不能为空。例如：</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* ptr = <span class="literal">nullptr</span>; <span class="comment">// 指针赋予空值</span></span><br><span class="line"><span class="comment">// int&amp; ref; // 错误，引用必须在声明时初始化</span></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>可修改性：指针可以重新指向其他地址，也可以修改所指向的值。而引用在初始化后不能改变绑定的对象，只能通过引用来修改所绑定的对象的值。例如：</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x;</span><br><span class="line">ptr = &amp;y; <span class="comment">// 指针重新指向另一个地址</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line"><span class="comment">// ref = &amp;y; // 错误，引用不能重新绑定到另一个对象</span></span><br><span class="line">ref = y; <span class="comment">// 通过引用修改绑定对象的值</span></span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>空间和操作：指针占用一定的内存空间，用于存储地址信息，而引用不占用额外的内存空间，它只是变量的别名。指针可以进行指针运算和解引用操作，而引用不需要进行这些操作，它可以直接使用原始变量的操作符。例如：</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x;</span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line"></span><br><span class="line">*ptr = <span class="number">10</span>; <span class="comment">// 指针解引用并修改所指向的值</span></span><br><span class="line">ref = <span class="number">15</span>; <span class="comment">// 直接通过引用修改绑定对象的值</span></span><br></pre></td></tr></table></figure>
-
-<p>总结起来，指针和引用都是用于间接访问和操作变量的机制，但它们在定义和初始化、空值、可修改性以及空间和操作上有所不同。选择使用指针还是引用取决于具体的需求和使用场景。</p>
-<h2 id="引用的应用"><a href="#引用的应用" class="headerlink" title="引用的应用"></a>引用的应用</h2><p>引用的主要应用就是把它作为函数参数，以扩厂函数传递数据的功能，引用作函数参数时是区别于值传递与地址传递的引用传递。</p>
-<p>利用引用传递可以克服值传递与地址传递中容易出现错误且可读性差的缺点，可直接操作变量，简单高效且可读性高。</p>
-<h3 id="函数参数传递："><a href="#函数参数传递：" class="headerlink" title="函数参数传递："></a>函数参数传递：</h3><p>引用可以用作函数的参数，可以通过引用传递变量，以便在函数内部修改原始变量的值。这样可以避免复制大型对象的开销，并且可以实现对变量的直接修改。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">increment</span><span class="params">(<span class="type">int</span>&amp; num)</span> </span>&#123;</span><br><span class="line">    num++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">increment</span>(x); <span class="comment">// 通过引用传递参数</span></span><br><span class="line">    cout &lt;&lt; x &lt;&lt; endl; <span class="comment">// 输出 6</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="返回值优化："><a href="#返回值优化：" class="headerlink" title="返回值优化："></a>返回值优化：</h3><p>函数可以返回引用类型，以便返回对变量的引用，而不是复制变量的值。这样可以避免复制大型对象的开销，并且可以实现对返回值的直接修改。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>&amp; <span class="title">getMax</span><span class="params">(<span class="type">int</span>&amp; a, <span class="type">int</span>&amp; b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a &gt; b) ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span>&amp; maxRef = <span class="built_in">getMax</span>(x, y); <span class="comment">// 返回引用</span></span><br><span class="line">    maxRef = <span class="number">15</span>; <span class="comment">// 修改返回的引用</span></span><br><span class="line">    cout &lt;&lt; x &lt;&lt; endl; <span class="comment">// 输出 15</span></span><br><span class="line">    cout &lt;&lt; y &lt;&lt; endl; <span class="comment">// 输出 10</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="遍历容器："><a href="#遍历容器：" class="headerlink" title="遍历容器："></a>遍历容器：</h3><p>引用可以用于遍历容器，通过引用来获取容器中的元素，以便对元素进行修改。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; nums = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span>&amp; num : nums) &#123;</span><br><span class="line">    num *= <span class="number">2</span>; <span class="comment">// 修改容器中的元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
