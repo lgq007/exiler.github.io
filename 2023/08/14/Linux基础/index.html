@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lgq007.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文件绪言在Linux操作系统中秉持着一切皆文件的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中  &#x2F;dev&#x2F;sdX：这个文件表示U盘设备，”X”代表具体的设备标识，例如&#x2F;dev&#x2F;sda、&#x2F;dev&#x2F;sdb等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基础">
+<meta property="og:url" content="http://lgq007.github.io/2023/08/14/Linux%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="exiler&#39;s Blog">
+<meta property="og:description" content="文件绪言在Linux操作系统中秉持着一切皆文件的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中  &#x2F;dev&#x2F;sdX：这个文件表示U盘设备，”X”代表具体的设备标识，例如&#x2F;dev&#x2F;sda、&#x2F;dev&#x2F;sdb等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://lgq007.github.io/images/Linux%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95.png">
+<meta property="og:image" content="http://lgq007.github.io/images/Ubuntu%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95">
+<meta property="article:published_time" content="2023-08-14T07:09:19.000Z">
+<meta property="article:modified_time" content="2023-08-18T15:55:32.105Z">
+<meta property="article:author" content="exiler">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://lgq007.github.io/images/Linux%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95.png">
+
+<link rel="canonical" href="http://lgq007.github.io/2023/08/14/Linux%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux基础 | exiler's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="exiler's Blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">exiler's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Code builds world !</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/lgq007" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/08/14/Linux%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="exiler">
+      <meta itemprop="description" content="日行一步，功不唐捐 !">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="exiler's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-14 15:09:19" itemprop="dateCreated datePublished" datetime="2023-08-14T15:09:19+08:00">2023-08-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-18 23:55:32" itemprop="dateModified" datetime="2023-08-18T23:55:32+08:00">2023-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/08/14/Linux%E5%9F%BA%E7%A1%80/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/08/14/Linux%E5%9F%BA%E7%A1%80/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><h2 id="绪言"><a href="#绪言" class="headerlink" title="绪言"></a>绪言</h2><p>在Linux操作系统中秉持着<strong>一切皆文件</strong>的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中</p>
+<ol>
+<li><p><code>/dev/sdX</code>：这个文件表示U盘设备，”X”代表具体的设备标识，例如<code>/dev/sda</code>、<code>/dev/sdb</code>等。你可以通过这个文件来访问整个U盘。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> /media/usb-drive</span><br><span class="line">sudo mount /dev/sdX /media/usb-drive</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>/media/username/usb-drive</code>：这个文件夹是U盘挂载的地方，”username”是你的用户名，”usb-drive”是挂载点。在这个文件夹中，你可以通过普通的文件操作来访问U盘中的文件和文件夹。</p>
+</li>
+</ol>
+<p>而在windows操作系统下，U盘通常会被视为两个不同的实体：一个是设备，另一个是文件系统中的一个文件夹</p>
+<ol>
+<li>设备：可以在Windows设备管理器中看到，通常显示为一个可移动设备。</li>
+<li>文件夹：windows会自动为U盘分配一个盘符，可以用过windows资源管理器访问U盘内的文件。</li>
+</ol>
+<h2 id="Linux下的文件目录结构"><a href="#Linux下的文件目录结构" class="headerlink" title="Linux下的文件目录结构"></a>Linux下的文件目录结构</h2><p><img src="/../images/Linux%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95.png"></p>
+<p>以Ubuntu 22.04 LTS 为例，输入<code>ll / -a</code>查看<code>/</code>目录下的文件目录：</p>
+<p><img src="/./../images/Ubuntu%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95" alt="image-20230814185233037"></p>
+<ol>
+<li>常见的目录：</li>
+</ol>
+<ul>
+<li><strong><code>/</code> (根目录)：</strong> Linux文件系统的根目录，所有其他目录都是从这里开始的。</li>
+<li><strong><code>/bin</code> (基本命令)：</strong> 全称<code>binary</code>，存放系统启动和维护所需的基本命令，如<code>ls</code>、<code>cp</code>、<code>mv</code>等。</li>
+<li><strong><code>/boot</code> (开机引导)：</strong> 存放包含引导启动Linux系统所需的文件，如内核映像文件、引导加载程序以及启动配置文件。</li>
+<li><strong><code>/dev</code> (设备文件)：</strong> 包含与系统硬件设备和外部设备的文件，Linux将这些设备抽象为文件，通过这些文件来进行访问和交互。在其中的外接设备是不能直接被使用的，需要<strong>挂载（类似windows下的分配盘符）</strong>。</li>
+<li><strong><code>/etc</code> (系统配置)：</strong> 存放系统的配置文件，包括网络配置、用户账户配置、软件配置等。</li>
+<li><strong><code>/home</code> (用户主目录)：</strong> 存放用户的主目录，每个用户都有一个独立的子目录，用于存放个人文件、文档和配置文件。</li>
+<li><strong><code>/root</code> (root用户主目录)：</strong> 超级用户（root用户）的主目录。</li>
+<li><strong><code>/run</code> (运行时数据)：</strong> 用于存放系统启动后运行时需要的临时文件，即进程的运行数据存放目录。</li>
+<li><strong><code>/sbin</code> (系统命令)：</strong> 存放系统管理员使用的系统管理命令，这些命令通常需要root权限，如<code>fdisk</code>、<code>iptables</code>等。</li>
+<li><strong><code>/tmp</code> (临时文件)：</strong> 用于存放临时文件，系统重新启动后会清空该目录。</li>
+<li><strong><code>/usr</code>(用户目录)：</strong>包含用户程序和文件，通常将大部分软件安装到这个目录下。<ul>
+<li><strong><code>/usr/bin</code>：</strong> 存放系统中的大部分用户级别的可执行命令。这些命令通常是系统的标准工具和应用程序，但不是必须在系统启动阶段使用的基本命令。</li>
+<li><strong><code>/usr/local</code>：</strong>程序安装目录。</li>
+<li><strong><code>/usr/sbin</code>：</strong>存放系统管理员（root用户）使用的系统管理命令。与 <code>/sbin</code> 目录类似，但 <code>/usr/sbin</code> 中的命令通常是不需要在系统启动阶段使用的，因此可以被认为是更为次要的系统命令。</li>
+<li><strong><code>/usr/tmp</code>：</strong>被抛弃临时文件目录。</li>
+<li><strong><code>/usr/lib</code>，<code>/usr/lib32</code>，<code>/usr/lib64</code>，<code>/usr/libx32</code>：</strong> 存放系统所需的共享库文件，这些库文件被可执行文件在运行时动态链接以实现代码重用。</li>
+<li><strong><code>/usr/src</code>  ：</strong>是用于存放内核源代码（Linux 内核）的目录。这个目录通常包含了系统所使用的内核版本的源代码，以及相关的文件和文档。</li>
+</ul>
+</li>
+<li><strong><code>/var</code> (变量数据)：</strong> 包含变量数据，如日志文件、数据库文件等会变化的数据。<ul>
+<li><strong><code>/var/tmp</code>：</strong>临时文件目录；存放周期更长</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>其他命令：</li>
+</ol>
+<ul>
+<li><p><strong><code>/media</code> 和 <code>/mnt</code> (挂载点)：</strong> 通常用于挂载外部设备，如U盘、光盘等，这样的设备会在这些目录下创建子目录以便访问。</p>
+</li>
+<li><p><strong><code>/opt</code> (可选软件)：</strong> 用于存放由第三方提供的附加软件，通常将这些软件安装在这个目录下。</p>
+</li>
+<li><p><strong><code>/proc</code> (进程信息)：</strong> 虚拟文件系统，提供有关正在运行的进程和系统状态的信息，以文件的形式呈现。</p>
+</li>
+<li><p><strong><code>/srv</code> (服务数据)：</strong> 用于存放系统提供的服务的数据文件，如Web服务器的文档。</p>
+</li>
+<li><p><strong><code>/sys</code> (内核文件)：</strong> 用于访问内核的运行时信息，以及与内核模块的交互。</p>
+</li>
+<li><p><strong><code>/snap</code>(包管理器)：</strong>是用于存放使用 Snap 包管理器安装的应用程序和软件包的目录。</p>
+</li>
+</ul>
+<h2 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h2><p>在 Linux 操作系统中，文件路径是用来描述文件在文件系统中位置的字符串。Linux 的文件路径是一个层次化的结构，从根目录开始，通过目录名和斜杠（&#x2F;）来指示文件的位置。</p>
+<ol>
+<li><strong>绝对路径：</strong> 绝对路径从根目录开始，指示完整的路径。例如：<ul>
+<li><code>/usr/bin</code>：指向根目录下的 <code>/usr/bin</code> 目录。</li>
+<li><code>/home/user/documents/file.txt</code>：指向根目录下的 <code>/home/user/documents</code> 目录中的 <code>file.txt</code> 文件。</li>
+</ul>
+</li>
+<li><strong>相对路径：</strong> 相对路径是<strong>相对于当前工作目录的路径。</strong>例如，如果当前工作目录是 <code>/home/user</code>，那么：<ul>
+<li><code>documents/file.txt</code>：指向 <code>/home/user/documents</code> 目录中的 <code>file.txt</code> 文件。</li>
+</ul>
+</li>
+<li><strong>特殊符号：</strong> 在路径中，一些特殊符号有特殊的含义：<ul>
+<li><code>.</code>：代表当前目录。例如：<code>./file.txt</code> 表示当前目录中的 <code>file.txt</code> 文件。</li>
+<li><code>..</code>：代表上一级目录。例如：<code>../folder/file.txt</code> 表示上一级目录中的 <code>folder</code> 目录下的 <code>file.txt</code> 文件。</li>
+<li><code>~</code>：代表当前用户的主目录。例如：<code>~/documents</code> 表示当前用户的主目录下的 <code>documents</code> 目录。</li>
+</ul>
+</li>
+<li><strong>环境变量：</strong> 有些路径中可能包含环境变量，例如 <code>$HOME</code> 代表当前用户的主目录。例如：<code>$HOME/documents</code> 表示主目录下的 <code>documents</code> 目录。</li>
+</ol>
+<h2 id="文件命名规则"><a href="#文件命名规则" class="headerlink" title="文件命名规则"></a>文件命名规则</h2><p>常见的 Linux 文件命名规则：</p>
+<ol>
+<li><strong>大小写敏感：</strong> Linux 文件系统是大小写敏感的。例如，<code>file.txt</code> 和 <code>File.txt</code> 被认为是两个不同的文件。</li>
+<li><strong>字母、数字和下划线：</strong> 文件名可以包含字母（大小写）、数字和下划线字符。文件名不能以数字开头。</li>
+<li><strong>连字符和点：</strong> 文件名中可以包含连字符（减号，短划线）和点（句点），但不能以它们开头或结尾。连字符通常用于分隔单词，而点通常用于文件名的扩展名。</li>
+<li><strong>扩展名：</strong> Linux 中的文件命名并不像 Windows 那样依赖于扩展名来识别文件类型。文件名可以没有扩展名，也可以使用任何合法的字符作为扩展名。</li>
+<li><strong>保留字符：</strong> Linux 文件名中不能包含特殊的保留字符，如斜杠（&#x2F;）、问号（?）等。</li>
+<li><strong>长度限制：</strong> 文件名的最大长度为 255 个字符。</li>
+</ol>
+<p>注意：</p>
+<ul>
+<li>以<code>.</code>开头的文件名是隐藏文件，使用<code>ls</code>命令时要添加命令选项<code>-a</code>方可查看。</li>
+</ul>
+<ul>
+<li>虽说Linux可以使用特殊字符作为文件名，但一般不推荐使用特殊字符。</li>
+</ul>
+<p>例如：用 （空格）当作文件名；在Ubuntu下系统会以引号显示该文件，但有的Linux版本可能会直接不显示该文件。文件名的含义尽量给文件命名以反映其内容、用途或功能，以便其他人能够轻松理解和识别文件。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">touch</span> <span class="string">&#x27; &#x27;</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line"><span class="string">&#x27; &#x27;</span>   book   gitclone_file   <span class="built_in">test</span>   </span><br></pre></td></tr></table></figure>
+
+<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><blockquote>
+<p>Linux是一种类Unix操作系统，近些年来Linux的桌面版本层出不穷，一定程度上极大简化了Linux的个人使用。面对server等版本，掌握shell终端命令的使用可以更加方便快速的操作Linux。</p>
+</blockquote>
+<h2 id="目录操作命令"><a href="#目录操作命令" class="headerlink" title="目录操作命令"></a>目录操作命令</h2><h3 id="查看路径"><a href="#查看路径" class="headerlink" title="查看路径"></a>查看路径</h3><ul>
+<li><code>pwd</code>	查看当前路径，Print Working Directory的缩写</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">pwd</span></span><br><span class="line">/home/exiler</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h3><ul>
+<li><code>mkdir</code>	一次建立一个或几个目录</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> document picture  <span class="comment">#新建目录</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line">document  picture</span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> ~/picture/temp  <span class="comment">#创建子目录</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> ~/picture/</span><br><span class="line">temp</span><br></pre></td></tr></table></figure>
+
+<p>创建子目录默认为为已存在的目录创建子目录，若想要完整地创建一个不存在目录结构，请使用<code>mkdir -p</code>	指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ mkdir ~/tempx/job  #error</span><br><span class="line">mkdir: cannot create directory ‘/home/exiler/tempx/job’: No such file or directory  </span><br><span class="line">exiler@localhost:~$ mkdir -p ~/tempx/job   #true</span><br><span class="line">exiler@localhost:~$ ls</span><br><span class="line">document  picture  tempx</span><br><span class="line">exiler@localhost:~$ ls ~/tempx/</span><br><span class="line">job</span><br></pre></td></tr></table></figure>
+
+<h3 id="移动目录"><a href="#移动目录" class="headerlink" title="移动目录"></a>移动目录</h3><ul>
+<li><code>mv</code>	move的缩写，可以用来移动文件，也可以用于重命名文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">mv</span> <span class="built_in">source</span> destination</span></span><br><span class="line">exiler@localhost:~$ tree</span><br><span class="line">.</span><br><span class="line">├── document</span><br><span class="line">├── picture</span><br><span class="line">│   └── temp</span><br><span class="line">└── tempx</span><br><span class="line">    └── job</span><br><span class="line">    </span><br><span class="line">5 directories, 0 files</span><br><span class="line">exiler@localhost:~$ mv ~/picture/temp document/ #移动文件</span><br><span class="line">exiler@localhost:~$ tree</span><br><span class="line">.</span><br><span class="line">├── document</span><br><span class="line">│   └── temp</span><br><span class="line">├── picture</span><br><span class="line">└── tempx</span><br><span class="line">    └── job</span><br></pre></td></tr></table></figure>
+
+<p>若source文件与的destination目录下的某个文件存在文件名相同的情况，则mv命令会不发出警告地把destination目录下的同名文件替换，导致某些重要文件丢失。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> ~/test &amp;&amp; <span class="built_in">cd</span> <span class="built_in">test</span></span><br><span class="line">exiler@localhost:~/test$ <span class="built_in">echo</span> <span class="string">&quot;hello&quot;</span> &gt; hello</span><br><span class="line">exiler@localhost:~/test$ <span class="built_in">cat</span> hello</span><br><span class="line">hello</span><br><span class="line">exiler@localhost:~/test$ <span class="built_in">cd</span> .. &amp;&amp; <span class="built_in">touch</span> hello</span><br><span class="line">exiler@localhost:~$ <span class="built_in">mv</span> hello <span class="built_in">test</span>/ &amp;&amp; <span class="built_in">cat</span> hello</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>为了杜绝此类情况，可以使用<code>mv -i</code>选项：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line">document  hello  picture  tempx  <span class="built_in">test</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">mv</span> -i hello <span class="built_in">test</span>/</span><br><span class="line"><span class="built_in">mv</span>: overwrite <span class="string">&#x27;test/hello&#x27;</span>? <span class="comment">#系统发出提示，回答n表示跳过，回答y表示覆盖</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以使用<code>mv -b</code>选项给source文件名添加字符<code>~</code>避免被覆盖：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">touch</span> <span class="string">&quot;hello&quot;</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">mv</span> -b hello <span class="built_in">test</span>/</span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line">document  picture  tempx  <span class="built_in">test</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> <span class="built_in">test</span>/</span><br><span class="line">hello  hello~</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>重命名</li>
+</ul>
+<p>Linux中并没有专门用来重命名的命令，因为mv命令可以轻松实现文件重命名</p>
+<p>例如，如果要将文件 “oldname.txt” 重命名为 “newname.txt”，你可以使用以下命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> oldname.txt newname.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除目录"><a href="#删除目录" class="headerlink" title="删除目录"></a>删除目录</h3><ul>
+<li><code>rmdir</code>用来<strong>删除空目录</strong>，后跟要删除的空目录名即可。</li>
+<li><code>rm</code>用来删除文件</li>
+</ul>
+<p>rm命令的使用方式较多，可以一次删除一个或几个文件，也可以用来删除目录。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> <span class="built_in">test</span>/*.php  <span class="comment">#删除test目录下的所有php文件</span></span><br></pre></td></tr></table></figure>
+
+<p>为了安全起见，使用<code>rm -i</code>命令系统会发出请求等待用户是否确定删除文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">rm</span> -i hello</span><br><span class="line"><span class="built_in">rm</span>: remove regular empty file <span class="string">&#x27;hello&#x27;</span>? </span><br><span class="line"><span class="comment">#答y表示确认删除，答n表示跳过。对于只读文件,不加上-i选项，rm命令也会提示</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>rm -f</code>可以避免这样的交互操作，<code>rm</code>命令会自动对这些文件回答y，一般<code>-f</code>选项都是配合<code>-r</code>选项使用删除整个目录。</p>
+<ul>
+<li>使用<code>rm -r</code>递归删除整个目录：</li>
+</ul>
+<p><code>rm -r</code>命令会递归删除一个目录下的所有文件和子目录下的文件，最后再删除选中的目录。使用该命令时要格外小心，特别是以root身份执行该命令。</p>
+<h3 id="复制目录"><a href="#复制目录" class="headerlink" title="复制目录"></a>复制目录</h3><ul>
+<li><code>cp</code></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> <span class="built_in">source</span> destination</span><br></pre></td></tr></table></figure>
+
+<p>和<code>mv</code>命令一样，<code>cp</code>默认情况下会也会覆盖目标目录中的同名文件。</p>
+<ol>
+<li>可以使用-i选项对这种情况进行提示.</li>
+<li>可以使用-b选项对同名文件改名后再复制。这两个选项的使用和mv命令中一样。</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> test.php <span class="built_in">test</span>/  </span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">cp</span> -i hello.php picture/</span><br><span class="line"><span class="built_in">cp</span>: overwrite <span class="string">&#x27;picture/hello.php&#x27;</span>?</span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">cp</span> -b hello.php picture/</span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> picture/</span><br><span class="line">hello.php  hello.php~</span><br></pre></td></tr></table></figure>
+
+<h3 id="跳转目录"><a href="#跳转目录" class="headerlink" title="跳转目录"></a>跳转目录</h3><ul>
+<li><code>cd</code>命令可以用来切换工作目录，Change Directory的缩写.</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../ <span class="comment">#返回上级目录</span></span><br><span class="line"><span class="built_in">cd</span> ../.. <span class="comment">#返回上级目录的上级目录，以此类推</span></span><br><span class="line"><span class="built_in">cd</span>  <span class="comment">#返回用户目录</span></span><br><span class="line"><span class="built_in">cd</span> ~ <span class="comment">#返回用户目录</span></span><br><span class="line"><span class="built_in">cd</span> /usr/bin <span class="comment">#进入usr目录下的bin目录</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>cd</code>命令时要注意区分相对路径和绝对路径的使用。</p>
+<h2 id="文件操作命令"><a href="#文件操作命令" class="headerlink" title="文件操作命令"></a>文件操作命令</h2>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>exiler
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://lgq007.github.io/2023/08/14/Linux%E5%9F%BA%E7%A1%80/" title="Linux基础">http://lgq007.github.io/2023/08/14/Linux基础/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-book"></i> Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/03/C++%20%E5%85%A5%E9%97%A8-2/" rel="prev" title="C ++入门-2">
+      <i class="fa fa-chevron-left"></i> C ++入门-2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/09/01/C++%E5%85%A5%E9%97%A8-3/" rel="next" title="pages">
+      pages <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%AA%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">绪言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">Linux下的文件目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">1.3.</span> <span class="nav-text">文件路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="nav-number">1.4.</span> <span class="nav-text">文件命名规则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">目录操作命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%B7%AF%E5%BE%84"><span class="nav-number">2.1.1.</span> <span class="nav-text">查看路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">移动目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.4.</span> <span class="nav-text">删除目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.5.</span> <span class="nav-text">复制目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E8%BD%AC%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.6.</span> <span class="nav-text">跳转目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">文件操作命令</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="exiler"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">exiler</p>
+  <div class="site-description" itemprop="description">日行一步，功不唐捐 !</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lgq007" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lgq007" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lgq2103148137@gmail.com" title="E-Mail → mailto:lgq2103148137@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=BzOjeH2vib9Oe4pzS3gxTl7t63uQHEib&authKey=oDUilQDMeIcSsiYYfqo1uCIlN8Rw/tPsx4Rc09zYJsjyit6r7yYZOE7SIFZ6GOuV&noverify=0&group_code=579082587" title="QQ群聊 → http:&#x2F;&#x2F;qm.qq.com&#x2F;cgi-bin&#x2F;qm&#x2F;qr?_wv&#x3D;1027&amp;k&#x3D;BzOjeH2vib9Oe4pzS3gxTl7t63uQHEib&amp;authKey&#x3D;oDUilQDMeIcSsiYYfqo1uCIlN8Rw%2FtPsx4Rc09zYJsjyit6r7yYZOE7SIFZ6GOuV&amp;noverify&#x3D;0&amp;group_code&#x3D;579082587" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ群聊</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://lgq007.github.io/atom.xml" title="RSS → https:&#x2F;&#x2F;lgq007.github.io&#x2F;atom.xml"><i class="fas fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">exiler</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+<script src="https://unpkg.com/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'OnUrHnSYNH1qtxJUkWRsawln-gzGzoHsz',
+      appKey     : 'X6mOj1XymOYB8gtn4trWXGmL',
+      placeholder: "期待您的留言！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,84 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>C++中的引用</title>
-    <url>/2023/07/15/C++%E4%B8%AD%E7%9A%84%E5%BC%95%E7%94%A8/</url>
-    <content><![CDATA[<h1 id="C-中的引用"><a href="#C-中的引用" class="headerlink" title="C++中的引用"></a>C++中的引用</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​	C++是C语言的继承，它可进行过程化程序设计(面向过程)，也可以进行以继承和多态为特点的面向对象的程序设计。<strong>引用</strong> (reference)是C++对C语言的重要扩充，旨在使用一种更为安全和简洁的操作方式，弥补C语言指针(pointer)中的一些不足之处。</p>
-<span id="more"></span>
-
-<h2 id="引用的概念"><a href="#引用的概念" class="headerlink" title="引用的概念"></a>引用的概念</h2><p>​	引用就是为某一个变量(目标)起一个别名，类似于C语言结构体中用<code>typedef</code>命令为结构体起别名。也就是说它是某个已经存在的变量的另一个名字。对引用的操作与对变量名的操作可达到一样的效果。</p>
-<h2 id="引用的初始化"><a href="#引用的初始化" class="headerlink" title="引用的初始化"></a>引用的初始化</h2><p>​	变量类型标识符 &amp;引用名&#x3D; 目标变量名</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> &amp;b = a;</span><br></pre></td></tr></table></figure>
-
-<p>  上述步骤即完成了对变量a的引用，需要注意的是，<code>&amp;</code>并不是C语言中的取地址操作符，而是起到标识作用，标识所定义的变量是一个引用，引用的声明完成之后，目标变量便有了两个名称，同时指向相同的一块内存地址。</p>
-<h2 id="定义引用的注意事项"><a href="#定义引用的注意事项" class="headerlink" title="定义引用的注意事项"></a>定义引用的注意事项</h2><ul>
-<li>引用在定义时必须初始化，必须要有指向的对象。</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> &amp;b;</span><br><span class="line"> b = a;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,b);</span><br><span class="line"></span><br><span class="line"><span class="comment">//[Error] &#x27;b&#x27; declared as reference but not initialized</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>引用在初始化时只能绑定左值，不能绑定临时对象、表达式结果和字面常量。</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line">ref = <span class="number">10</span>;   <span class="comment">// 修改 x 的值</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> y = <span class="number">15</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; ref = y;</span><br><span class="line"><span class="type">int</span> z = ref; <span class="comment">// 可通过间接引用访问 const 限定的变量的值</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 错误，不能通过引用修改 const 限定的变量的值</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span>&amp; <span class="title">getElement</span><span class="params">(<span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arr[index];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = <span class="built_in">getElement</span>(<span class="number">2</span>); <span class="comment">// 引用函数返回的左值引用</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 修改数组元素的值</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; ref = <span class="number">5</span>;  <span class="comment">// 错误，不能引用字面常量</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = x + y; <span class="comment">// 错误，不能引用表达式结果</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> z = <span class="number">20</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = z;  <span class="comment">// 错误，不能直接引用 const 限定的变量的值。</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>这里要注意const左值与右值的区别:</p>
-<p>const 左值和 const 右值都是指被声明为 const 的值，至于怎么辨别左右值，主要看此时const限定的变量所起到的作用，它们之间的关系是：</p>
-<ul>
-<li>const 左值：const 左值是指被声明为 const 的左值，即不可修改的左值。它可以通过引用来访问，但不能通过引用来修改。例如：</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; ref = x; <span class="comment">// 引用 const 左值</span></span><br><span class="line"><span class="type">int</span> y = ref; <span class="comment">// 通过引用访问 const 左值</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 错误，不能通过引用修改 const 左值</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>const 右值：const 右值是指被声明为 const 的右值，即不可修改的右值。它不能被引用，因为引用只能绑定到可修改的左值。例如：</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = y; <span class="comment">// 错误，不能引用 const 右值</span></span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是，const 右值和 const 左值都是不可修改的，但它们的区别在于 const 左值可以通过引用访问和修改，而 const 右值不能被引用。</p>
-<h2 id="引用与指针的区别"><a href="#引用与指针的区别" class="headerlink" title="引用与指针的区别"></a>引用与指针的区别</h2><ol>
-<li>定义和初始化：指针需要通过使用星号(*)来声明和初始化，而引用则使用&amp;符号来声明和初始化。例如：</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x; <span class="comment">// 指针的定义和初始化</span></span><br><span class="line"><span class="type">int</span>&amp; ref = x; <span class="comment">// 引用的定义和初始化</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>空值：指针可以被赋予空值（nullptr），表示指向空地址或无效地址。而引用必须在声明时初始化，并且不能为空。例如：</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* ptr = <span class="literal">nullptr</span>; <span class="comment">// 指针赋予空值</span></span><br><span class="line"><span class="comment">// int&amp; ref; // 错误，引用必须在声明时初始化</span></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>可修改性：指针可以重新指向其他地址，也可以修改所指向的值。而引用在初始化后不能改变绑定的对象，只能通过引用来修改所绑定的对象的值。例如：</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x;</span><br><span class="line">ptr = &amp;y; <span class="comment">// 指针重新指向另一个地址</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line"><span class="comment">// ref = &amp;y; // 错误，引用不能重新绑定到另一个对象</span></span><br><span class="line">ref = y; <span class="comment">// 通过引用修改绑定对象的值</span></span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>空间和操作：指针占用一定的内存空间，用于存储地址信息，而引用不占用额外的内存空间，它只是变量的别名。指针可以进行指针运算和解引用操作，而引用不需要进行这些操作，它可以直接使用原始变量的操作符。例如：</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x;</span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line"></span><br><span class="line">*ptr = <span class="number">10</span>; <span class="comment">// 指针解引用并修改所指向的值</span></span><br><span class="line">ref = <span class="number">15</span>; <span class="comment">// 直接通过引用修改绑定对象的值</span></span><br></pre></td></tr></table></figure>
-
-<p>总结起来，指针和引用都是用于间接访问和操作变量的机制，但它们在定义和初始化、空值、可修改性以及空间和操作上有所不同。选择使用指针还是引用取决于具体的需求和使用场景。</p>
-<h2 id="引用的应用"><a href="#引用的应用" class="headerlink" title="引用的应用"></a>引用的应用</h2><p>引用的主要应用就是把它作为函数参数，以扩厂函数传递数据的功能，引用作函数参数时是区别于值传递与地址传递的引用传递。</p>
-<p>利用引用传递可以克服值传递与地址传递中容易出现错误且可读性差的缺点，可直接操作变量，简单高效且可读性高。</p>
-<h3 id="函数参数传递："><a href="#函数参数传递：" class="headerlink" title="函数参数传递："></a>函数参数传递：</h3><p>引用可以用作函数的参数，可以通过引用传递变量，以便在函数内部修改原始变量的值。这样可以避免复制大型对象的开销，并且可以实现对变量的直接修改。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">increment</span><span class="params">(<span class="type">int</span>&amp; num)</span> </span>&#123;</span><br><span class="line">    num++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">increment</span>(x); <span class="comment">// 通过引用传递参数</span></span><br><span class="line">    cout &lt;&lt; x &lt;&lt; endl; <span class="comment">// 输出 6</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="返回值优化："><a href="#返回值优化：" class="headerlink" title="返回值优化："></a>返回值优化：</h3><p>函数可以返回引用类型，以便返回对变量的引用，而不是复制变量的值。这样可以避免复制大型对象的开销，并且可以实现对返回值的直接修改。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>&amp; <span class="title">getMax</span><span class="params">(<span class="type">int</span>&amp; a, <span class="type">int</span>&amp; b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a &gt; b) ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span>&amp; maxRef = <span class="built_in">getMax</span>(x, y); <span class="comment">// 返回引用</span></span><br><span class="line">    maxRef = <span class="number">15</span>; <span class="comment">// 修改返回的引用</span></span><br><span class="line">    cout &lt;&lt; x &lt;&lt; endl; <span class="comment">// 输出 15</span></span><br><span class="line">    cout &lt;&lt; y &lt;&lt; endl; <span class="comment">// 输出 10</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="遍历容器："><a href="#遍历容器：" class="headerlink" title="遍历容器："></a>遍历容器：</h3><p>引用可以用于遍历容器，通过引用来获取容器中的元素，以便对元素进行修改。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; nums = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span>&amp; num : nums) &#123;</span><br><span class="line">    num *= <span class="number">2</span>; <span class="comment">// 修改容器中的元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>后端</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C ++入门-2</title>
     <url>/2023/08/03/C++%20%E5%85%A5%E9%97%A8-2/</url>
     <content><![CDATA[<h1 id="命名空间的using声明"><a href="#命名空间的using声明" class="headerlink" title="命名空间的using声明"></a>命名空间的using声明</h1><ul>
@@ -444,151 +366,81 @@
       </tags>
   </entry>
   <entry>
-    <title>HTML导读</title>
-    <url>/2023/07/14/HTML%E5%AF%BC%E8%AF%BB/</url>
-    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>HTML 是网页使用的语言，定义了网页的结构和内容。浏览器访问网站，其实就是从服务器下载 HTML 代码，然后渲染出网页。</p>
-<p>HTML 的全名是“超文本标记语言”（HyperText Markup Language），上个世纪90年代由欧洲核子研究中心的物理学家蒂姆·伯纳斯-李（Tim Berners-Lee）发明。它的最大特点就是支持超链接，可以跳转到其他网页，从而构成了整个互联网。1999年，HTML 4.01 版发布，成为广泛接受的 HTML 标准。2014年，HTML 5 发布，这是目前正在使用的版本。</p>
-<p>浏览器的网页开发，涉及三种技术：HTML、CSS 和 JavaScript。HTML 语言定义网页的结构和内容，CSS 样式表定义网页的样式，JavaScript 语言定义网页与用户的互动行为。</p>
+    <title>C++中的引用</title>
+    <url>/2023/07/15/C++%E4%B8%AD%E7%9A%84%E5%BC%95%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="C-中的引用"><a href="#C-中的引用" class="headerlink" title="C++中的引用"></a>C++中的引用</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​	C++是C语言的继承，它可进行过程化程序设计(面向过程)，也可以进行以继承和多态为特点的面向对象的程序设计。<strong>引用</strong> (reference)是C++对C语言的重要扩充，旨在使用一种更为安全和简洁的操作方式，弥补C语言指针(pointer)中的一些不足之处。</p>
 <span id="more"></span>
 
-<p>下面就是一个简单网页的 HTML 源码。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="引用的概念"><a href="#引用的概念" class="headerlink" title="引用的概念"></a>引用的概念</h2><p>​	引用就是为某一个变量(目标)起一个别名，类似于C语言结构体中用<code>typedef</code>命令为结构体起别名。也就是说它是某个已经存在的变量的另一个名字。对引用的操作与对变量名的操作可达到一样的效果。</p>
+<h2 id="引用的初始化"><a href="#引用的初始化" class="headerlink" title="引用的初始化"></a>引用的初始化</h2><p>​	变量类型标识符 &amp;引用名&#x3D; 目标变量名</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> &amp;b = a;</span><br></pre></td></tr></table></figure>
 
-<p>上面这段代码，可以保存成文件<code>hello.html</code>。浏览器打开这个本地文件，就能看到文字“Hello World”。</p>
-<h2 id="网页的基本概念"><a href="#网页的基本概念" class="headerlink" title="网页的基本概念"></a>网页的基本概念</h2><h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><p>HTML 代码由许许多多不同的标签（tag）构成。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面代码中，<code>&lt;title&gt;</code>和<code>&lt;/title&gt;</code>就是一对标签。</p>
-<p>标签用来告诉浏览器，如何处理这段代码。标签的内容就是浏览器所要渲染的、展示在网页上的内容。</p>
-<p><strong>标签放在一对尖括号里面（比如<code>&lt;title&gt;</code>），大多数标签都是成对出现的，分成开始标签和结束标签，结束标签在标签名之前加斜杠（比如<code>&lt;/title&gt;</code>）。但是，也有一些标签不是成对使用，而是只有开始标签，没有结束标签，比如上一节示例的<code>&lt;meta&gt;</code>标签。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面代码中，<code>&lt;meta&gt;</code>标签就没有结束标签<code>&lt;/meta&gt;</code>。</p>
-<p>这种单独使用的标签，通常是因为标签本身就足够完成功能了，不需要标签之间的内容。实际引用中，它们主要用来提示浏览器，做一些特别处理。</p>
-<p>标签可以嵌套。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>hello world<span class="tag">&lt;/<span class="name">p</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面代码中，<code>&lt;div&gt;</code>标签内部包含了一个<code>&lt;p&gt;</code>标签。</p>
-<p>嵌套时，必须保证正确的闭合顺序，不能跨层嵌套，否则会出现意想不到的渲染结果。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>hello world<span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面代码就是错误的嵌套，闭合顺序不正确。</p>
-<p><strong>标签名是大小写不敏感，比如<code>&lt;title&gt;</code>和<code>&lt;TITLE&gt;</code>是同一个标签。不过，一般习惯都是使用小写。</strong></p>
-<p>另外，HTML 语言忽略缩进和换行。也就是说，下面的写法与一行的写法效果是一样的。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>  网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>进一步说，整个网页的 HTML 代码完全可以写成一行，浏览器照样解析，结果完全一样。有时，正式发布网页之前，开发者会把源码压缩成一行，以减少传输的字节数。网页内容的缩进和换行，主要靠 CSS 样式来实现。</p>
-<h3 id="元素"><a href="#元素" class="headerlink" title="元素"></a>元素</h3><p>浏览器渲染网页的时候，会把 HTML 源码解析成一个标签树，每个标签都是一个节点（node），称为网页元素（element）。所以，“标签”和“元素”基本上是同义词，只是使用的场合不一样：标签是源码角度来看，元素是从编程角度来看，比如<code>&lt;p&gt;</code>标签对应网页的<code>p</code>元素。</p>
-<p>嵌套的标签就构成了网页元素的层级关系。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>hello world<span class="tag">&lt;/<span class="name">p</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面代码中，<code>div</code>元素内部包含了一个<code>p</code>元素。上层元素又称为“父元素”，下层元素又称为“子元素”，即<code>div</code>是<code>p</code>的父元素，<code>p</code>是<code>div</code>的子元素。</p>
-<p><strong>所有元素可以分成两大类：块级元素（block）和行内元素（inline）。块级元素默认占据一个独立的区域，在网页上会自动另起一行，占据 100% 的宽度。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>world<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面代码中，<code>p</code>元素是块级元素，因此浏览器会将内容分成两行显示。</p>
-<p><strong>行内元素默认与其他元素在同一行，不产生换行。比如，<code>span</code>就是行内元素，通常用来为某些文字指定特别的样式。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>world<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>上面代码中，<code>span</code>元素是行内元素，因此浏览器会将两行内容放在一行显示。</strong></p>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p><strong>属性（attribute）是标签的额外信息，使用空格与标签名和其他属性分隔。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;demo.jpg&quot;</span> <span class="attr">width</span>=<span class="string">&quot;500&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面代码中，<code>&lt;img&gt;</code>标签有两个属性：<code>src</code>和<code>width</code>。</p>
-<p>属性可以用等号指定属性值，比如上例的<code>demo.jpg</code>就是<code>src</code>的属性值。<strong>属性值一般放在双引号里面，这不是必需的，但推荐总是使用双引号。</strong></p>
-<p><strong>注意，属性名是大小写不敏感的，<code>onclick</code>和<code>onClick</code>是同一个属性。</strong></p>
-<p>HTML 提供大量属性，用来定制标签的行为。</p>
-<h2 id="网页的基本标签"><a href="#网页的基本标签" class="headerlink" title="网页的基本标签"></a>网页的基本标签</h2><p>符合语法标准的网页，应该满足下面的基本结构。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>不管多么复杂的网页，都是从上面这个基本结构衍生出来的。</p>
-<p><strong>注意，HTML 代码的缩进和换行，对于浏览器不产生作用。所以，上面的代码完全可以写成一行，渲染结果不变。上面这样分行写，只是为了提高可读性。</strong></p>
-<p>下面介绍，这个基本结构的主要标签，它们构成网页的骨架。</p>
-<h3 id><a href="#" class="headerlink" title="&lt;!doctype&gt;&#96;"></a>&lt;!doctype&gt;&#96;</h3><p>网页的第一个标签通常是<code>&lt;!doctype&gt;</code>，表示文档类型，告诉浏览器如何解析网页。</p>
-<p>一般来说，只要像下面这样，简单声明<code>doctype</code>为<code>html</code>即可。浏览器就会按照 HTML5 的规则处理网页。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>有时，该标签采用完全大写的形式，以便区别于正常的 HTML 标签。因为<code>&lt;!doctype&gt;</code>本质上不是标签，更像一个处理指令。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="-1"><a href="#-1" class="headerlink" title="&lt;html&gt;"></a><code>&lt;html&gt;</code></h3><p><strong><code>&lt;html&gt;</code>标签是网页的顶层容器，也称为根元素（root element），其他元素都是它的子元素。一个网页只能有一个<code>&lt;html&gt;</code>标签。</strong></p>
-<p><strong>该标签的<code>lang</code>属性，表示网页内容默认的语言。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>上面代码表示，网页的语言是英语。更详细的介绍，参见《属性》一章。</p>
-<h3 id="-2"><a href="#-2" class="headerlink" title="&lt;head&gt;"></a><code>&lt;head&gt;</code></h3><p><code>&lt;head&gt;</code>标签是一个容器标签，用于放置网页的元信息。它的内容不会出现在网页上，而是为网页渲染做准备。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>    </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><code>&lt;head&gt;</code>是<code>&lt;html&gt;</code>的第一个子元素。如果网页不包含<code>&lt;head&gt;</code>，浏览器会自动创建一个。</p>
-<p><code>&lt;head&gt;</code>的子元素一般有下面七个，后文会一一介绍。</p>
-<ul>
-<li><strong><code>&lt;meta&gt;</code>：设置网页的元数据。</strong></li>
-<li><strong><code>&lt;link&gt;</code>：连接外部样式表。</strong></li>
-<li><strong><code>&lt;title&gt;</code>：设置网页标题。</strong></li>
-<li><strong><code>&lt;style&gt;</code>：放置内嵌的样式表。</strong></li>
-<li><strong><code>&lt;script&gt;</code>：引入脚本。</strong></li>
-<li><strong><code>&lt;noscript&gt;</code>：浏览器不支持脚本时，所要显示的内容。</strong></li>
-<li><strong><code>&lt;base&gt;</code>：设置网页内部相对 URL 的计算基准。</strong></li>
+<p>  上述步骤即完成了对变量a的引用，需要注意的是，<code>&amp;</code>并不是C语言中的取地址操作符，而是起到标识作用，标识所定义的变量是一个引用，引用的声明完成之后，目标变量便有了两个名称，同时指向相同的一块内存地址。</p>
+<h2 id="定义引用的注意事项"><a href="#定义引用的注意事项" class="headerlink" title="定义引用的注意事项"></a>定义引用的注意事项</h2><ul>
+<li>引用在定义时必须初始化，必须要有指向的对象。</li>
 </ul>
-<h3 id="-3"><a href="#-3" class="headerlink" title="&lt;meta&gt;"></a><code>&lt;meta&gt;</code></h3><p><code>&lt;meta&gt;</code>标签用于设置或说明网页的元数据，必须放在<head>里面。一个<meta>标签就是一项元数据，网页可以有多个<meta>。</head></p>
-<p>一般来说，网页至少应该具有以下两个<code>&lt;meta&gt;</code>标签，而且必须在<code>&lt;head&gt;</code>的最前面。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Page Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> &amp;b;</span><br><span class="line"> b = a;</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,b);</span><br><span class="line"></span><br><span class="line"><span class="comment">//[Error] &#x27;b&#x27; declared as reference but not initialized</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>（1）charset 属性</strong><br><code>&lt;meta&gt;</code>有一个charset属性，指定网页的编码方式，该属性非常重要。如果设置得不正确，浏览器可能无法正确解码，就会出现乱码。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>引用在初始化时只能绑定左值，不能绑定临时对象、表达式结果和字面常量。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line">ref = <span class="number">10</span>;   <span class="comment">// 修改 x 的值</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> y = <span class="number">15</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; ref = y;</span><br><span class="line"><span class="type">int</span> z = ref; <span class="comment">// 可通过间接引用访问 const 限定的变量的值</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 错误，不能通过引用修改 const 限定的变量的值</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span>&amp; <span class="title">getElement</span><span class="params">(<span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arr[index];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = <span class="built_in">getElement</span>(<span class="number">2</span>); <span class="comment">// 引用函数返回的左值引用</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 修改数组元素的值</span></span><br></pre></td></tr></table></figure>
 
-<p>上面代码声明，网页为<code>utf-8</code>编码。虽然可以使用其他的编码方式，但几乎总是应该采用 UTF-8。注意，声明的编码方式，应该与网页实际的编码方式一致，即声明了<code>utf-8</code>，网页就应该使用 UTF-8 编码保存。</p>
-<p><strong>（2）name 属性，content 属性</strong></p>
-<p><code>&lt;meta&gt;</code>的name属性表示元数据的名字，content属性表示元数据的值。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;HTML 语言入门&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;HTML,教程&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;author&quot;</span> <span class="attr">content</span>=<span class="string">&quot;张三&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; ref = <span class="number">5</span>;  <span class="comment">// 错误，不能引用字面常量</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = x + y; <span class="comment">// 错误，不能引用表达式结果</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> z = <span class="number">20</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = z;  <span class="comment">// 错误，不能直接引用 const 限定的变量的值。</span></span><br></pre></td></tr></table></figure>
 
-<p>上面代码包含了三个元数据：**<code>description</code>是网页内容的描述，<code>keywords</code>是网页内容的关键字，<code>author</code>是网页作者。**</p>
-<p>元数据有很多种，大部分涉及浏览器内部工作机制，或者特定的使用场景，这里就不一一介绍了。下面是一些例子。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;application-name&quot;</span> <span class="attr">content</span>=<span class="string">&quot;Application Name&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;generator&quot;</span> <span class="attr">content</span>=<span class="string">&quot;program&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;subject&quot;</span> <span class="attr">content</span>=<span class="string">&quot;your document&#x27;s subject&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;referrer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;no-referrer&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>（3）http-equiv 属性，content 属性</strong></p>
-<p><code>http-equiv</code>属性用来覆盖 HTTP 回应的头信息字段，<code>content</code>属性是该字段的内容。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;self&#x27;&quot;&gt;</span><br></pre></td></tr></table></figure>
 
-<p>上面代码可以覆盖 HTTP 回应的<code>Content-Security-Policy</code>字段。</p>
-<p>下面是另一些例子。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;Type=text/html; charset=utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;refresh&quot;</span> <span class="attr">content</span>=<span class="string">&quot;30&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;refresh&quot;</span> <span class="attr">content</span>=<span class="string">&quot;30;URL=&#x27;http://website.com&#x27;&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里要注意const左值与右值的区别:</p>
+<p>const 左值和 const 右值都是指被声明为 const 的值，至于怎么辨别左右值，主要看此时const限定的变量所起到的作用，它们之间的关系是：</p>
+<ul>
+<li>const 左值：const 左值是指被声明为 const 的左值，即不可修改的左值。它可以通过引用来访问，但不能通过引用来修改。例如：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; ref = x; <span class="comment">// 引用 const 左值</span></span><br><span class="line"><span class="type">int</span> y = ref; <span class="comment">// 通过引用访问 const 左值</span></span><br><span class="line">ref = <span class="number">10</span>; <span class="comment">// 错误，不能通过引用修改 const 左值</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="-4"><a href="#-4" class="headerlink" title="&lt;title&gt;"></a><code>&lt;title&gt;</code></h3><p><strong><code>&lt;title&gt;</code>标签用于指定网页的标题，会显示在浏览器窗口的标题栏。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>const 右值：const 右值是指被声明为 const 的右值，即不可修改的右值。它不能被引用，因为引用只能绑定到可修改的左值。例如：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span>&amp; ref = y; <span class="comment">// 错误，不能引用 const 右值</span></span><br></pre></td></tr></table></figure>
 
-<p>搜索引擎根据这个标签，显示每个网页的标题。它对于网页在搜索引擎的排序，有很大的影响，应该精心安排，反映网页的主题。</p>
-<p><code>&lt;title&gt;</code>标签的内部，不能再放置其他标签，只能放置无格式的纯文本。</p>
-<h3 id="-5"><a href="#-5" class="headerlink" title="&lt;body&gt;"></a><code>&lt;body&gt;</code></h3><p><strong><code>&lt;body&gt;</code>标签是一个容器标签，用于放置网页的主体内容。浏览器显示的页面内容，都是放置在它的内部。它是<code>&lt;html&gt;</code>的第二个子元素，紧跟在<code>&lt;head&gt;</code>后面。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>    </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>    </span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span>hello world<span class="tag">&lt;/<span class="name">p</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是，const 右值和 const 左值都是不可修改的，但它们的区别在于 const 左值可以通过引用访问和修改，而 const 右值不能被引用。</p>
+<h2 id="引用与指针的区别"><a href="#引用与指针的区别" class="headerlink" title="引用与指针的区别"></a>引用与指针的区别</h2><ol>
+<li>定义和初始化：指针需要通过使用星号(*)来声明和初始化，而引用则使用&amp;符号来声明和初始化。例如：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x; <span class="comment">// 指针的定义和初始化</span></span><br><span class="line"><span class="type">int</span>&amp; ref = x; <span class="comment">// 引用的定义和初始化</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="空格和换行"><a href="#空格和换行" class="headerlink" title="空格和换行"></a>空格和换行</h2><p>HTML 语言有自己的空格处理规则。标签内容的头部和尾部的空格，一律忽略不计。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>  hello world   <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>空值：指针可以被赋予空值（nullptr），表示指向空地址或无效地址。而引用必须在声明时初始化，并且不能为空。例如：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* ptr = <span class="literal">nullptr</span>; <span class="comment">// 指针赋予空值</span></span><br><span class="line"><span class="comment">// int&amp; ref; // 错误，引用必须在声明时初始化</span></span><br></pre></td></tr></table></figure>
 
-<p>上面代码中，<code>hello</code>前面的空格和<code>world</code>后面的空格，浏览器一律忽略不计。</p>
-<p><strong>标签内容里面的多个连续空格（包含制表符<code>\t</code>），会被浏览器合并成一个。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>hello      world<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>可修改性：指针可以重新指向其他地址，也可以修改所指向的值。而引用在初始化后不能改变绑定的对象，只能通过引用来修改所绑定的对象的值。例如：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x;</span><br><span class="line">ptr = &amp;y; <span class="comment">// 指针重新指向另一个地址</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line"><span class="comment">// ref = &amp;y; // 错误，引用不能重新绑定到另一个对象</span></span><br><span class="line">ref = y; <span class="comment">// 通过引用修改绑定对象的值</span></span><br></pre></td></tr></table></figure>
 
-<p>上面代码中，<code>hello</code>与<code>world</code>之间有多个连续空格，浏览器会将它们合并成一个。网页渲染的结果是，<code>hello</code>与<code>world</code>之间只有一个空格。</p>
-<p><strong>浏览器还会将文本里面的换行符（<code>\n</code>）和回车符（<code>\r</code>），替换成空格。</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>hello</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">world<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>空间和操作：指针占用一定的内存空间，用于存储地址信息，而引用不占用额外的内存空间，它只是变量的别名。指针可以进行指针运算和解引用操作，而引用不需要进行这些操作，它可以直接使用原始变量的操作符。例如：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span>* ptr = &amp;x;</span><br><span class="line"><span class="type">int</span>&amp; ref = x;</span><br><span class="line"></span><br><span class="line">*ptr = <span class="number">10</span>; <span class="comment">// 指针解引用并修改所指向的值</span></span><br><span class="line">ref = <span class="number">15</span>; <span class="comment">// 直接通过引用修改绑定对象的值</span></span><br></pre></td></tr></table></figure>
 
-<p>上面代码中，<code>hello</code>与<code>world</code>之间有多个换行，浏览器会将它们替换成空格，然后再将多个空格合并成一个。网页渲染的结果是，<code>hello</code>与<code>world</code>之间有一个空格。</p>
-<p>这意味着，HTML 源码里面的换行，不会产生换行效果。</p>
-<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>HTML 代码可以包含注释，浏览器会自动忽略注释。注释以<code>&lt;!--</code>开头，以<code>--&gt;</code>结尾，下面就是一个注释的例子。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- 这是一个注释 --&gt;</span><br></pre></td></tr></table></figure>
+<p>总结起来，指针和引用都是用于间接访问和操作变量的机制，但它们在定义和初始化、空值、可修改性以及空间和操作上有所不同。选择使用指针还是引用取决于具体的需求和使用场景。</p>
+<h2 id="引用的应用"><a href="#引用的应用" class="headerlink" title="引用的应用"></a>引用的应用</h2><p>引用的主要应用就是把它作为函数参数，以扩厂函数传递数据的功能，引用作函数参数时是区别于值传递与地址传递的引用传递。</p>
+<p>利用引用传递可以克服值传递与地址传递中容易出现错误且可读性差的缺点，可直接操作变量，简单高效且可读性高。</p>
+<h3 id="函数参数传递："><a href="#函数参数传递：" class="headerlink" title="函数参数传递："></a>函数参数传递：</h3><p>引用可以用作函数的参数，可以通过引用传递变量，以便在函数内部修改原始变量的值。这样可以避免复制大型对象的开销，并且可以实现对变量的直接修改。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">increment</span><span class="params">(<span class="type">int</span>&amp; num)</span> </span>&#123;</span><br><span class="line">    num++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">increment</span>(x); <span class="comment">// 通过引用传递参数</span></span><br><span class="line">    cout &lt;&lt; x &lt;&lt; endl; <span class="comment">// 输出 6</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>注释可以是多行的，并且内部的 HTML 都不再生效了。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--  </span></span><br><span class="line"><span class="comment">&lt;p&gt;</span></span><br><span class="line"><span class="comment">hello world</span></span><br><span class="line"><span class="comment">&lt;/p&gt;</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="返回值优化："><a href="#返回值优化：" class="headerlink" title="返回值优化："></a>返回值优化：</h3><p>函数可以返回引用类型，以便返回对变量的引用，而不是复制变量的值。这样可以避免复制大型对象的开销，并且可以实现对返回值的直接修改。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>&amp; <span class="title">getMax</span><span class="params">(<span class="type">int</span>&amp; a, <span class="type">int</span>&amp; b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a &gt; b) ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span> y = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span>&amp; maxRef = <span class="built_in">getMax</span>(x, y); <span class="comment">// 返回引用</span></span><br><span class="line">    maxRef = <span class="number">15</span>; <span class="comment">// 修改返回的引用</span></span><br><span class="line">    cout &lt;&lt; x &lt;&lt; endl; <span class="comment">// 输出 15</span></span><br><span class="line">    cout &lt;&lt; y &lt;&lt; endl; <span class="comment">// 输出 10</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>上面代码是一个注释的区块，内部的代码都是无效的，浏览器不会解析，更不会渲染它们。</p>
-<p>注释有助于理解代码的含义，复杂的代码块前面最好加上注释。</p>
+<h3 id="遍历容器："><a href="#遍历容器：" class="headerlink" title="遍历容器："></a>遍历容器：</h3><p>引用可以用于遍历容器，通过引用来获取容器中的元素，以便对元素进行修改。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; nums = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span>&amp; num : nums) &#123;</span><br><span class="line">    num *= <span class="number">2</span>; <span class="comment">// 修改容器中的元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>前端</category>
+        <category>后端</category>
       </categories>
       <tags>
-        <tag>html</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -1195,6 +1047,216 @@
       <tags>
         <tag>C++</tag>
         <tag>c</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pages</title>
+    <url>/2023/09/01/C++%E5%85%A5%E9%97%A8-3/</url>
+    <content><![CDATA[<h1 id="表达式基础"><a href="#表达式基础" class="headerlink" title="表达式基础"></a>表达式基础</h1><blockquote>
+<p>表达式是有一个或多个运算对象(operand)所组成的，对表达式求值将得到的是一个结果(result)。字面值和变量是最简单的表达式(expression)，结果是字面值和变量的值。把一个运算符(operator)和一个或者多个运算对象组合起来可以生成复杂的表达式</p>
+</blockquote>
+<ul>
+<li>一元运算符(unary operator)<ul>
+<li>作用与一个运算对象</li>
+<li>如取地址符<code>&amp;</code>和解引用符<code>*</code></li>
+</ul>
+</li>
+<li>二元运算符(binary operator)<ul>
+<li>作用于两个运算对象</li>
+<li>如相等运算符<code>==</code>，乘法运算符<code>*</code></li>
+</ul>
+</li>
+<li>三元运算符<ul>
+<li>作用于三个运算对象</li>
+</ul>
+</li>
+<li>函数也是一种特殊的运算符<ul>
+<li>对运算对象数量没有限制</li>
+</ul>
+</li>
+<li>一些符号既能做一元运算符，也能做二元运算符<ul>
+<li>由上下文决定</li>
+<li>如<code>*</code>，可用做解引用和乘法</li>
+</ul>
+</li>
+</ul>
+<h2 id="组合运算符和运算对象"><a href="#组合运算符和运算对象" class="headerlink" title="组合运算符和运算对象"></a>组合运算符和运算对象</h2><p>对于含有多个运算符的复杂表达式，要理解：</p>
+<ol>
+<li>运算符的优先级(precedence)</li>
+<li>运算符的结合律(associativity)</li>
+<li>运算对象的求值顺序(order of evaluation)</li>
+</ol>
+<h2 id="运算对象转换"><a href="#运算对象转换" class="headerlink" title="运算对象转换"></a>运算对象转换</h2><p>表达式求值的过程中，运算对象常由一种类型转换成另一种类型。如二元运算符要求两个运算对象类型相同，若不同，转换成同一种类型。</p>
+<p>类型转换的规则复杂，但大多数合乎情理容易理解：</p>
+<ol>
+<li>整数转浮点数，浮点数转整数</li>
+<li>指针不能转浮点数</li>
+<li>小整数类型 (<code>bool</code>，<code>char</code>，<code>short</code>) 提升 (promoted) 成较大整数类型（主要是<code>int</code>）</li>
+</ol>
+<h2 id="重载运算符"><a href="#重载运算符" class="headerlink" title="重载运算符"></a>重载运算符</h2><p>C++语言定义了运算符作用于内置类型和复合类型的运算对象时所执行的操作</p>
+<ul>
+<li>当运算符作用在类类型的运算对象时，用户可以自行定义其含义。</li>
+<li>为已存在的运算符赋予另外一层含义，称为<strong>重载运算符</strong>（overloaded operator）<ul>
+<li>如IO库中的&gt;&gt;，&lt;&lt;，string对象，vector对象，迭代器所使用的运算符。</li>
+</ul>
+</li>
+</ul>
+<p>重载运算符可自定义运算对象类型和返回值，但无法改变运算对象个数，运算符优先级，结合律</p>
+<h1 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h1><h1 id="逻辑和关系运算符"><a href="#逻辑和关系运算符" class="headerlink" title="逻辑和关系运算符"></a>逻辑和关系运算符</h1><h1 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h1><h1 id="递增和递减运算符"><a href="#递增和递减运算符" class="headerlink" title="递增和递减运算符"></a>递增和递减运算符</h1><h1 id="成员访问运算符"><a href="#成员访问运算符" class="headerlink" title="成员访问运算符"></a>成员访问运算符</h1><h1 id="条件运算符"><a href="#条件运算符" class="headerlink" title="条件运算符"></a>条件运算符</h1><h1 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h1><h1 id="sizeof运算符"><a href="#sizeof运算符" class="headerlink" title="sizeof运算符"></a><code>sizeof</code>运算符</h1><h1 id="逗号运算符"><a href="#逗号运算符" class="headerlink" title="逗号运算符"></a>逗号运算符</h1><h1 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h1><h1 id="运算符优先级表"><a href="#运算符优先级表" class="headerlink" title="运算符优先级表"></a>运算符优先级表</h1>]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTML导读</title>
+    <url>/2023/07/14/HTML%E5%AF%BC%E8%AF%BB/</url>
+    <content><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>HTML 是网页使用的语言，定义了网页的结构和内容。浏览器访问网站，其实就是从服务器下载 HTML 代码，然后渲染出网页。</p>
+<p>HTML 的全名是“超文本标记语言”（HyperText Markup Language），上个世纪90年代由欧洲核子研究中心的物理学家蒂姆·伯纳斯-李（Tim Berners-Lee）发明。它的最大特点就是支持超链接，可以跳转到其他网页，从而构成了整个互联网。1999年，HTML 4.01 版发布，成为广泛接受的 HTML 标准。2014年，HTML 5 发布，这是目前正在使用的版本。</p>
+<p>浏览器的网页开发，涉及三种技术：HTML、CSS 和 JavaScript。HTML 语言定义网页的结构和内容，CSS 样式表定义网页的样式，JavaScript 语言定义网页与用户的互动行为。</p>
+<span id="more"></span>
+
+<p>下面就是一个简单网页的 HTML 源码。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面这段代码，可以保存成文件<code>hello.html</code>。浏览器打开这个本地文件，就能看到文字“Hello World”。</p>
+<h2 id="网页的基本概念"><a href="#网页的基本概念" class="headerlink" title="网页的基本概念"></a>网页的基本概念</h2><h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><p>HTML 代码由许许多多不同的标签（tag）构成。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>&lt;title&gt;</code>和<code>&lt;/title&gt;</code>就是一对标签。</p>
+<p>标签用来告诉浏览器，如何处理这段代码。标签的内容就是浏览器所要渲染的、展示在网页上的内容。</p>
+<p><strong>标签放在一对尖括号里面（比如<code>&lt;title&gt;</code>），大多数标签都是成对出现的，分成开始标签和结束标签，结束标签在标签名之前加斜杠（比如<code>&lt;/title&gt;</code>）。但是，也有一些标签不是成对使用，而是只有开始标签，没有结束标签，比如上一节示例的<code>&lt;meta&gt;</code>标签。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>&lt;meta&gt;</code>标签就没有结束标签<code>&lt;/meta&gt;</code>。</p>
+<p>这种单独使用的标签，通常是因为标签本身就足够完成功能了，不需要标签之间的内容。实际引用中，它们主要用来提示浏览器，做一些特别处理。</p>
+<p>标签可以嵌套。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>hello world<span class="tag">&lt;/<span class="name">p</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>&lt;div&gt;</code>标签内部包含了一个<code>&lt;p&gt;</code>标签。</p>
+<p>嵌套时，必须保证正确的闭合顺序，不能跨层嵌套，否则会出现意想不到的渲染结果。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>hello world<span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码就是错误的嵌套，闭合顺序不正确。</p>
+<p><strong>标签名是大小写不敏感，比如<code>&lt;title&gt;</code>和<code>&lt;TITLE&gt;</code>是同一个标签。不过，一般习惯都是使用小写。</strong></p>
+<p>另外，HTML 语言忽略缩进和换行。也就是说，下面的写法与一行的写法效果是一样的。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>  网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>进一步说，整个网页的 HTML 代码完全可以写成一行，浏览器照样解析，结果完全一样。有时，正式发布网页之前，开发者会把源码压缩成一行，以减少传输的字节数。网页内容的缩进和换行，主要靠 CSS 样式来实现。</p>
+<h3 id="元素"><a href="#元素" class="headerlink" title="元素"></a>元素</h3><p>浏览器渲染网页的时候，会把 HTML 源码解析成一个标签树，每个标签都是一个节点（node），称为网页元素（element）。所以，“标签”和“元素”基本上是同义词，只是使用的场合不一样：标签是源码角度来看，元素是从编程角度来看，比如<code>&lt;p&gt;</code>标签对应网页的<code>p</code>元素。</p>
+<p>嵌套的标签就构成了网页元素的层级关系。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span>&gt;</span>hello world<span class="tag">&lt;/<span class="name">p</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>div</code>元素内部包含了一个<code>p</code>元素。上层元素又称为“父元素”，下层元素又称为“子元素”，即<code>div</code>是<code>p</code>的父元素，<code>p</code>是<code>div</code>的子元素。</p>
+<p><strong>所有元素可以分成两大类：块级元素（block）和行内元素（inline）。块级元素默认占据一个独立的区域，在网页上会自动另起一行，占据 100% 的宽度。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>world<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>p</code>元素是块级元素，因此浏览器会将内容分成两行显示。</p>
+<p><strong>行内元素默认与其他元素在同一行，不产生换行。比如，<code>span</code>就是行内元素，通常用来为某些文字指定特别的样式。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>world<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>上面代码中，<code>span</code>元素是行内元素，因此浏览器会将两行内容放在一行显示。</strong></p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p><strong>属性（attribute）是标签的额外信息，使用空格与标签名和其他属性分隔。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;demo.jpg&quot;</span> <span class="attr">width</span>=<span class="string">&quot;500&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>&lt;img&gt;</code>标签有两个属性：<code>src</code>和<code>width</code>。</p>
+<p>属性可以用等号指定属性值，比如上例的<code>demo.jpg</code>就是<code>src</code>的属性值。<strong>属性值一般放在双引号里面，这不是必需的，但推荐总是使用双引号。</strong></p>
+<p><strong>注意，属性名是大小写不敏感的，<code>onclick</code>和<code>onClick</code>是同一个属性。</strong></p>
+<p>HTML 提供大量属性，用来定制标签的行为。</p>
+<h2 id="网页的基本标签"><a href="#网页的基本标签" class="headerlink" title="网页的基本标签"></a>网页的基本标签</h2><p>符合语法标准的网页，应该满足下面的基本结构。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>不管多么复杂的网页，都是从上面这个基本结构衍生出来的。</p>
+<p><strong>注意，HTML 代码的缩进和换行，对于浏览器不产生作用。所以，上面的代码完全可以写成一行，渲染结果不变。上面这样分行写，只是为了提高可读性。</strong></p>
+<p>下面介绍，这个基本结构的主要标签，它们构成网页的骨架。</p>
+<h3 id><a href="#" class="headerlink" title="&lt;!doctype&gt;&#96;"></a>&lt;!doctype&gt;&#96;</h3><p>网页的第一个标签通常是<code>&lt;!doctype&gt;</code>，表示文档类型，告诉浏览器如何解析网页。</p>
+<p>一般来说，只要像下面这样，简单声明<code>doctype</code>为<code>html</code>即可。浏览器就会按照 HTML5 的规则处理网页。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>有时，该标签采用完全大写的形式，以便区别于正常的 HTML 标签。因为<code>&lt;!doctype&gt;</code>本质上不是标签，更像一个处理指令。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="-1"><a href="#-1" class="headerlink" title="&lt;html&gt;"></a><code>&lt;html&gt;</code></h3><p><strong><code>&lt;html&gt;</code>标签是网页的顶层容器，也称为根元素（root element），其他元素都是它的子元素。一个网页只能有一个<code>&lt;html&gt;</code>标签。</strong></p>
+<p><strong>该标签的<code>lang</code>属性，表示网页内容默认的语言。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码表示，网页的语言是英语。更详细的介绍，参见《属性》一章。</p>
+<h3 id="-2"><a href="#-2" class="headerlink" title="&lt;head&gt;"></a><code>&lt;head&gt;</code></h3><p><code>&lt;head&gt;</code>标签是一个容器标签，用于放置网页的元信息。它的内容不会出现在网页上，而是为网页渲染做准备。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>    </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>&lt;head&gt;</code>是<code>&lt;html&gt;</code>的第一个子元素。如果网页不包含<code>&lt;head&gt;</code>，浏览器会自动创建一个。</p>
+<p><code>&lt;head&gt;</code>的子元素一般有下面七个，后文会一一介绍。</p>
+<ul>
+<li><strong><code>&lt;meta&gt;</code>：设置网页的元数据。</strong></li>
+<li><strong><code>&lt;link&gt;</code>：连接外部样式表。</strong></li>
+<li><strong><code>&lt;title&gt;</code>：设置网页标题。</strong></li>
+<li><strong><code>&lt;style&gt;</code>：放置内嵌的样式表。</strong></li>
+<li><strong><code>&lt;script&gt;</code>：引入脚本。</strong></li>
+<li><strong><code>&lt;noscript&gt;</code>：浏览器不支持脚本时，所要显示的内容。</strong></li>
+<li><strong><code>&lt;base&gt;</code>：设置网页内部相对 URL 的计算基准。</strong></li>
+</ul>
+<h3 id="-3"><a href="#-3" class="headerlink" title="&lt;meta&gt;"></a><code>&lt;meta&gt;</code></h3><p><code>&lt;meta&gt;</code>标签用于设置或说明网页的元数据，必须放在<head>里面。一个<meta>标签就是一项元数据，网页可以有多个<meta>。</head></p>
+<p>一般来说，网页至少应该具有以下两个<code>&lt;meta&gt;</code>标签，而且必须在<code>&lt;head&gt;</code>的最前面。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Page Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>（1）charset 属性</strong><br><code>&lt;meta&gt;</code>有一个charset属性，指定网页的编码方式，该属性非常重要。如果设置得不正确，浏览器可能无法正确解码，就会出现乱码。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码声明，网页为<code>utf-8</code>编码。虽然可以使用其他的编码方式，但几乎总是应该采用 UTF-8。注意，声明的编码方式，应该与网页实际的编码方式一致，即声明了<code>utf-8</code>，网页就应该使用 UTF-8 编码保存。</p>
+<p><strong>（2）name 属性，content 属性</strong></p>
+<p><code>&lt;meta&gt;</code>的name属性表示元数据的名字，content属性表示元数据的值。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;HTML 语言入门&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;HTML,教程&quot;</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;author&quot;</span> <span class="attr">content</span>=<span class="string">&quot;张三&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码包含了三个元数据：**<code>description</code>是网页内容的描述，<code>keywords</code>是网页内容的关键字，<code>author</code>是网页作者。**</p>
+<p>元数据有很多种，大部分涉及浏览器内部工作机制，或者特定的使用场景，这里就不一一介绍了。下面是一些例子。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;application-name&quot;</span> <span class="attr">content</span>=<span class="string">&quot;Application Name&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;generator&quot;</span> <span class="attr">content</span>=<span class="string">&quot;program&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;subject&quot;</span> <span class="attr">content</span>=<span class="string">&quot;your document&#x27;s subject&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;referrer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;no-referrer&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>（3）http-equiv 属性，content 属性</strong></p>
+<p><code>http-equiv</code>属性用来覆盖 HTTP 回应的头信息字段，<code>content</code>属性是该字段的内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;self&#x27;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码可以覆盖 HTTP 回应的<code>Content-Security-Policy</code>字段。</p>
+<p>下面是另一些例子。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;Type=text/html; charset=utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;refresh&quot;</span> <span class="attr">content</span>=<span class="string">&quot;30&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;refresh&quot;</span> <span class="attr">content</span>=<span class="string">&quot;30;URL=&#x27;http://website.com&#x27;&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="-4"><a href="#-4" class="headerlink" title="&lt;title&gt;"></a><code>&lt;title&gt;</code></h3><p><strong><code>&lt;title&gt;</code>标签用于指定网页的标题，会显示在浏览器窗口的标题栏。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>搜索引擎根据这个标签，显示每个网页的标题。它对于网页在搜索引擎的排序，有很大的影响，应该精心安排，反映网页的主题。</p>
+<p><code>&lt;title&gt;</code>标签的内部，不能再放置其他标签，只能放置无格式的纯文本。</p>
+<h3 id="-5"><a href="#-5" class="headerlink" title="&lt;body&gt;"></a><code>&lt;body&gt;</code></h3><p><strong><code>&lt;body&gt;</code>标签是一个容器标签，用于放置网页的主体内容。浏览器显示的页面内容，都是放置在它的内部。它是<code>&lt;html&gt;</code>的第二个子元素，紧跟在<code>&lt;head&gt;</code>后面。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>    </span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>网页标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>    </span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span>hello world<span class="tag">&lt;/<span class="name">p</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="空格和换行"><a href="#空格和换行" class="headerlink" title="空格和换行"></a>空格和换行</h2><p>HTML 语言有自己的空格处理规则。标签内容的头部和尾部的空格，一律忽略不计。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>  hello world   <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>hello</code>前面的空格和<code>world</code>后面的空格，浏览器一律忽略不计。</p>
+<p><strong>标签内容里面的多个连续空格（包含制表符<code>\t</code>），会被浏览器合并成一个。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>hello      world<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>hello</code>与<code>world</code>之间有多个连续空格，浏览器会将它们合并成一个。网页渲染的结果是，<code>hello</code>与<code>world</code>之间只有一个空格。</p>
+<p><strong>浏览器还会将文本里面的换行符（<code>\n</code>）和回车符（<code>\r</code>），替换成空格。</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>hello</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">world<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>hello</code>与<code>world</code>之间有多个换行，浏览器会将它们替换成空格，然后再将多个空格合并成一个。网页渲染的结果是，<code>hello</code>与<code>world</code>之间有一个空格。</p>
+<p>这意味着，HTML 源码里面的换行，不会产生换行效果。</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>HTML 代码可以包含注释，浏览器会自动忽略注释。注释以<code>&lt;!--</code>开头，以<code>--&gt;</code>结尾，下面就是一个注释的例子。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- 这是一个注释 --&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注释可以是多行的，并且内部的 HTML 都不再生效了。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--  </span></span><br><span class="line"><span class="comment">&lt;p&gt;</span></span><br><span class="line"><span class="comment">hello world</span></span><br><span class="line"><span class="comment">&lt;/p&gt;</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码是一个注释的区块，内部的代码都是无效的，浏览器不会解析，更不会渲染它们。</p>
+<p>注释有助于理解代码的含义，复杂的代码块前面最好加上注释。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>html</tag>
       </tags>
   </entry>
   <entry>
@@ -2015,6 +2077,308 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux基础</title>
+    <url>/2023/08/14/Linux%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><h2 id="绪言"><a href="#绪言" class="headerlink" title="绪言"></a>绪言</h2><p>在Linux操作系统中秉持着<strong>一切皆文件</strong>的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中</p>
+<ol>
+<li><p><code>/dev/sdX</code>：这个文件表示U盘设备，”X”代表具体的设备标识，例如<code>/dev/sda</code>、<code>/dev/sdb</code>等。你可以通过这个文件来访问整个U盘。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> /media/usb-drive</span><br><span class="line">sudo mount /dev/sdX /media/usb-drive</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>/media/username/usb-drive</code>：这个文件夹是U盘挂载的地方，”username”是你的用户名，”usb-drive”是挂载点。在这个文件夹中，你可以通过普通的文件操作来访问U盘中的文件和文件夹。</p>
+</li>
+</ol>
+<p>而在windows操作系统下，U盘通常会被视为两个不同的实体：一个是设备，另一个是文件系统中的一个文件夹</p>
+<ol>
+<li>设备：可以在Windows设备管理器中看到，通常显示为一个可移动设备。</li>
+<li>文件夹：windows会自动为U盘分配一个盘符，可以用过windows资源管理器访问U盘内的文件。</li>
+</ol>
+<h2 id="Linux下的文件目录结构"><a href="#Linux下的文件目录结构" class="headerlink" title="Linux下的文件目录结构"></a>Linux下的文件目录结构</h2><p><img src="/../images/Linux%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95.png"></p>
+<p>以Ubuntu 22.04 LTS 为例，输入<code>ll / -a</code>查看<code>/</code>目录下的文件目录：</p>
+<p><img src="/./../images/Ubuntu%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95" alt="image-20230814185233037"></p>
+<ol>
+<li>常见的目录：</li>
+</ol>
+<ul>
+<li><strong><code>/</code> (根目录)：</strong> Linux文件系统的根目录，所有其他目录都是从这里开始的。</li>
+<li><strong><code>/bin</code> (基本命令)：</strong> 全称<code>binary</code>，存放系统启动和维护所需的基本命令，如<code>ls</code>、<code>cp</code>、<code>mv</code>等。</li>
+<li><strong><code>/boot</code> (开机引导)：</strong> 存放包含引导启动Linux系统所需的文件，如内核映像文件、引导加载程序以及启动配置文件。</li>
+<li><strong><code>/dev</code> (设备文件)：</strong> 包含与系统硬件设备和外部设备的文件，Linux将这些设备抽象为文件，通过这些文件来进行访问和交互。在其中的外接设备是不能直接被使用的，需要<strong>挂载（类似windows下的分配盘符）</strong>。</li>
+<li><strong><code>/etc</code> (系统配置)：</strong> 存放系统的配置文件，包括网络配置、用户账户配置、软件配置等。</li>
+<li><strong><code>/home</code> (用户主目录)：</strong> 存放用户的主目录，每个用户都有一个独立的子目录，用于存放个人文件、文档和配置文件。</li>
+<li><strong><code>/root</code> (root用户主目录)：</strong> 超级用户（root用户）的主目录。</li>
+<li><strong><code>/run</code> (运行时数据)：</strong> 用于存放系统启动后运行时需要的临时文件，即进程的运行数据存放目录。</li>
+<li><strong><code>/sbin</code> (系统命令)：</strong> 存放系统管理员使用的系统管理命令，这些命令通常需要root权限，如<code>fdisk</code>、<code>iptables</code>等。</li>
+<li><strong><code>/tmp</code> (临时文件)：</strong> 用于存放临时文件，系统重新启动后会清空该目录。</li>
+<li><strong><code>/usr</code>(用户目录)：</strong>包含用户程序和文件，通常将大部分软件安装到这个目录下。<ul>
+<li><strong><code>/usr/bin</code>：</strong> 存放系统中的大部分用户级别的可执行命令。这些命令通常是系统的标准工具和应用程序，但不是必须在系统启动阶段使用的基本命令。</li>
+<li><strong><code>/usr/local</code>：</strong>程序安装目录。</li>
+<li><strong><code>/usr/sbin</code>：</strong>存放系统管理员（root用户）使用的系统管理命令。与 <code>/sbin</code> 目录类似，但 <code>/usr/sbin</code> 中的命令通常是不需要在系统启动阶段使用的，因此可以被认为是更为次要的系统命令。</li>
+<li><strong><code>/usr/tmp</code>：</strong>被抛弃临时文件目录。</li>
+<li><strong><code>/usr/lib</code>，<code>/usr/lib32</code>，<code>/usr/lib64</code>，<code>/usr/libx32</code>：</strong> 存放系统所需的共享库文件，这些库文件被可执行文件在运行时动态链接以实现代码重用。</li>
+<li><strong><code>/usr/src</code>  ：</strong>是用于存放内核源代码（Linux 内核）的目录。这个目录通常包含了系统所使用的内核版本的源代码，以及相关的文件和文档。</li>
+</ul>
+</li>
+<li><strong><code>/var</code> (变量数据)：</strong> 包含变量数据，如日志文件、数据库文件等会变化的数据。<ul>
+<li><strong><code>/var/tmp</code>：</strong>临时文件目录；存放周期更长</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>其他命令：</li>
+</ol>
+<ul>
+<li><p><strong><code>/media</code> 和 <code>/mnt</code> (挂载点)：</strong> 通常用于挂载外部设备，如U盘、光盘等，这样的设备会在这些目录下创建子目录以便访问。</p>
+</li>
+<li><p><strong><code>/opt</code> (可选软件)：</strong> 用于存放由第三方提供的附加软件，通常将这些软件安装在这个目录下。</p>
+</li>
+<li><p><strong><code>/proc</code> (进程信息)：</strong> 虚拟文件系统，提供有关正在运行的进程和系统状态的信息，以文件的形式呈现。</p>
+</li>
+<li><p><strong><code>/srv</code> (服务数据)：</strong> 用于存放系统提供的服务的数据文件，如Web服务器的文档。</p>
+</li>
+<li><p><strong><code>/sys</code> (内核文件)：</strong> 用于访问内核的运行时信息，以及与内核模块的交互。</p>
+</li>
+<li><p><strong><code>/snap</code>(包管理器)：</strong>是用于存放使用 Snap 包管理器安装的应用程序和软件包的目录。</p>
+</li>
+</ul>
+<h2 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h2><p>在 Linux 操作系统中，文件路径是用来描述文件在文件系统中位置的字符串。Linux 的文件路径是一个层次化的结构，从根目录开始，通过目录名和斜杠（&#x2F;）来指示文件的位置。</p>
+<ol>
+<li><strong>绝对路径：</strong> 绝对路径从根目录开始，指示完整的路径。例如：<ul>
+<li><code>/usr/bin</code>：指向根目录下的 <code>/usr/bin</code> 目录。</li>
+<li><code>/home/user/documents/file.txt</code>：指向根目录下的 <code>/home/user/documents</code> 目录中的 <code>file.txt</code> 文件。</li>
+</ul>
+</li>
+<li><strong>相对路径：</strong> 相对路径是<strong>相对于当前工作目录的路径。</strong>例如，如果当前工作目录是 <code>/home/user</code>，那么：<ul>
+<li><code>documents/file.txt</code>：指向 <code>/home/user/documents</code> 目录中的 <code>file.txt</code> 文件。</li>
+</ul>
+</li>
+<li><strong>特殊符号：</strong> 在路径中，一些特殊符号有特殊的含义：<ul>
+<li><code>.</code>：代表当前目录。例如：<code>./file.txt</code> 表示当前目录中的 <code>file.txt</code> 文件。</li>
+<li><code>..</code>：代表上一级目录。例如：<code>../folder/file.txt</code> 表示上一级目录中的 <code>folder</code> 目录下的 <code>file.txt</code> 文件。</li>
+<li><code>~</code>：代表当前用户的主目录。例如：<code>~/documents</code> 表示当前用户的主目录下的 <code>documents</code> 目录。</li>
+</ul>
+</li>
+<li><strong>环境变量：</strong> 有些路径中可能包含环境变量，例如 <code>$HOME</code> 代表当前用户的主目录。例如：<code>$HOME/documents</code> 表示主目录下的 <code>documents</code> 目录。</li>
+</ol>
+<h2 id="文件命名规则"><a href="#文件命名规则" class="headerlink" title="文件命名规则"></a>文件命名规则</h2><p>常见的 Linux 文件命名规则：</p>
+<ol>
+<li><strong>大小写敏感：</strong> Linux 文件系统是大小写敏感的。例如，<code>file.txt</code> 和 <code>File.txt</code> 被认为是两个不同的文件。</li>
+<li><strong>字母、数字和下划线：</strong> 文件名可以包含字母（大小写）、数字和下划线字符。文件名不能以数字开头。</li>
+<li><strong>连字符和点：</strong> 文件名中可以包含连字符（减号，短划线）和点（句点），但不能以它们开头或结尾。连字符通常用于分隔单词，而点通常用于文件名的扩展名。</li>
+<li><strong>扩展名：</strong> Linux 中的文件命名并不像 Windows 那样依赖于扩展名来识别文件类型。文件名可以没有扩展名，也可以使用任何合法的字符作为扩展名。</li>
+<li><strong>保留字符：</strong> Linux 文件名中不能包含特殊的保留字符，如斜杠（&#x2F;）、问号（?）等。</li>
+<li><strong>长度限制：</strong> 文件名的最大长度为 255 个字符。</li>
+</ol>
+<p>注意：</p>
+<ul>
+<li>以<code>.</code>开头的文件名是隐藏文件，使用<code>ls</code>命令时要添加命令选项<code>-a</code>方可查看。</li>
+</ul>
+<ul>
+<li>虽说Linux可以使用特殊字符作为文件名，但一般不推荐使用特殊字符。</li>
+</ul>
+<p>例如：用 （空格）当作文件名；在Ubuntu下系统会以引号显示该文件，但有的Linux版本可能会直接不显示该文件。文件名的含义尽量给文件命名以反映其内容、用途或功能，以便其他人能够轻松理解和识别文件。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">touch</span> <span class="string">&#x27; &#x27;</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line"><span class="string">&#x27; &#x27;</span>   book   gitclone_file   <span class="built_in">test</span>   </span><br></pre></td></tr></table></figure>
+
+<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><blockquote>
+<p>Linux是一种类Unix操作系统，近些年来Linux的桌面版本层出不穷，一定程度上极大简化了Linux的个人使用。面对server等版本，掌握shell终端命令的使用可以更加方便快速的操作Linux。</p>
+</blockquote>
+<h2 id="目录操作命令"><a href="#目录操作命令" class="headerlink" title="目录操作命令"></a>目录操作命令</h2><h3 id="查看路径"><a href="#查看路径" class="headerlink" title="查看路径"></a>查看路径</h3><ul>
+<li><code>pwd</code>	查看当前路径，Print Working Directory的缩写</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">pwd</span></span><br><span class="line">/home/exiler</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h3><ul>
+<li><code>mkdir</code>	一次建立一个或几个目录</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> document picture  <span class="comment">#新建目录</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line">document  picture</span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> ~/picture/temp  <span class="comment">#创建子目录</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> ~/picture/</span><br><span class="line">temp</span><br></pre></td></tr></table></figure>
+
+<p>创建子目录默认为为已存在的目录创建子目录，若想要完整地创建一个不存在目录结构，请使用<code>mkdir -p</code>	指令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ mkdir ~/tempx/job  #error</span><br><span class="line">mkdir: cannot create directory ‘/home/exiler/tempx/job’: No such file or directory  </span><br><span class="line">exiler@localhost:~$ mkdir -p ~/tempx/job   #true</span><br><span class="line">exiler@localhost:~$ ls</span><br><span class="line">document  picture  tempx</span><br><span class="line">exiler@localhost:~$ ls ~/tempx/</span><br><span class="line">job</span><br></pre></td></tr></table></figure>
+
+<h3 id="移动目录"><a href="#移动目录" class="headerlink" title="移动目录"></a>移动目录</h3><ul>
+<li><code>mv</code>	move的缩写，可以用来移动文件，也可以用于重命名文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">mv</span> <span class="built_in">source</span> destination</span></span><br><span class="line">exiler@localhost:~$ tree</span><br><span class="line">.</span><br><span class="line">├── document</span><br><span class="line">├── picture</span><br><span class="line">│   └── temp</span><br><span class="line">└── tempx</span><br><span class="line">    └── job</span><br><span class="line">    </span><br><span class="line">5 directories, 0 files</span><br><span class="line">exiler@localhost:~$ mv ~/picture/temp document/ #移动文件</span><br><span class="line">exiler@localhost:~$ tree</span><br><span class="line">.</span><br><span class="line">├── document</span><br><span class="line">│   └── temp</span><br><span class="line">├── picture</span><br><span class="line">└── tempx</span><br><span class="line">    └── job</span><br></pre></td></tr></table></figure>
+
+<p>若source文件与的destination目录下的某个文件存在文件名相同的情况，则mv命令会不发出警告地把destination目录下的同名文件替换，导致某些重要文件丢失。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> ~/test &amp;&amp; <span class="built_in">cd</span> <span class="built_in">test</span></span><br><span class="line">exiler@localhost:~/test$ <span class="built_in">echo</span> <span class="string">&quot;hello&quot;</span> &gt; hello</span><br><span class="line">exiler@localhost:~/test$ <span class="built_in">cat</span> hello</span><br><span class="line">hello</span><br><span class="line">exiler@localhost:~/test$ <span class="built_in">cd</span> .. &amp;&amp; <span class="built_in">touch</span> hello</span><br><span class="line">exiler@localhost:~$ <span class="built_in">mv</span> hello <span class="built_in">test</span>/ &amp;&amp; <span class="built_in">cat</span> hello</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>为了杜绝此类情况，可以使用<code>mv -i</code>选项：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line">document  hello  picture  tempx  <span class="built_in">test</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">mv</span> -i hello <span class="built_in">test</span>/</span><br><span class="line"><span class="built_in">mv</span>: overwrite <span class="string">&#x27;test/hello&#x27;</span>? <span class="comment">#系统发出提示，回答n表示跳过，回答y表示覆盖</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以使用<code>mv -b</code>选项给source文件名添加字符<code>~</code>避免被覆盖：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">touch</span> <span class="string">&quot;hello&quot;</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">mv</span> -b hello <span class="built_in">test</span>/</span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line">document  picture  tempx  <span class="built_in">test</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> <span class="built_in">test</span>/</span><br><span class="line">hello  hello~</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>重命名</li>
+</ul>
+<p>Linux中并没有专门用来重命名的命令，因为mv命令可以轻松实现文件重命名</p>
+<p>例如，如果要将文件 “oldname.txt” 重命名为 “newname.txt”，你可以使用以下命令：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mv</span> oldname.txt newname.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除目录"><a href="#删除目录" class="headerlink" title="删除目录"></a>删除目录</h3><ul>
+<li><code>rmdir</code>用来<strong>删除空目录</strong>，后跟要删除的空目录名即可。</li>
+<li><code>rm</code>用来删除文件</li>
+</ul>
+<p>rm命令的使用方式较多，可以一次删除一个或几个文件，也可以用来删除目录。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> <span class="built_in">test</span>/*.php  <span class="comment">#删除test目录下的所有php文件</span></span><br></pre></td></tr></table></figure>
+
+<p>为了安全起见，使用<code>rm -i</code>命令系统会发出请求等待用户是否确定删除文件</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">rm</span> -i hello</span><br><span class="line"><span class="built_in">rm</span>: remove regular empty file <span class="string">&#x27;hello&#x27;</span>? </span><br><span class="line"><span class="comment">#答y表示确认删除，答n表示跳过。对于只读文件,不加上-i选项，rm命令也会提示</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>rm -f</code>可以避免这样的交互操作，<code>rm</code>命令会自动对这些文件回答y，一般<code>-f</code>选项都是配合<code>-r</code>选项使用删除整个目录。</p>
+<ul>
+<li>使用<code>rm -r</code>递归删除整个目录：</li>
+</ul>
+<p><code>rm -r</code>命令会递归删除一个目录下的所有文件和子目录下的文件，最后再删除选中的目录。使用该命令时要格外小心，特别是以root身份执行该命令。</p>
+<h3 id="复制目录"><a href="#复制目录" class="headerlink" title="复制目录"></a>复制目录</h3><ul>
+<li><code>cp</code></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> <span class="built_in">source</span> destination</span><br></pre></td></tr></table></figure>
+
+<p>和<code>mv</code>命令一样，<code>cp</code>默认情况下会也会覆盖目标目录中的同名文件。</p>
+<ol>
+<li>可以使用-i选项对这种情况进行提示.</li>
+<li>可以使用-b选项对同名文件改名后再复制。这两个选项的使用和mv命令中一样。</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> test.php <span class="built_in">test</span>/  </span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">cp</span> -i hello.php picture/</span><br><span class="line"><span class="built_in">cp</span>: overwrite <span class="string">&#x27;picture/hello.php&#x27;</span>?</span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">cp</span> -b hello.php picture/</span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> picture/</span><br><span class="line">hello.php  hello.php~</span><br></pre></td></tr></table></figure>
+
+<h3 id="跳转目录"><a href="#跳转目录" class="headerlink" title="跳转目录"></a>跳转目录</h3><ul>
+<li><code>cd</code>命令可以用来切换工作目录，Change Directory的缩写.</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../ <span class="comment">#返回上级目录</span></span><br><span class="line"><span class="built_in">cd</span> ../.. <span class="comment">#返回上级目录的上级目录，以此类推</span></span><br><span class="line"><span class="built_in">cd</span>  <span class="comment">#返回用户目录</span></span><br><span class="line"><span class="built_in">cd</span> ~ <span class="comment">#返回用户目录</span></span><br><span class="line"><span class="built_in">cd</span> /usr/bin <span class="comment">#进入usr目录下的bin目录</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<code>cd</code>命令时要注意区分相对路径和绝对路径的使用。</p>
+<h2 id="文件操作命令"><a href="#文件操作命令" class="headerlink" title="文件操作命令"></a>文件操作命令</h2>]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux基础</title>
+    <url>/2023/09/06/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h1 id="虚拟机安装"><a href="#虚拟机安装" class="headerlink" title="虚拟机安装"></a>虚拟机安装</h1><p>本文演示虚拟机中安装<code>deepin</code>操作系统，由于windows是闭源的，故不再演示，有兴趣的可以自行在B站找教程。Ubuntu与此类似，可在B站找最新的教程观看。</p>
+<h2 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h2><p>下载地址均选择清华大学开源镜像站镜像站</p>
+<ul>
+<li><code>visualbox</code>：<a href="https://mirrors.tuna.tsinghua.edu.cn/virtualbox/virtualbox-Win-latest.exe">点击下载</a></li>
+</ul>
+<p>需要注意的是，有的电脑没有<code>msvc</code>环境，会出现安装报错的情况，这里需要安装<code>visual C++</code>环境：<a href="https://aka.ms/vs/17/release/vc_redist.x64.exe">点击下载</a></p>
+<ul>
+<li><code>deepin</code>：<a href="https://mirrors.tuna.tsinghua.edu.cn/deepin-cd/20.6/deepin-desktop-community-20.6-amd64.iso">点击下载</a> ，这里下载的是ISO镜像文件。</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="安装deepin"><a href="#安装deepin" class="headerlink" title="安装deepin"></a>安装<code>deepin</code></h2><ol>
+<li><p>点击新建<img src="/./hexo-blog/source/images/image-20230906185336662.png" alt="image-20230906185336662"></p>
+</li>
+<li><p>选择一下：</p>
+</li>
+</ol>
+<p><img src="/./hexo-blog/source/images/image-20230906185708422.png" alt="image-20230906185708422"></p>
+<ul>
+<li>名称设为英文</li>
+<li>文件夹是指将虚拟机放在那个文件里，推荐装在D盘，节省C盘空间</li>
+<li>虚拟光盘选择下载好的<code>deepin</code>的ISO文件</li>
+</ul>
+<ol start="3">
+<li>硬件设置：</li>
+</ol>
+<p><img src="/./hexo-blog/source/images/image-20230906190132464.png" alt="image-20230906190132464"></p>
+<ul>
+<li>如果仅是普通操作学习命令，内存分配2GB即可，如果有长期使用的想法可以多分配，内存较高的也可以多分配点</li>
+<li>处理器这里要看主机的CPU核数，一般选择4核即可</li>
+</ul>
+<ol start="5">
+<li>磁盘分配：</li>
+</ol>
+<p><img src="/./hexo-blog/source/images/image-20230906190208144.png" alt="image-20230906190208144"></p>
+<p>这里作为演示我分配了50GB，当然有条件的话多多益善，体验感更高。</p>
+<p>然后：</p>
+<p><img src="/./hexo-blog/source/images/image-20230906190306348.png" alt="image-20230906190306348"></p>
+<p>点击完成。</p>
+<h2 id="启动！"><a href="#启动！" class="headerlink" title="启动！"></a>启动！</h2><p><img src="/./hexo-blog/source/images/image-20230906190352568.png" alt="image-20230906190352568"></p>
+<p>点击启动进入安装引导页面：</p>
+<p><img src="/./hexo-blog/source/images/image-20230906190419540.png" alt="image-20230906190419540"></p>
+<p>等待…….</p>
+<p><img src="/./hexo-blog/source/images/image-20230906190630961.png" alt="image-20230906190630961"></p>
+<p><strong>选择第一个</strong>，然后进入安装界面，等待……..</p>
+<h3 id="安装界面步骤："><a href="#安装界面步骤：" class="headerlink" title="安装界面步骤："></a>安装界面步骤：</h3><h2 id="1-选择语言"><a href="#1-选择语言" class="headerlink" title="1.选择语言"></a>1.选择语言</h2><ol>
+<li>选择简体中文并勾选协议：</li>
+</ol>
+<p><img src="/./hexo-blog/source/images/image-20230906190813137.png" alt="image-20230906190813137"></p>
+<p>点击下一步，再点击下一步</p>
+<h2 id="2-硬盘分区："><a href="#2-硬盘分区：" class="headerlink" title="2.硬盘分区："></a>2.硬盘分区：</h2><p><strong>选择手动安装</strong>：</p>
+<ul>
+<li>点击右边的一个圆圈</li>
+</ul>
+<p><img src="/./hexo-blog/source/images/image-20230906191008427.png" alt="image-20230906191008427"></p>
+<h3 id="2-1-设置根目录分区"><a href="#2-1-设置根目录分区" class="headerlink" title="2.1 设置根目录分区"></a>2.1 设置根目录分区</h3><ul>
+<li>挂载点先选择根目录<code>/</code>，大小分配最小为20GB，多多益善，根目录分配的空间主要用来安装系统文件：</li>
+</ul>
+<p><img src="/./hexo-blog/source/images/image-20230906191256626.png" alt="image-20230906191256626"></p>
+<p>点击新建</p>
+<h3 id="2-2-设置home目录分区"><a href="#2-2-设置home目录分区" class="headerlink" title="2.2 设置home目录分区"></a>2.2 设置home目录分区</h3><ul>
+<li>重述上述步骤，为home目录建立分区：</li>
+</ul>
+<p><img src="/./hexo-blog/source/images/image-20230906191439055.png" alt="image-20230906191439055"></p>
+<h3 id="2-3-设置swap分区"><a href="#2-3-设置swap分区" class="headerlink" title="2.3 设置swap分区"></a>2.3 设置swap分区</h3><ul>
+<li>再次点击可用空间右边的圆圈建立swap分区：<ul>
+<li>文件系统选择交换分区</li>
+<li>空间的分配按照主机内存，若主机内存为8GB，交换分区的大小可设为8GB，若主机内存为16GB，交换分区大小可以设置为8GB或16GB，具体交换分区的作用可自行百度。</li>
+</ul>
+</li>
+</ul>
+<p><strong>这里我是先分配的home目录的空间大小，后分配的swap分区的大小，便将剩余的空间全部分配给了swap分区，自行操作的话建议先设置swap分区大小，在设置根目录和home目录的空间大小。</strong></p>
+<p><img src="/./hexo-blog/source/images/image-20230906191810534.png" alt="image-20230906191810534"></p>
+<p>至此硬盘的分区已经完成，单击下一步。</p>
+<p><img src="/./hexo-blog/source/images/image-20230906192107718.png" alt="image-20230906192107718"></p>
+<h2 id="3-安装"><a href="#3-安装" class="headerlink" title="3.安装"></a>3.安装</h2><p><img src="/./hexo-blog/source/images/image-20230906192554993.png" alt="image-20230906192554993"></p>
+<p>等待…….</p>
+<p>安装完成之后会出现这种界面：</p>
+<p><img src="/./hexo-blog/source/images/image-20230906192632774.png" alt="image-20230906192632774"></p>
+<p>系统提示拔出安装介质，这里我们选择的是ISO文件，且visualbox正在使用ISO文件，故此时可将虚拟机强制退出，并将deepin的ISO文件放入回收站。否则会循环引导安装。</p>
+<h2 id="4-配置用户信息"><a href="#4-配置用户信息" class="headerlink" title="4. 配置用户信息"></a>4. 配置用户信息</h2><p>重新打开虚拟机：</p>
+<p><img src="/./hexo-blog/source/images/image-20230906193254731.png" alt="image-20230906193254731"></p>
+<p>默认第一个选项会立即加载。</p>
+<h3 id="4-1-选择语言"><a href="#4-1-选择语言" class="headerlink" title="4.1 选择语言"></a>4.1 选择语言</h3><ul>
+<li>选择简体中文并勾选协议</li>
+</ul>
+<p><img src="/./hexo-blog/source/images/image-20230906193333397.png" alt="image-20230906193333397"></p>
+<h3 id="4-2-选择时区"><a href="#4-2-选择时区" class="headerlink" title="4.2 选择时区"></a>4.2 选择时区</h3><ul>
+<li>默认北京即可</li>
+</ul>
+<p><img src="/./hexo-blog/source/images/image-20230906193352753.png" alt="image-20230906193352753"></p>
+<h3 id="4-3-创建账户"><a href="#4-3-创建账户" class="headerlink" title="4.3 创建账户"></a>4.3 创建账户</h3><ul>
+<li>用户名设为英文</li>
+<li>计算机名设为英文(默认用户名+PC，可自行修改)</li>
+<li>密码设置</li>
+<li>重新输入密码</li>
+</ul>
+<p><img src="/./hexo-blog/source/images/image-20230906193424078.png" alt="image-20230906193424078"></p>
+<h3 id="4-4-等待优化系统配置"><a href="#4-4-等待优化系统配置" class="headerlink" title="4.4 等待优化系统配置"></a>4.4 等待优化系统配置</h3><ul>
+<li>等待就好了</li>
+</ul>
+<p><img src="/./hexo-blog/source/images/image-20230906193439814.png" alt="image-20230906193439814"></p>
+<p>等待优化完成之后便可见到：</p>
+<p><img src="/./hexo-blog/source/images/image-20230906193811631.png" alt="image-20230906193811631"></p>
+<p>输入密码后选择普通模式：</p>
+<p><img src="/./hexo-blog/source/images/image-20230906193913970.png" alt="image-20230906193913970"></p>
+<p>然后就大功告成啦！</p>
+<h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><ul>
+<li>虚拟机的试图可以在<code>visualbox</code>中自行修改</li>
+<li>进入虚拟机后可以在系统中修改<code>deepin</code>操作系统的分辨率及刷新率</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
