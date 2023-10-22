@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"lgq007.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="虚拟机安装本文演示虚拟机中安装deepin操作系统，由于windows是闭源的，故不再演示，有兴趣的可以自行在B站找教程。Ubuntu与此类似，可在B站找最新的教程观看。 准备环境下载地址均选择清华大学开源镜像站镜像站  visualbox：点击下载  需要注意的是，有的电脑没有msvc环境，会出现安装报错的情况，这里需要安装visual C++环境：点击下载  deepin：点击下载 ，这里下载">
+  <meta name="description" content="虚拟机安装 本文演示虚拟机中安装deepin操作系统，由于windows是闭源的，故不再演示，有兴趣的可以自行在B站找教程。Ubuntu与此类似，可在B站找最新的教程观看。 准备环境 下载地址均选择清华大学开源镜像站镜像站  visualbox：点击下载  需要注意的是，有的电脑没有msvc环境，会出现安装报错的情况，这里需要安装visual C++环境：点击下载  deepin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="deepin虚拟机安装">
 <meta property="og:url" content="http://lgq007.github.io/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="exiler&#39;s Blog">
-<meta property="og:description" content="虚拟机安装本文演示虚拟机中安装deepin操作系统，由于windows是闭源的，故不再演示，有兴趣的可以自行在B站找教程。Ubuntu与此类似，可在B站找最新的教程观看。 准备环境下载地址均选择清华大学开源镜像站镜像站  visualbox：点击下载  需要注意的是，有的电脑没有msvc环境，会出现安装报错的情况，这里需要安装visual C++环境：点击下载  deepin：点击下载 ，这里下载">
+<meta property="og:description" content="虚拟机安装 本文演示虚拟机中安装deepin操作系统，由于windows是闭源的，故不再演示，有兴趣的可以自行在B站找教程。Ubuntu与此类似，可在B站找最新的教程观看。 准备环境 下载地址均选择清华大学开源镜像站镜像站  visualbox：点击下载  需要注意的是，有的电脑没有msvc环境，会出现安装报错的情况，这里需要安装visual C++环境：点击下载  deepin">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://lgq007.github.io/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906185336662.png">
 <meta property="og:image" content="http://lgq007.github.io/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906185708422.png">
@@ -292,114 +292,195 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="虚拟机安装"><a href="#虚拟机安装" class="headerlink" title="虚拟机安装"></a>虚拟机安装</h1><p>本文演示虚拟机中安装<code>deepin</code>操作系统，由于windows是闭源的，故不再演示，有兴趣的可以自行在B站找教程。Ubuntu与此类似，可在B站找最新的教程观看。</p>
-<h2 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h2><p>下载地址均选择清华大学开源镜像站镜像站</p>
+        <h1 id="虚拟机安装">虚拟机安装</h1>
+<p>本文演示虚拟机中安装<code>deepin</code>操作系统，由于windows是闭源的，故不再演示，有兴趣的可以自行在B站找教程。Ubuntu与此类似，可在B站找最新的教程观看。</p>
+<h2 id="准备环境">准备环境</h2>
+<p>下载地址均选择清华大学开源镜像站镜像站</p>
 <ul>
 <li><code>visualbox</code>：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/virtualbox/virtualbox-Win-latest.exe">点击下载</a></li>
 </ul>
 <p>需要注意的是，有的电脑没有<code>msvc</code>环境，会出现安装报错的情况，这里需要安装<code>visual C++</code>环境：<a target="_blank" rel="noopener" href="https://aka.ms/vs/17/release/vc_redist.x64.exe">点击下载</a></p>
 <ul>
-<li><code>deepin</code>：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/deepin-cd/20.6/deepin-desktop-community-20.6-amd64.iso">点击下载</a> ，这里下载的是ISO镜像文件。</li>
+<li><code>deepin</code>：<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/deepin-cd/20.6/deepin-desktop-community-20.6-amd64.iso">点击下载</a>
+，这里下载的是ISO镜像文件。</li>
 </ul>
 <span id="more"></span>
-
-<h2 id="安装deepin"><a href="#安装deepin" class="headerlink" title="安装deepin"></a>安装<code>deepin</code></h2><ol>
-<li><p>点击新建<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906185336662.png" alt="image-20230906185336662"></p>
-</li>
-<li><p>选择一下：</p>
-</li>
+<h2 id="安装deepin">安装<code>deepin</code></h2>
+<ol type="1">
+<li><p>点击新建<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906185336662.png" alt="image-20230906185336662"></p></li>
+<li><p>选择一下：</p></li>
 </ol>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906185708422.png" alt="image-20230906185708422"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906185708422.png" alt="image-20230906185708422">
+<figcaption aria-hidden="true">image-20230906185708422</figcaption>
+</figure>
 <ul>
 <li>名称设为英文</li>
 <li>文件夹是指将虚拟机放在那个文件里，推荐装在D盘，节省C盘空间</li>
 <li>虚拟光盘选择下载好的<code>deepin</code>的ISO文件</li>
 </ul>
-<ol start="3">
+<ol start="3" type="1">
 <li>硬件设置：</li>
 </ol>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190132464.png" alt="image-20230906190132464"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190132464.png" alt="image-20230906190132464">
+<figcaption aria-hidden="true">image-20230906190132464</figcaption>
+</figure>
 <ul>
 <li>如果仅是普通操作学习命令，内存分配2GB即可，如果有长期使用的想法可以多分配，内存较高的也可以多分配点</li>
 <li>处理器这里要看主机的CPU核数，一般选择4核即可</li>
 </ul>
-<ol start="5">
+<ol start="5" type="1">
 <li>磁盘分配：</li>
 </ol>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190208144.png" alt="image-20230906190208144"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190208144.png" alt="image-20230906190208144">
+<figcaption aria-hidden="true">image-20230906190208144</figcaption>
+</figure>
 <p>这里作为演示我分配了50GB，当然有条件的话多多益善，体验感更高。</p>
 <p>然后：</p>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190306348.png" alt="image-20230906190306348"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190306348.png" alt="image-20230906190306348">
+<figcaption aria-hidden="true">image-20230906190306348</figcaption>
+</figure>
 <p>点击完成。</p>
-<h2 id="启动！"><a href="#启动！" class="headerlink" title="启动！"></a>启动！</h2><p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190352568.png" alt="image-20230906190352568"></p>
+<h2 id="启动">启动！</h2>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190352568.png" alt="image-20230906190352568">
+<figcaption aria-hidden="true">image-20230906190352568</figcaption>
+</figure>
 <p>点击启动进入安装引导页面：</p>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190419540.png" alt="image-20230906190419540"></p>
-<p>等待…….</p>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190630961.png" alt="image-20230906190630961"></p>
-<p><strong>选择第一个</strong>，然后进入安装界面，等待……..</p>
-<h3 id="安装界面步骤："><a href="#安装界面步骤：" class="headerlink" title="安装界面步骤："></a>安装界面步骤：</h3><h2 id="1-选择语言"><a href="#1-选择语言" class="headerlink" title="1.选择语言"></a>1.选择语言</h2><ol>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190419540.png" alt="image-20230906190419540">
+<figcaption aria-hidden="true">image-20230906190419540</figcaption>
+</figure>
+<p>等待.......</p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190630961.png" alt="image-20230906190630961">
+<figcaption aria-hidden="true">image-20230906190630961</figcaption>
+</figure>
+<p><strong>选择第一个</strong>，然后进入安装界面，等待........</p>
+<h3 id="安装界面步骤">安装界面步骤：</h3>
+<h2 id="选择语言">1.选择语言</h2>
+<ol type="1">
 <li>选择简体中文并勾选协议：</li>
 </ol>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190813137.png" alt="image-20230906190813137"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906190813137.png" alt="image-20230906190813137">
+<figcaption aria-hidden="true">image-20230906190813137</figcaption>
+</figure>
 <p>点击下一步，再点击下一步</p>
-<h2 id="2-硬盘分区："><a href="#2-硬盘分区：" class="headerlink" title="2.硬盘分区："></a>2.硬盘分区：</h2><p><strong>选择手动安装</strong>：</p>
+<h2 id="硬盘分区">2.硬盘分区：</h2>
+<p><strong>选择手动安装</strong>：</p>
 <ul>
 <li>点击右边的一个圆圈</li>
 </ul>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906191008427.png" alt="image-20230906191008427"></p>
-<h3 id="2-1-设置根目录分区"><a href="#2-1-设置根目录分区" class="headerlink" title="2.1 设置根目录分区"></a>2.1 设置根目录分区</h3><ul>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906191008427.png" alt="image-20230906191008427">
+<figcaption aria-hidden="true">image-20230906191008427</figcaption>
+</figure>
+<h3 id="设置根目录分区">2.1 设置根目录分区</h3>
+<ul>
 <li>挂载点先选择根目录<code>/</code>，大小分配最小为20GB，多多益善，根目录分配的空间主要用来安装系统文件：</li>
 </ul>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906191256626.png" alt="image-20230906191256626"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906191256626.png" alt="image-20230906191256626">
+<figcaption aria-hidden="true">image-20230906191256626</figcaption>
+</figure>
 <p>点击新建</p>
-<h3 id="2-2-设置home目录分区"><a href="#2-2-设置home目录分区" class="headerlink" title="2.2 设置home目录分区"></a>2.2 设置home目录分区</h3><ul>
+<h3 id="设置home目录分区">2.2 设置home目录分区</h3>
+<ul>
 <li>重述上述步骤，为home目录建立分区：</li>
 </ul>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906191439055.png" alt="image-20230906191439055"></p>
-<h3 id="2-3-设置swap分区"><a href="#2-3-设置swap分区" class="headerlink" title="2.3 设置swap分区"></a>2.3 设置swap分区</h3><ul>
-<li>再次点击可用空间右边的圆圈建立swap分区：<ul>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906191439055.png" alt="image-20230906191439055">
+<figcaption aria-hidden="true">image-20230906191439055</figcaption>
+</figure>
+<h3 id="设置swap分区">2.3 设置swap分区</h3>
+<ul>
+<li>再次点击可用空间右边的圆圈建立swap分区：
+<ul>
 <li>文件系统选择交换分区</li>
 <li>空间的分配按照主机内存，若主机内存为8GB，交换分区的大小可设为8GB，若主机内存为16GB，交换分区大小可以设置为8GB或16GB，具体交换分区的作用可自行百度。</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><strong>这里我是先分配的home目录的空间大小，后分配的swap分区的大小，便将剩余的空间全部分配给了swap分区，自行操作的话建议先设置swap分区大小，在设置根目录和home目录的空间大小。</strong></p>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906191810534.png" alt="image-20230906191810534"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906191810534.png" alt="image-20230906191810534">
+<figcaption aria-hidden="true">image-20230906191810534</figcaption>
+</figure>
 <p>至此硬盘的分区已经完成，单击下一步。</p>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906192107718.png" alt="image-20230906192107718"></p>
-<h2 id="3-安装"><a href="#3-安装" class="headerlink" title="3.安装"></a>3.安装</h2><p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906192554993.png" alt="image-20230906192554993"></p>
-<p>等待…….</p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906192107718.png" alt="image-20230906192107718">
+<figcaption aria-hidden="true">image-20230906192107718</figcaption>
+</figure>
+<h2 id="安装">3.安装</h2>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906192554993.png" alt="image-20230906192554993">
+<figcaption aria-hidden="true">image-20230906192554993</figcaption>
+</figure>
+<p>等待.......</p>
 <p>安装完成之后会出现这种界面：</p>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906192632774.png" alt="image-20230906192632774"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906192632774.png" alt="image-20230906192632774">
+<figcaption aria-hidden="true">image-20230906192632774</figcaption>
+</figure>
 <p>系统提示拔出安装介质，这里我们选择的是ISO文件，且visualbox正在使用ISO文件，故此时可将虚拟机强制退出，并将deepin的ISO文件放入回收站。否则会循环引导安装。</p>
-<h2 id="4-配置用户信息"><a href="#4-配置用户信息" class="headerlink" title="4. 配置用户信息"></a>4. 配置用户信息</h2><p>重新打开虚拟机：</p>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193254731.png" alt="image-20230906193254731"></p>
+<h2 id="配置用户信息">4. 配置用户信息</h2>
+<p>重新打开虚拟机：</p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193254731.png" alt="image-20230906193254731">
+<figcaption aria-hidden="true">image-20230906193254731</figcaption>
+</figure>
 <p>默认第一个选项会立即加载。</p>
-<h3 id="4-1-选择语言"><a href="#4-1-选择语言" class="headerlink" title="4.1 选择语言"></a>4.1 选择语言</h3><ul>
+<h3 id="选择语言-1">4.1 选择语言</h3>
+<ul>
 <li>选择简体中文并勾选协议</li>
 </ul>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193333397.png" alt="image-20230906193333397"></p>
-<h3 id="4-2-选择时区"><a href="#4-2-选择时区" class="headerlink" title="4.2 选择时区"></a>4.2 选择时区</h3><ul>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193333397.png" alt="image-20230906193333397">
+<figcaption aria-hidden="true">image-20230906193333397</figcaption>
+</figure>
+<h3 id="选择时区">4.2 选择时区</h3>
+<ul>
 <li>默认北京即可</li>
 </ul>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193352753.png" alt="image-20230906193352753"></p>
-<h3 id="4-3-创建账户"><a href="#4-3-创建账户" class="headerlink" title="4.3 创建账户"></a>4.3 创建账户</h3><ul>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193352753.png" alt="image-20230906193352753">
+<figcaption aria-hidden="true">image-20230906193352753</figcaption>
+</figure>
+<h3 id="创建账户">4.3 创建账户</h3>
+<ul>
 <li>用户名设为英文</li>
 <li>计算机名设为英文(默认用户名+PC，可自行修改)</li>
 <li>密码设置</li>
 <li>重新输入密码</li>
 </ul>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193424078.png" alt="image-20230906193424078"></p>
-<h3 id="4-4-等待优化系统配置"><a href="#4-4-等待优化系统配置" class="headerlink" title="4.4 等待优化系统配置"></a>4.4 等待优化系统配置</h3><ul>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193424078.png" alt="image-20230906193424078">
+<figcaption aria-hidden="true">image-20230906193424078</figcaption>
+</figure>
+<h3 id="等待优化系统配置">4.4 等待优化系统配置</h3>
+<ul>
 <li>等待就好了</li>
 </ul>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193439814.png" alt="image-20230906193439814"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193439814.png" alt="image-20230906193439814">
+<figcaption aria-hidden="true">image-20230906193439814</figcaption>
+</figure>
 <p>等待优化完成之后便可见到：</p>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193811631.png" alt="image-20230906193811631"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193811631.png" alt="image-20230906193811631">
+<figcaption aria-hidden="true">image-20230906193811631</figcaption>
+</figure>
 <p>输入密码后选择普通模式：</p>
-<p><img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193913970.png" alt="image-20230906193913970"></p>
+<figure>
+<img src="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/image-20230906193913970.png" alt="image-20230906193913970">
+<figcaption aria-hidden="true">image-20230906193913970</figcaption>
+</figure>
 <p>然后就大功告成啦！</p>
-<h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><ul>
+<h2 id="tips">tips</h2>
+<ul>
 <li>虚拟机的试图可以在<code>visualbox</code>中自行修改</li>
 <li>进入虚拟机后可以在系统中修改<code>deepin</code>操作系统的分辨率及刷新率</li>
 </ul>
@@ -461,8 +542,8 @@
       <i class="fa fa-chevron-left"></i> 数据结构基础
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/10/21/%E5%88%9D%E8%AF%86%E6%A0%91/" rel="next" title="初识树">
-      初识树 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/10/22/Tree-1/" rel="next" title="Tree-1">
+      Tree-1 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -523,7 +604,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">虚拟机安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">准备环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85deepin"><span class="nav-number">1.2.</span> <span class="nav-text">安装deepin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%EF%BC%81"><span class="nav-number">1.3.</span> <span class="nav-text">启动！</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%95%8C%E9%9D%A2%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装界面步骤：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%80%89%E6%8B%A9%E8%AF%AD%E8%A8%80"><span class="nav-number">1.4.</span> <span class="nav-text">1.选择语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA%EF%BC%9A"><span class="nav-number">1.5.</span> <span class="nav-text">2.硬盘分区：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E8%AE%BE%E7%BD%AE%E6%A0%B9%E7%9B%AE%E5%BD%95%E5%88%86%E5%8C%BA"><span class="nav-number">1.5.1.</span> <span class="nav-text">2.1 设置根目录分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%AE%BE%E7%BD%AEhome%E7%9B%AE%E5%BD%95%E5%88%86%E5%8C%BA"><span class="nav-number">1.5.2.</span> <span class="nav-text">2.2 设置home目录分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E8%AE%BE%E7%BD%AEswap%E5%88%86%E5%8C%BA"><span class="nav-number">1.5.3.</span> <span class="nav-text">2.3 设置swap分区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%89%E8%A3%85"><span class="nav-number">1.6.</span> <span class="nav-text">3.安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">1.7.</span> <span class="nav-text">4. 配置用户信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E9%80%89%E6%8B%A9%E8%AF%AD%E8%A8%80"><span class="nav-number">1.7.1.</span> <span class="nav-text">4.1 选择语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E9%80%89%E6%8B%A9%E6%97%B6%E5%8C%BA"><span class="nav-number">1.7.2.</span> <span class="nav-text">4.2 选择时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%88%9B%E5%BB%BA%E8%B4%A6%E6%88%B7"><span class="nav-number">1.7.3.</span> <span class="nav-text">4.3 创建账户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E7%AD%89%E5%BE%85%E4%BC%98%E5%8C%96%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE"><span class="nav-number">1.7.4.</span> <span class="nav-text">4.4 等待优化系统配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tips"><span class="nav-number">1.8.</span> <span class="nav-text">tips</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">虚拟机安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">准备环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85deepin"><span class="nav-number">1.2.</span> <span class="nav-text">安装deepin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8"><span class="nav-number">1.3.</span> <span class="nav-text">启动！</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%95%8C%E9%9D%A2%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装界面步骤：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E8%AF%AD%E8%A8%80"><span class="nav-number">1.4.</span> <span class="nav-text">1.选择语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E7%9B%98%E5%88%86%E5%8C%BA"><span class="nav-number">1.5.</span> <span class="nav-text">2.硬盘分区：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%A0%B9%E7%9B%AE%E5%BD%95%E5%88%86%E5%8C%BA"><span class="nav-number">1.5.1.</span> <span class="nav-text">2.1 设置根目录分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEhome%E7%9B%AE%E5%BD%95%E5%88%86%E5%8C%BA"><span class="nav-number">1.5.2.</span> <span class="nav-text">2.2 设置home目录分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEswap%E5%88%86%E5%8C%BA"><span class="nav-number">1.5.3.</span> <span class="nav-text">2.3 设置swap分区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.6.</span> <span class="nav-text">3.安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">1.7.</span> <span class="nav-text">4. 配置用户信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E8%AF%AD%E8%A8%80-1"><span class="nav-number">1.7.1.</span> <span class="nav-text">4.1 选择语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%97%B6%E5%8C%BA"><span class="nav-number">1.7.2.</span> <span class="nav-text">4.2 选择时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%B4%A6%E6%88%B7"><span class="nav-number">1.7.3.</span> <span class="nav-text">4.3 创建账户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%89%E5%BE%85%E4%BC%98%E5%8C%96%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE"><span class="nav-number">1.7.4.</span> <span class="nav-text">4.4 等待优化系统配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tips"><span class="nav-number">1.8.</span> <span class="nav-text">tips</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

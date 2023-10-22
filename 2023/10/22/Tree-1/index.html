@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"lgq007.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="树（Tree） 图是计算机科学与数学领域中一个重要的数据结构，而树是一种特殊类型的图  树有以下特点：  树是一种分层的数据结构，由节点（Node）和边（Edge）组成。 树是一种没有环路的图，即无环图，并且它是连通的（每两个节点之间都存在路径）。 树通常有一个根节点（Root），从根节点出发，可以沿着边到达其他节点。 树中每个节点通常有一个父节点（除去根节点），可以用零个或多个子节点。 树可以分">
+  <meta name="description" content="树（Tree）  图是计算机科学与数学领域中一个重要的数据结构，而树是一种特殊类型的图  树有以下特点：  树是一种分层的数据结构，由节点（Node）和边（Edge）组成。 树是一种没有环路的图，即无环图，并且它是连通的（每两个节点之间都存在路径）。 树通常有一个根节点（Root），从根节点出发，可以沿着边到达其他节点。 树中每个节点通常有一个父节点（除去根节点），可以用零个或多">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tree-1">
 <meta property="og:url" content="http://lgq007.github.io/2023/10/22/Tree-1/index.html">
 <meta property="og:site_name" content="exiler&#39;s Blog">
-<meta property="og:description" content="树（Tree） 图是计算机科学与数学领域中一个重要的数据结构，而树是一种特殊类型的图  树有以下特点：  树是一种分层的数据结构，由节点（Node）和边（Edge）组成。 树是一种没有环路的图，即无环图，并且它是连通的（每两个节点之间都存在路径）。 树通常有一个根节点（Root），从根节点出发，可以沿着边到达其他节点。 树中每个节点通常有一个父节点（除去根节点），可以用零个或多个子节点。 树可以分">
+<meta property="og:description" content="树（Tree）  图是计算机科学与数学领域中一个重要的数据结构，而树是一种特殊类型的图  树有以下特点：  树是一种分层的数据结构，由节点（Node）和边（Edge）组成。 树是一种没有环路的图，即无环图，并且它是连通的（每两个节点之间都存在路径）。 树通常有一个根节点（Root），从根节点出发，可以沿着边到达其他节点。 树中每个节点通常有一个父节点（除去根节点），可以用零个或多">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://lgq007.github.io/2023/10/22/Tree-1/image-20231021210547562.png">
 <meta property="og:image" content="http://lgq007.github.io/2023/10/22/Tree-1/image-20231021231433613.png">
@@ -282,108 +282,156 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="树（Tree）"><a href="#树（Tree）" class="headerlink" title="树（Tree）"></a>树（Tree）</h1><blockquote>
+        <h1 id="树tree">树（Tree）</h1>
+<blockquote>
 <p>图是计算机科学与数学领域中一个重要的数据结构，而树是一种特殊类型的图</p>
 </blockquote>
 <p>树有以下特点：</p>
-<ol>
-<li><em><strong>树是一种分层的数据结构，由节点（Node）和边（Edge）组成。</strong></em></li>
-<li><em><strong>树是一种没有环路的图，即无环图，并且它是连通的（每两个节点之间都存在路径）。</strong></em></li>
-<li><em><strong>树通常有一个根节点（Root），从根节点出发，可以沿着边到达其他节点。</strong></em></li>
-<li><em><strong>树中每个节点通常有一个父节点（除去根节点），可以用零个或多个子节点。</strong></em></li>
-<li><em><strong>树可以分为多个子树，每个子树也是一颗树。</strong></em></li>
+<ol type="1">
+<li><strong><em>树是一种分层的数据结构，由节点（Node）和边（Edge）组成。</em></strong></li>
+<li><strong><em>树是一种没有环路的图，即无环图，并且它是连通的（每两个节点之间都存在路径）。</em></strong></li>
+<li><strong><em>树通常有一个根节点（Root），从根节点出发，可以沿着边到达其他节点。</em></strong></li>
+<li><strong><em>树中每个节点通常有一个父节点（除去根节点），可以用零个或多个子节点。</em></strong></li>
+<li><strong><em>树可以分为多个子树，每个子树也是一颗树。</em></strong></li>
 </ol>
 <hr>
 <span id="more"></span>
 <p>图（Graph）：</p>
-<ol>
+<ol type="1">
 <li>图是一种更一般化的数据结构，它由节点和边组成，节点之间的连接关系可以非常复杂，可以包含环路。</li>
-<li>图分为有向图（Directed Graph）和无向图（Undirected Graph）两种主要类型。在有向图中，边有方向，而在无向图中，边没有方向。</li>
+<li>图分为有向图（Directed Graph）和无向图（Undirected
+Graph）两种主要类型。在有向图中，边有方向，而在无向图中，边没有方向。</li>
 <li>图可以是连通的，也可以是不连通的。连通的图中，从任意一个节点都可以到达其他节点。</li>
 <li>图中的节点之间的关系可以是单向的，双向的，带权重的等，这使得图能够表示各种复杂的关系网络。</li>
 </ol>
 <hr>
 <p>树与图的关系：</p>
-<ol>
+<ol type="1">
 <li>树是图的一种特殊情况，具有一些额外的约束条件，如无环和连通性。</li>
 <li>树通常表示层次结构，比如文件系统，组织结构等，而图通常用于表示更一般的关系网络，如社交网络，交通网络等。</li>
-<li>图可以转化为树，例如，可以从一个有向图中选择一个节点作为根节点，构建一棵树，这种书被称为生成树（Spanning Tree）。</li>
+<li>图可以转化为树，例如，可以从一个有向图中选择一个节点作为根节点，构建一棵树，这种书被称为生成树（Spanning
+Tree）。</li>
 </ol>
 <hr>
 <p><strong>树在层次性结构和递归算法中特别有用，而图用于更广泛的关系网络建模。</strong></p>
 <hr>
 <p>文件系统中的树：</p>
-<p><img src="/2023/10/22/Tree-1/image-20231021210547562.png" alt="image-20231021210547562"></p>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021210547562.png" alt="image-20231021210547562">
+<figcaption aria-hidden="true">image-20231021210547562</figcaption>
+</figure>
 <hr>
-<h1 id="树的基本概念及基本术语"><a href="#树的基本概念及基本术语" class="headerlink" title="树的基本概念及基本术语"></a>树的基本概念及基本术语</h1><p><img src="/2023/10/22/Tree-1/image-20231021231433613.png" alt="image-20231021231433613"></p>
-<h2 id="树的基本概念"><a href="#树的基本概念" class="headerlink" title="树的基本概念"></a>树的基本概念</h2><p><img src="/2023/10/22/Tree-1/image-20231021211251341.png" alt="image-20231021211251341"></p>
+<h1 id="树的基本概念及基本术语">树的基本概念及基本术语</h1>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021231433613.png" alt="image-20231021231433613">
+<figcaption aria-hidden="true">image-20231021231433613</figcaption>
+</figure>
+<p>## 树的基本概念</p>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021211251341.png" alt="image-20231021211251341">
+<figcaption aria-hidden="true">image-20231021211251341</figcaption>
+</figure>
 <ul>
-<li>空树：——结点数为<em><strong>0</strong></em>的树</li>
-<li>非空树的特性：<ul>
+<li>空树：——结点数为<strong><em>0</em></strong>的树</li>
+<li>非空树的特性：
+<ul>
 <li>有且仅有一个根结点</li>
 <li>没有后继的结点称为“叶子结点”（或终端结点）</li>
 <li>有后继的结点称为“分支结点”（或非终端结点）</li>
-<li><em><strong>除了根节点外，任何一个结点都有且仅有一个前驱结点</strong></em></li>
+<li><strong><em>除了根节点外，任何一个结点都有且仅有一个前驱结点</em></strong></li>
 <li>每个结点可以有0个或多个后继结点</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <hr>
 <p>以下的数据结构不是树：</p>
-<p><img src="/2023/10/22/Tree-1/image-20231021212155424.png" alt="image-20231021212155424"></p>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021212155424.png" alt="image-20231021212155424">
+<figcaption aria-hidden="true">image-20231021212155424</figcaption>
+</figure>
 <hr>
-<p>树是<em><strong>n</strong></em>（<em><strong>n≥0</strong></em>）个<em><strong>结点</strong></em>的有限集合，<em><strong>n&#x3D;0时，称为空树</strong></em>，这是一种特殊情况。在任意一颗非空树中应满足：</p>
-<p>1）有且仅有一个特定的称为<em><strong>根</strong></em>的结点</p>
-<p>2）当<em><strong>n&gt;1</strong></em>时，其余节点可分为<em><strong>m（m&gt;0）</strong></em>个互不相交的有限集合***T<del>1</del>,T<del>2</del>,T<del>3</del>,…,T<del>m</del>***，其中每个集合本身又是一棵树，并且称为根节点的子树。</p>
-<p><img src="/2023/10/22/Tree-1/image-20231021215456155.png" alt="image-20231021215456155"></p>
-<p><img src="/2023/10/22/Tree-1/image-20231021215626757.png" alt="image-20231021215626757"></p>
-<h3 id="树形逻辑结构的应用"><a href="#树形逻辑结构的应用" class="headerlink" title="树形逻辑结构的应用"></a>树形逻辑结构的应用</h3><p><img src="/2023/10/22/Tree-1/image-20231021215839494.png" alt="image-20231021215839494"></p>
-<h3 id="结点之间的关系描述"><a href="#结点之间的关系描述" class="headerlink" title="结点之间的关系描述"></a>结点之间的关系描述</h3><p><img src="/2023/10/22/Tree-1/image-20231021215959151.png" alt="image-20231021215959151"></p>
+<p>树是<strong><em>n</em></strong>（<strong><em>n≥0</em></strong>）个<strong><em>结点</em></strong>的有限集合，<strong><em>n=0时，称为空树</em></strong>，这是一种特殊情况。在任意一颗非空树中应满足：</p>
+<p>1）有且仅有一个特定的称为<strong><em>根</em></strong>的结点</p>
+<p>2）当<strong><em>n&gt;1</em></strong>时，其余节点可分为<strong><em>m（m&gt;0）</em></strong>个互不相交的有限集合<strong><em>T<sub>1</sub>,T<sub>2</sub>,T<sub>3</sub>,...,T<sub>m</sub></em></strong>，其中每个集合本身又是一棵树，并且称为根节点的子树。</p>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021215456155.png" alt="image-20231021215456155">
+<figcaption aria-hidden="true">image-20231021215456155</figcaption>
+</figure>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021215626757.png" alt="image-20231021215626757">
+<figcaption aria-hidden="true">image-20231021215626757</figcaption>
+</figure>
+<h3 id="树形逻辑结构的应用">树形逻辑结构的应用</h3>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021215839494.png" alt="image-20231021215839494">
+<figcaption aria-hidden="true">image-20231021215839494</figcaption>
+</figure>
+<h3 id="结点之间的关系描述">结点之间的关系描述</h3>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021215959151.png" alt="image-20231021215959151">
+<figcaption aria-hidden="true">image-20231021215959151</figcaption>
+</figure>
 <ul>
-<li>祖先结点（Ancestors）：<em><strong>在树中从一个结点到根节点的路径上的所有节点，也就是，一个结点的祖先结点就是其所有上层结点，一直到根节点。</strong></em>以*’M’<em>为例子，</em>‘H’、’三叔’、’爷爷’*就是它的祖先节点。</li>
-<li>子孙结点（Descendants）：<em><strong>在树中从某个结点向下遍历树，包括所有通过边与该结点相连的后代节点。一个结点的子孙结点是其所有下层节点，包括直接子节点的子孙结点。</strong></em>以*’父亲’<em>为例，</em>‘你’、’F’、’K’、’L’*都是其子孙结点。</li>
-<li>双亲结点（父结点，Parent）：<em><strong>在树中与某个结点直接相连的上层结点。</strong></em>以*’你’<em>为例，</em>‘父亲’*便是其双亲结点。</li>
-<li>孩子结点（Childs）：<em><strong>在树中与某个结点直接相连的下层结点。</strong></em>以*’父亲’<em>为例，</em>‘你’<em>和</em>‘F’*就是其孩子结点。</li>
-<li>兄弟结点（Sibling）：<strong>在树中与同一个双亲结点相连的结点，也就是在同一层次的结点。</strong>兄弟结点具有相同的双亲结点。以*’你’<em>为例，</em>‘F’*便是其兄弟结点。</li>
+<li>祖先结点（Ancestors）：<strong><em>在树中从一个结点到根节点的路径上的所有节点，也就是，一个结点的祖先结点就是其所有上层结点，一直到根节点。</em></strong>以<em>'M'</em>为例子，<em>'H'、'三叔'、'爷爷'</em>就是它的祖先节点。</li>
+<li>子孙结点（Descendants）：<strong><em>在树中从某个结点向下遍历树，包括所有通过边与该结点相连的后代节点。一个结点的子孙结点是其所有下层节点，包括直接子节点的子孙结点。</em></strong>以<em>'父亲'</em>为例，<em>'你'、'F'、'K'、'L'</em>都是其子孙结点。</li>
+<li>双亲结点（父结点，Parent）：<strong><em>在树中与某个结点直接相连的上层结点。</em></strong>以<em>'你'</em>为例，<em>'父亲'</em>便是其双亲结点。</li>
+<li>孩子结点（Childs）：<strong><em>在树中与某个结点直接相连的下层结点。</em></strong>以<em>'父亲'</em>为例，<em>'你'</em>和<em>'F'</em>就是其孩子结点。</li>
+<li>兄弟结点（Sibling）：<strong>在树中与同一个双亲结点相连的结点，也就是在同一层次的结点。</strong>兄弟结点具有相同的双亲结点。以<em>'你'</em>为例，<em>'F'</em>便是其兄弟结点。</li>
 <li>堂兄弟结点（Cousins）：在树中具有不同的双亲结点，但它们的双亲结点是兄弟或姐妹。堂兄弟结点通常在不同分支下，但它们共享一个祖父结点。</li>
 </ul>
 <hr>
-<h4 id="Q1：什么是两个结点之间的路径？"><a href="#Q1：什么是两个结点之间的路径？" class="headerlink" title="Q1：什么是两个结点之间的路径？"></a>Q1：什么是两个结点之间的路径？</h4><p><em><strong>两个结点之间的路径是指从一个结点到另一个结点经过的边的序列。</strong></em>在树或图中，路径表示了从一个结点到另一个结点的连接方式。这个路径是由一系列边组成的，这些边连接了沿途的结点。路径可以是直接的（只有一条边）也可以是间接的（多条边组成）。<em><strong>路径的存在意味着从一个结点到另一个结点有可达性。</strong></em></p>
-<h4 id="Q2：什么是路径长度？"><a href="#Q2：什么是路径长度？" class="headerlink" title="Q2：什么是路径长度？"></a>Q2：什么是路径长度？</h4><p><em><strong>路径长度是指路径上的边的数量</strong></em>，<em><strong>也可以是路径上的边的权重之和（如果边有权重的话）。</strong></em>在许多情况下，路径长度表示从一个结点到另一个结点的距离或代价。如果路径是直接的，路径长度通常是1，如果路径是间接的，路径长度是沿途的边的数量。在带权重的图中，路径长度是路径上所有边的权重之和。路径长度的计算对于许多算法和问题解决方案非常重要，如最短路径问题、最小生成树算法等。</p>
+<h4 id="q1什么是两个结点之间的路径">Q1：什么是两个结点之间的路径？</h4>
+<p><strong><em>两个结点之间的路径是指从一个结点到另一个结点经过的边的序列。</em></strong>在树或图中，路径表示了从一个结点到另一个结点的连接方式。这个路径是由一系列边组成的，这些边连接了沿途的结点。路径可以是直接的（只有一条边）也可以是间接的（多条边组成）。<strong><em>路径的存在意味着从一个结点到另一个结点有可达性。</em></strong></p>
+<h4 id="q2什么是路径长度">Q2：什么是路径长度？</h4>
+<p><strong><em>路径长度是指路径上的边的数量</em></strong>，<strong><em>也可以是路径上的边的权重之和（如果边有权重的话）。</em></strong>在许多情况下，路径长度表示从一个结点到另一个结点的距离或代价。如果路径是直接的，路径长度通常是1，如果路径是间接的，路径长度是沿途的边的数量。在带权重的图中，路径长度是路径上所有边的权重之和。路径长度的计算对于许多算法和问题解决方案非常重要，如最短路径问题、最小生成树算法等。</p>
 <hr>
-<h2 id="结点、树的属性描述"><a href="#结点、树的属性描述" class="headerlink" title="结点、树的属性描述"></a>结点、树的属性描述</h2><p><img src="/2023/10/22/Tree-1/image-20231021224428477.png" alt="image-20231021224428477"></p>
+<h2 id="结点树的属性描述">结点、树的属性描述</h2>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021224428477.png" alt="image-20231021224428477">
+<figcaption aria-hidden="true">image-20231021224428477</figcaption>
+</figure>
 <p>属性：</p>
 <ul>
 <li>结点的层次（深度）——从上往下数：</li>
 </ul>
-<p><em><strong>结点的层次指的是结点在树中的垂直级别或深度。</strong></em>根结点的层次通常被定义为0，而根结点的子结点的层次为1，依此类推。结点的层次可以帮助确定结点在树中的相对位置。</p>
+<p><strong><em>结点的层次指的是结点在树中的垂直级别或深度。</em></strong>根结点的层次通常被定义为0，而根结点的子结点的层次为1，依此类推。结点的层次可以帮助确定结点在树中的相对位置。</p>
 <ul>
 <li>结点的高度——从下往上数：</li>
 </ul>
-<p><em><strong>结点的高度是从该结点到树中最远叶子结点的最长路径的长度。</strong></em>换句话说，结点的高度表示了以该结点为起点的最长路径的长度。<em><strong>根结点的高度通常被定义为整棵树的高度。</strong></em></p>
+<p><strong><em>结点的高度是从该结点到树中最远叶子结点的最长路径的长度。</em></strong>换句话说，结点的高度表示了以该结点为起点的最长路径的长度。<strong><em>根结点的高度通常被定义为整棵树的高度。</em></strong></p>
 <ul>
 <li>树的高度（深度）——总共多少层：</li>
 </ul>
-<p><em><strong>树的高度是树中任意叶子结点的最长路径的长度。</strong></em>它表示了整棵树的垂直级别或深度。树的高度可以看作是树的层次的最大值，也就是树的最深层次。</p>
+<p><strong><em>树的高度是树中任意叶子结点的最长路径的长度。</em></strong>它表示了整棵树的垂直级别或深度。树的高度可以看作是树的层次的最大值，也就是树的最深层次。</p>
 <ul>
 <li>结点的度——有几个孩子（分支）：</li>
 </ul>
-<p><strong>结点的度是指该结点拥有的子结点的数量。</strong>在树中，结点的度可以是0（叶子结点），1（只有一个子结点，通常是根结点），2（拥有两个子结点，通常是二叉树），或更多。<em><strong>结点的度可以帮助确定树的类型，例如二叉树、三叉树等。</strong></em></p>
+<p><strong>结点的度是指该结点拥有的子结点的数量。</strong>在树中，结点的度可以是0（叶子结点），1（只有一个子结点，通常是根结点），2（拥有两个子结点，通常是二叉树），或更多。<strong><em>结点的度可以帮助确定树的类型，例如二叉树、三叉树等。</em></strong></p>
 <ul>
 <li>树的度——各结点的度的最大值：</li>
 </ul>
-<p><em><strong>树的度是指树中各个结点的度的最大值。树的度表示了树中分支的复杂程度。</strong></em>例如，如果树的度为1，那么它是一棵链式树，如果度为2，它是二叉树，如果度大于2，它是多叉树。</p>
+<p><strong><em>树的度是指树中各个结点的度的最大值。树的度表示了树中分支的复杂程度。</em></strong>例如，如果树的度为1，那么它是一棵链式树，如果度为2，它是二叉树，如果度大于2，它是多叉树。</p>
 <hr>
-<h3 id="有序树与无序树"><a href="#有序树与无序树" class="headerlink" title="有序树与无序树"></a>有序树与无序树</h3><ul>
+<h3 id="有序树与无序树">有序树与无序树</h3>
+<ul>
 <li>有序树：逻辑上看，树中各结点的各字数从左到右是有次序的，不能互换</li>
 </ul>
-<p><img src="/2023/10/22/Tree-1/image-20231021230701007.png" alt="image-20231021230701007"></p>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021230701007.png" alt="image-20231021230701007">
+<figcaption aria-hidden="true">image-20231021230701007</figcaption>
+</figure>
 <ul>
 <li>无序树：逻辑上看，树中各结点的各字数从左到右是无次序的，可以互换</li>
 </ul>
-<p><img src="/2023/10/22/Tree-1/image-20231021230850198.png" alt="image-20231021230850198"></p>
-<h3 id="树与森林"><a href="#树与森林" class="headerlink" title="树与森林"></a>树与森林</h3><p>森林是<em><strong>m（m≥0）</strong></em>颗互不相交的树的集合，<em>比如全中国所有人家的家谱</em>（<em><strong>m为0，空森林</strong></em>）。</p>
-<p><img src="/2023/10/22/Tree-1/image-20231021231251345.png" alt="image-20231021231251345"></p>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021230850198.png" alt="image-20231021230850198">
+<figcaption aria-hidden="true">image-20231021230850198</figcaption>
+</figure>
+<h3 id="树与森林">树与森林</h3>
+<p>森林是<strong><em>m（m≥0）</em></strong>颗互不相交的树的集合，<em>比如全中国所有人家的家谱</em>（<strong><em>m为0，空森林</em></strong>）。</p>
+<figure>
+<img src="/2023/10/22/Tree-1/image-20231021231251345.png" alt="image-20231021231251345">
+<figcaption aria-hidden="true">image-20231021231251345</figcaption>
+</figure>
 
     </div>
 
@@ -439,10 +487,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/10/21/%E5%88%9D%E8%AF%86%E6%A0%91/" rel="prev" title="初识树">
-      <i class="fa fa-chevron-left"></i> 初识树
+    <a href="/2023/09/09/deepin%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" rel="prev" title="deepin虚拟机安装">
+      <i class="fa fa-chevron-left"></i> deepin虚拟机安装
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/10/22/Tree-2/" rel="next" title="Tree-2">
+      Tree-2 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -502,7 +553,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91%EF%BC%88Tree%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">树（Tree）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD"><span class="nav-number">2.</span> <span class="nav-text">树的基本概念及基本术语</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">树的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E5%BD%A2%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">树形逻辑结构的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.1.2.</span> <span class="nav-text">结点之间的关系描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Q1%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%A4%E4%B8%AA%E7%BB%93%E7%82%B9%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BC%9F"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">Q1：什么是两个结点之间的路径？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q2%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6%EF%BC%9F"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">Q2：什么是路径长度？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E3%80%81%E6%A0%91%E7%9A%84%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.2.</span> <span class="nav-text">结点、树的属性描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E6%A0%91%E4%B8%8E%E6%97%A0%E5%BA%8F%E6%A0%91"><span class="nav-number">2.2.1.</span> <span class="nav-text">有序树与无序树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E4%B8%8E%E6%A3%AE%E6%9E%97"><span class="nav-number">2.2.2.</span> <span class="nav-text">树与森林</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91tree"><span class="nav-number">1.</span> <span class="nav-text">树（Tree）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD"><span class="nav-number">2.</span> <span class="nav-text">树的基本概念及基本术语</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E5%BD%A2%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">2.0.1.</span> <span class="nav-text">树形逻辑结构的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.0.2.</span> <span class="nav-text">结点之间的关系描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#q1%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%A4%E4%B8%AA%E7%BB%93%E7%82%B9%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">Q1：什么是两个结点之间的路径？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#q2%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6"><span class="nav-number">2.0.2.2.</span> <span class="nav-text">Q2：什么是路径长度？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E6%A0%91%E7%9A%84%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">结点、树的属性描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E6%A0%91%E4%B8%8E%E6%97%A0%E5%BA%8F%E6%A0%91"><span class="nav-number">2.1.1.</span> <span class="nav-text">有序树与无序树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E4%B8%8E%E6%A3%AE%E6%9E%97"><span class="nav-number">2.1.2.</span> <span class="nav-text">树与森林</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
