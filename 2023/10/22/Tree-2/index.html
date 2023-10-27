@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"lgq007.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="树的常考性质   image-20231022174230215">
+  <meta name="description" content="树的常考性质">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tree-2">
 <meta property="og:url" content="http://lgq007.github.io/2023/10/22/Tree-2/index.html">
 <meta property="og:site_name" content="exiler&#39;s Blog">
-<meta property="og:description" content="树的常考性质   image-20231022174230215">
+<meta property="og:description" content="树的常考性质">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://lgq007.github.io/2023/10/22/Tree-2/image-20231022174230215.png">
 <meta property="og:image" content="http://lgq007.github.io/2023/10/22/Tree-2/image-20231022162720388.png">
@@ -151,7 +151,7 @@
   </li>
         <li class="menu-item menu-item-link">
 
-    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>link</a>
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -281,22 +281,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="树的常考性质">树的常考性质</h1>
-<figure>
-<img src="/2023/10/22/Tree-2/image-20231022174230215.png" alt="image-20231022174230215">
-<figcaption aria-hidden="true">image-20231022174230215</figcaption>
-</figure>
+        <h1 id="树的常考性质"><a href="#树的常考性质" class="headerlink" title="树的常考性质"></a>树的常考性质</h1><p><img src="/2023/10/22/Tree-2/image-20231022174230215.png" alt="image-20231022174230215"></p>
 <hr>
 <span id="more"></span>
-<h2 id="结点数-总度数-1">结点数 = 总度数 + 1</h2>
-<ul>
+<h2 id="结点数-总度数-1"><a href="#结点数-总度数-1" class="headerlink" title="结点数 = 总度数 + 1"></a>结点数 = 总度数 + 1</h2><ul>
 <li>结点的度：结点有几个孩子（分支）</li>
 </ul>
-<figure>
-<img src="/2023/10/22/Tree-2/image-20231022162720388.png" alt="image-20231022162720388">
-<figcaption aria-hidden="true">image-20231022162720388</figcaption>
-</figure>
-<ol type="1">
+<p><img src="/2023/10/22/Tree-2/image-20231022162720388.png" alt="image-20231022162720388"></p>
+<ol>
 <li><strong>结点数（N）</strong>：树中的结点数表示树中包含的总结点数量，包括根结点和所有子结点。</li>
 <li><strong>总度数（Σdeg）</strong>：总度数是指树中所有结点的度（子结点的数量）之和。它表示了树中的所有分支总数。</li>
 <li><strong>根结点的度和叶子结点的度</strong>：在一棵树中，根结点的度通常是1或更大，因为根结点可以有子结点。叶子结点的度通常是0，因为它们没有子结点。</li>
@@ -311,93 +303,59 @@
 <p>所以，如果我们计算树中每个结点的度，然后将它们相加，总度数等于树的结点数减去1。这是因为根结点的度不需要被计算在总度数中。所以可以表示为：</p>
 <p>总度数 = 结点数 - 1</p>
 <hr>
-<h2 id="度为m的树m叉树的区别">度为m的树、m叉树的区别</h2>
-<ul>
+<h2 id="度为m的树、m叉树的区别"><a href="#度为m的树、m叉树的区别" class="headerlink" title="度为m的树、m叉树的区别"></a>度为m的树、m叉树的区别</h2><ul>
 <li>树的度：各结点的度的最大值</li>
 <li>m叉树：每个结点最多只能有m个孩子的树</li>
 </ul>
+<div class="table-container">
 <table>
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
-<tr class="header">
-<th style="text-align: center;">度为m的树</th>
-<th style="text-align: center;">m叉树</th>
+<tr>
+<th style="text-align:center">度为m的树</th>
+<th style="text-align:center">m叉树</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: center;">任意结点的度 <strong><em>≤
-m</em></strong>（最多m个孩子）</td>
-<td style="text-align: center;">任意结点的度 <strong><em>≤
-m</em></strong>（最多m个孩子）</td>
+<tr>
+<td style="text-align:center">任意结点的度 <strong><em>≤ m</em></strong>（最多m个孩子）</td>
+<td style="text-align:center">任意结点的度 <strong><em>≤ m</em></strong>（最多m个孩子）</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">至少有一个结点度 <strong><em>=
-m</em></strong>（有m个孩子）</td>
-<td style="text-align: center;">允许所有结点的度都 <strong><em>&lt;
-m</em></strong>（m叉空树）</td>
+<tr>
+<td style="text-align:center">至少有一个结点度 <strong><em>= m</em></strong>（有m个孩子）</td>
+<td style="text-align:center">允许所有结点的度都 <strong><em>&lt; m</em></strong>（m叉空树）</td>
 </tr>
-<tr class="odd">
-<td style="text-align: center;">一定是非空树，至少有
-<strong><em>m+1</em></strong> 个结点</td>
-<td style="text-align: center;">可以是空树</td>
+<tr>
+<td style="text-align:center">一定是非空树，至少有 <strong><em>m+1</em></strong> 个结点</td>
+<td style="text-align:center">可以是空树</td>
 </tr>
 </tbody>
 </table>
-<figure>
-<img src="/2023/10/22/Tree-2/image-20231022164612919.png" alt="image-20231022164612919">
-<figcaption aria-hidden="true">image-20231022164612919</figcaption>
-</figure>
+</div>
+<p><img src="/2023/10/22/Tree-2/image-20231022164612919.png" alt="image-20231022164612919"></p>
 <hr>
-<h2 id="度为m的树与m叉树每层至多有mi-1个结点i-1">度为m的树与m叉树每层至多有m<sup>i-1</sup>个结点（<em>i
-≥ 1</em>）</h2>
-<figure>
-<img src="/2023/10/22/Tree-2/image-20231022170648868.png" alt="image-20231022170648868">
-<figcaption aria-hidden="true">image-20231022170648868</figcaption>
-</figure>
+<h2 id="度为m的树与m叉树每层至多有m-i-1-个结点（i-≥-1）"><a href="#度为m的树与m叉树每层至多有m-i-1-个结点（i-≥-1）" class="headerlink" title="度为m的树与m叉树每层至多有m^i-1^个结点（i ≥ 1）"></a>度为m的树与m叉树每层至多有m^i-1^个结点（<em>i ≥ 1</em>）</h2><p><img src="/2023/10/22/Tree-2/image-20231022170648868.png" alt="image-20231022170648868"></p>
 <hr>
-<h2 id="高度为h的m叉树至多有多少结点">高度为h的m叉树至多有多少结点？</h2>
-<figure>
-<img src="/2023/10/22/Tree-2/image-20231022171803394.png" alt="image-20231022171803394">
-<figcaption aria-hidden="true">image-20231022171803394</figcaption>
-</figure>
+<h2 id="高度为h的m叉树至多有多少结点？"><a href="#高度为h的m叉树至多有多少结点？" class="headerlink" title="高度为h的m叉树至多有多少结点？"></a>高度为h的m叉树至多有多少结点？</h2><p><img src="/2023/10/22/Tree-2/image-20231022171803394.png" alt="image-20231022171803394"></p>
 <p>当树的每一层结点数均为最大时，此树有最大结点：</p>
-<p><span class="math display">\[
-m^0 + m^1 + m^2 + m^3 + ...  + m^{h-1}
-\]</span> 即：</p>
-<p><span class="math display">\[
-S = \frac{m^{h} - 1}{m-1}
-\]</span> <strong><em>(h从0开始计数)</em></strong></p>
+<script type="math/tex; mode=display">
+m^0 + m^1 + m^2 + m^3 + ...  + m^{h-1}</script><p>即：</p>
+<script type="math/tex; mode=display">
+S = \frac{m^{h} - 1}{m-1}</script><p><strong><em>(h从0开始计数)</em></strong></p>
 <hr>
-<h2 id="高度为h的m叉树至少有h个结点高度为h度为m的树至少有hm-1个结点">高度为<code>h</code>的<code>m</code>叉树至少有<code>h</code>个结点，高度为<code>h</code>、度为<code>m</code>的树至少有<code>h+m-1</code>个结点</h2>
-<figure>
-<img src="/2023/10/22/Tree-2/image-20231022172752895.png" alt="image-20231022172752895">
-<figcaption aria-hidden="true">image-20231022172752895</figcaption>
-</figure>
+<h2 id="高度为h的m叉树至少有h个结点，高度为h、度为m的树至少有h-m-1个结点"><a href="#高度为h的m叉树至少有h个结点，高度为h、度为m的树至少有h-m-1个结点" class="headerlink" title="高度为h的m叉树至少有h个结点，高度为h、度为m的树至少有h+m-1个结点"></a>高度为<code>h</code>的<code>m</code>叉树至少有<code>h</code>个结点，高度为<code>h</code>、度为<code>m</code>的树至少有<code>h+m-1</code>个结点</h2><p><img src="/2023/10/22/Tree-2/image-20231022172752895.png" alt="image-20231022172752895"></p>
 <hr>
-<h2 id="具有n个结点的m叉树的最小高度为logm-n-m-1-1">具有<code>n</code>个结点的<code>m</code>叉树的最小高度为log<sub>m</sub>(
-n (m-1) + 1)</h2>
-<p>高度最小的情况：所有结点都有m个孩子</p>
-<p>前h-1层最多的结点数： <span class="math display">\[
-\frac{m^{h-1}-1}{m-1}
-\]</span> 前h曾最多的结点数： <span class="math display">\[
-\frac{m^{h}-1}{m-1}
-\]</span> 故： <span class="math display">\[
-\frac{m^{h-1}-1}{m-1}&lt;n≤\frac{m^{h}-1}{m-1}
-\]</span></p>
-<p><span class="math display">\[
-2. m^{h-1}&lt;n(m-1)+1≤m^h
-\]</span></p>
-<p><span class="math display">\[
-h-1&lt;log_{m}(n(m-1)+1)≤h
-\]</span></p>
-<p>故： <span class="math display">\[
-h_{min}=log_{m}(n(m-1)+1)
-\]</span></p>
-
+<h2 id="具有n个结点的m叉树的最小高度为log-m-n-m-1-1"><a href="#具有n个结点的m叉树的最小高度为log-m-n-m-1-1" class="headerlink" title="具有n个结点的m叉树的最小高度为log~m~( n (m-1) + 1)"></a>具有<code>n</code>个结点的<code>m</code>叉树的最小高度为log~m~( n (m-1) + 1)</h2><p>高度最小的情况：所有结点都有m个孩子</p>
+<p>前h-1层最多的结点数：</p>
+<script type="math/tex; mode=display">
+\frac{m^{h-1}-1}{m-1}</script><p>前h曾最多的结点数：</p>
+<script type="math/tex; mode=display">
+\frac{m^{h}-1}{m-1}</script><p>故：</p>
+<script type="math/tex; mode=display">
+ \frac{m^{h-1}-1}{m-1}<n≤\frac{m^{h}-1}{m-1}</script><script type="math/tex; mode=display">
+2. m^{h-1}<n(m-1)+1≤m^h</script><script type="math/tex; mode=display">
+h-1<log_{m}(n(m-1)+1)≤h</script><p>故：</p>
+<script type="math/tex; mode=display">
+h_{min}=log_{m}(n(m-1)+1)</script>
     </div>
 
     
@@ -515,9 +473,7 @@ h_{min}=log_{m}(n(m-1)+1)
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E5%B8%B8%E8%80%83%E6%80%A7%E8%B4%A8"><span class="nav-number">1.</span> <span class="nav-text">树的常考性质</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E6%95%B0-%E6%80%BB%E5%BA%A6%E6%95%B0-1"><span class="nav-number">1.1.</span> <span class="nav-text">结点数 &#x3D; 总度数 + 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91m%E5%8F%89%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.</span> <span class="nav-text">度为m的树、m叉树的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E4%B8%8Em%E5%8F%89%E6%A0%91%E6%AF%8F%E5%B1%82%E8%87%B3%E5%A4%9A%E6%9C%89mi-1%E4%B8%AA%E7%BB%93%E7%82%B9i-1"><span class="nav-number">1.3.</span> <span class="nav-text">度为m的树与m叉树每层至多有mi-1个结点（i
-≥ 1）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%BA%A6%E4%B8%BAh%E7%9A%84m%E5%8F%89%E6%A0%91%E8%87%B3%E5%A4%9A%E6%9C%89%E5%A4%9A%E5%B0%91%E7%BB%93%E7%82%B9"><span class="nav-number">1.4.</span> <span class="nav-text">高度为h的m叉树至多有多少结点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%BA%A6%E4%B8%BAh%E7%9A%84m%E5%8F%89%E6%A0%91%E8%87%B3%E5%B0%91%E6%9C%89h%E4%B8%AA%E7%BB%93%E7%82%B9%E9%AB%98%E5%BA%A6%E4%B8%BAh%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E8%87%B3%E5%B0%91%E6%9C%89hm-1%E4%B8%AA%E7%BB%93%E7%82%B9"><span class="nav-number">1.5.</span> <span class="nav-text">高度为h的m叉树至少有h个结点，高度为h、度为m的树至少有h+m-1个结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E6%9C%89n%E4%B8%AA%E7%BB%93%E7%82%B9%E7%9A%84m%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E4%B8%BAlogm-n-m-1-1"><span class="nav-number">1.6.</span> <span class="nav-text">具有n个结点的m叉树的最小高度为logm(
-n (m-1) + 1)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E5%B8%B8%E8%80%83%E6%80%A7%E8%B4%A8"><span class="nav-number">1.</span> <span class="nav-text">树的常考性质</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E6%95%B0-%E6%80%BB%E5%BA%A6%E6%95%B0-1"><span class="nav-number">1.1.</span> <span class="nav-text">结点数 &#x3D; 总度数 + 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E3%80%81m%E5%8F%89%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.</span> <span class="nav-text">度为m的树、m叉树的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E4%B8%8Em%E5%8F%89%E6%A0%91%E6%AF%8F%E5%B1%82%E8%87%B3%E5%A4%9A%E6%9C%89m-i-1-%E4%B8%AA%E7%BB%93%E7%82%B9%EF%BC%88i-%E2%89%A5-1%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">度为m的树与m叉树每层至多有m^i-1^个结点（i ≥ 1）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%BA%A6%E4%B8%BAh%E7%9A%84m%E5%8F%89%E6%A0%91%E8%87%B3%E5%A4%9A%E6%9C%89%E5%A4%9A%E5%B0%91%E7%BB%93%E7%82%B9%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">高度为h的m叉树至多有多少结点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%BA%A6%E4%B8%BAh%E7%9A%84m%E5%8F%89%E6%A0%91%E8%87%B3%E5%B0%91%E6%9C%89h%E4%B8%AA%E7%BB%93%E7%82%B9%EF%BC%8C%E9%AB%98%E5%BA%A6%E4%B8%BAh%E3%80%81%E5%BA%A6%E4%B8%BAm%E7%9A%84%E6%A0%91%E8%87%B3%E5%B0%91%E6%9C%89h-m-1%E4%B8%AA%E7%BB%93%E7%82%B9"><span class="nav-number">1.5.</span> <span class="nav-text">高度为h的m叉树至少有h个结点，高度为h、度为m的树至少有h+m-1个结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E6%9C%89n%E4%B8%AA%E7%BB%93%E7%82%B9%E7%9A%84m%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E4%B8%BAlog-m-n-m-1-1"><span class="nav-number">1.6.</span> <span class="nav-text">具有n个结点的m叉树的最小高度为log~m~( n (m-1) + 1)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
