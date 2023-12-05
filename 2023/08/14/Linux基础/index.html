@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"lgq007.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="文件绪言在Linux操作系统中秉持着一切皆文件的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中  &#x2F;dev&#x2F;sdX：这个文件表示U盘设备，”X”代表具体的设备标识，例如&#x2F;dev&#x2F;sda、&#x2F;dev&#x2F;sdb等">
+  <meta name="description" content="文件 绪言 在Linux操作系统中秉持着一切皆文件的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中  &#x2F;dev&#x2F;sdX：这个文件表示U盘设备，&quot;X&quot;代表具体的设备标识，例如&#x2F;dev&#x2F;sda、&#x2F;de">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux基础">
 <meta property="og:url" content="http://lgq007.github.io/2023/08/14/Linux%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="exiler&#39;s Blog">
-<meta property="og:description" content="文件绪言在Linux操作系统中秉持着一切皆文件的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中  &#x2F;dev&#x2F;sdX：这个文件表示U盘设备，”X”代表具体的设备标识，例如&#x2F;dev&#x2F;sda、&#x2F;dev&#x2F;sdb等">
+<meta property="og:description" content="文件 绪言 在Linux操作系统中秉持着一切皆文件的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中  &#x2F;dev&#x2F;sdX：这个文件表示U盘设备，&quot;X&quot;代表具体的设备标识，例如&#x2F;dev&#x2F;sda、&#x2F;de">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://lgq007.github.io/2023/08/14/images/Linux%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95.png">
 <meta property="og:image" content="http://lgq007.github.io/2023/08/14/images/Ubuntu%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95">
@@ -282,119 +282,172 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><h2 id="绪言"><a href="#绪言" class="headerlink" title="绪言"></a>绪言</h2><p>在Linux操作系统中秉持着<strong>一切皆文件</strong>的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中</p>
-<ol>
-<li><p><code>/dev/sdX</code>：这个文件表示U盘设备，”X”代表具体的设备标识，例如<code>/dev/sda</code>、<code>/dev/sdb</code>等。你可以通过这个文件来访问整个U盘。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> /media/usb-drive</span><br><span class="line">sudo mount /dev/sdX /media/usb-drive</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>/media/username/usb-drive</code>：这个文件夹是U盘挂载的地方，”username”是你的用户名，”usb-drive”是挂载点。在这个文件夹中，你可以通过普通的文件操作来访问U盘中的文件和文件夹。</p>
-</li>
+        <h1 id="文件">文件</h1>
+<h2 id="绪言">绪言</h2>
+<p>在Linux操作系统中秉持着<strong>一切皆文件</strong>的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中</p>
+<ol type="1">
+<li><p><code>/dev/sdX</code>：这个文件表示U盘设备，"X"代表具体的设备标识，例如<code>/dev/sda</code>、<code>/dev/sdb</code>等。你可以通过这个文件来访问整个U盘。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> /media/usb-drive</span><br><span class="line">sudo mount /dev/sdX /media/usb-drive</span><br></pre></td></tr></table></figure></li>
+<li><p><code>/media/username/usb-drive</code>：这个文件夹是U盘挂载的地方，"username"是你的用户名，"usb-drive"是挂载点。在这个文件夹中，你可以通过普通的文件操作来访问U盘中的文件和文件夹。</p></li>
 </ol>
 <p>而在windows操作系统下，U盘通常会被视为两个不同的实体：一个是设备，另一个是文件系统中的一个文件夹</p>
-<ol>
+<ol type="1">
 <li>设备：可以在Windows设备管理器中看到，通常显示为一个可移动设备。</li>
 <li>文件夹：windows会自动为U盘分配一个盘符，可以用过windows资源管理器访问U盘内的文件。</li>
 </ol>
-<h2 id="Linux下的文件目录结构"><a href="#Linux下的文件目录结构" class="headerlink" title="Linux下的文件目录结构"></a>Linux下的文件目录结构</h2><p><img src="../images/Linux文件目录.png" alt></p>
-<p>以Ubuntu 22.04 LTS 为例，输入<code>ll / -a</code>查看<code>/</code>目录下的文件目录：</p>
-<p><img src="./../images/Ubuntu文件目录" alt="image-20230814185233037"></p>
-<ol>
+<h2 id="linux下的文件目录结构">Linux下的文件目录结构</h2>
+<p><img src="../images/Linux文件目录.png"></p>
+<p>以Ubuntu 22.04 LTS
+为例，输入<code>ll / -a</code>查看<code>/</code>目录下的文件目录：</p>
+<figure>
+<img src="./../images/Ubuntu文件目录" alt="image-20230814185233037">
+<figcaption aria-hidden="true">image-20230814185233037</figcaption>
+</figure>
+<ol type="1">
 <li>常见的目录：</li>
 </ol>
 <ul>
-<li><strong><code>/</code> (根目录)：</strong> Linux文件系统的根目录，所有其他目录都是从这里开始的。</li>
-<li><strong><code>/bin</code> (基本命令)：</strong> 全称<code>binary</code>，存放系统启动和维护所需的基本命令，如<code>ls</code>、<code>cp</code>、<code>mv</code>等。</li>
-<li><strong><code>/boot</code> (开机引导)：</strong> 存放包含引导启动Linux系统所需的文件，如内核映像文件、引导加载程序以及启动配置文件。</li>
-<li><strong><code>/dev</code> (设备文件)：</strong> 包含与系统硬件设备和外部设备的文件，Linux将这些设备抽象为文件，通过这些文件来进行访问和交互。在其中的外接设备是不能直接被使用的，需要<strong>挂载（类似windows下的分配盘符）</strong>。</li>
-<li><strong><code>/etc</code> (系统配置)：</strong> 存放系统的配置文件，包括网络配置、用户账户配置、软件配置等。</li>
-<li><strong><code>/home</code> (用户主目录)：</strong> 存放用户的主目录，每个用户都有一个独立的子目录，用于存放个人文件、文档和配置文件。</li>
-<li><strong><code>/root</code> (root用户主目录)：</strong> 超级用户（root用户）的主目录。</li>
-<li><strong><code>/run</code> (运行时数据)：</strong> 用于存放系统启动后运行时需要的临时文件，即进程的运行数据存放目录。</li>
-<li><strong><code>/sbin</code> (系统命令)：</strong> 存放系统管理员使用的系统管理命令，这些命令通常需要root权限，如<code>fdisk</code>、<code>iptables</code>等。</li>
-<li><strong><code>/tmp</code> (临时文件)：</strong> 用于存放临时文件，系统重新启动后会清空该目录。</li>
-<li><strong><code>/usr</code>(用户目录)：</strong>包含用户程序和文件，通常将大部分软件安装到这个目录下。<ul>
-<li><strong><code>/usr/bin</code>：</strong> 存放系统中的大部分用户级别的可执行命令。这些命令通常是系统的标准工具和应用程序，但不是必须在系统启动阶段使用的基本命令。</li>
+<li><strong><code>/</code> (根目录)：</strong>
+Linux文件系统的根目录，所有其他目录都是从这里开始的。</li>
+<li><strong><code>/bin</code> (基本命令)：</strong>
+全称<code>binary</code>，存放系统启动和维护所需的基本命令，如<code>ls</code>、<code>cp</code>、<code>mv</code>等。</li>
+<li><strong><code>/boot</code> (开机引导)：</strong>
+存放包含引导启动Linux系统所需的文件，如内核映像文件、引导加载程序以及启动配置文件。</li>
+<li><strong><code>/dev</code> (设备文件)：</strong>
+包含与系统硬件设备和外部设备的文件，Linux将这些设备抽象为文件，通过这些文件来进行访问和交互。在其中的外接设备是不能直接被使用的，需要<strong>挂载（类似windows下的分配盘符）</strong>。</li>
+<li><strong><code>/etc</code> (系统配置)：</strong>
+存放系统的配置文件，包括网络配置、用户账户配置、软件配置等。</li>
+<li><strong><code>/home</code> (用户主目录)：</strong>
+存放用户的主目录，每个用户都有一个独立的子目录，用于存放个人文件、文档和配置文件。</li>
+<li><strong><code>/root</code> (root用户主目录)：</strong>
+超级用户（root用户）的主目录。</li>
+<li><strong><code>/run</code> (运行时数据)：</strong>
+用于存放系统启动后运行时需要的临时文件，即进程的运行数据存放目录。</li>
+<li><strong><code>/sbin</code> (系统命令)：</strong>
+存放系统管理员使用的系统管理命令，这些命令通常需要root权限，如<code>fdisk</code>、<code>iptables</code>等。</li>
+<li><strong><code>/tmp</code> (临时文件)：</strong>
+用于存放临时文件，系统重新启动后会清空该目录。</li>
+<li><strong><code>/usr</code>(用户目录)：</strong>包含用户程序和文件，通常将大部分软件安装到这个目录下。
+<ul>
+<li><strong><code>/usr/bin</code>：</strong>
+存放系统中的大部分用户级别的可执行命令。这些命令通常是系统的标准工具和应用程序，但不是必须在系统启动阶段使用的基本命令。</li>
 <li><strong><code>/usr/local</code>：</strong>程序安装目录。</li>
-<li><strong><code>/usr/sbin</code>：</strong>存放系统管理员（root用户）使用的系统管理命令。与 <code>/sbin</code> 目录类似，但 <code>/usr/sbin</code> 中的命令通常是不需要在系统启动阶段使用的，因此可以被认为是更为次要的系统命令。</li>
+<li><strong><code>/usr/sbin</code>：</strong>存放系统管理员（root用户）使用的系统管理命令。与
+<code>/sbin</code> 目录类似，但 <code>/usr/sbin</code>
+中的命令通常是不需要在系统启动阶段使用的，因此可以被认为是更为次要的系统命令。</li>
 <li><strong><code>/usr/tmp</code>：</strong>被抛弃临时文件目录。</li>
-<li><strong><code>/usr/lib</code>，<code>/usr/lib32</code>，<code>/usr/lib64</code>，<code>/usr/libx32</code>：</strong> 存放系统所需的共享库文件，这些库文件被可执行文件在运行时动态链接以实现代码重用。</li>
-<li><strong><code>/usr/src</code>  ：</strong>是用于存放内核源代码（Linux 内核）的目录。这个目录通常包含了系统所使用的内核版本的源代码，以及相关的文件和文档。</li>
-</ul>
-</li>
-<li><strong><code>/var</code> (变量数据)：</strong> 包含变量数据，如日志文件、数据库文件等会变化的数据。<ul>
+<li><strong><code>/usr/lib</code>，<code>/usr/lib32</code>，<code>/usr/lib64</code>，<code>/usr/libx32</code>：</strong>
+存放系统所需的共享库文件，这些库文件被可执行文件在运行时动态链接以实现代码重用。</li>
+<li><strong><code>/usr/src</code> ：</strong>是用于存放内核源代码（Linux
+内核）的目录。这个目录通常包含了系统所使用的内核版本的源代码，以及相关的文件和文档。</li>
+</ul></li>
+<li><strong><code>/var</code> (变量数据)：</strong>
+包含变量数据，如日志文件、数据库文件等会变化的数据。
+<ul>
 <li><strong><code>/var/tmp</code>：</strong>临时文件目录；存放周期更长</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<ol>
+<ol start="2" type="1">
 <li>其他命令：</li>
 </ol>
 <ul>
-<li><p><strong><code>/media</code> 和 <code>/mnt</code> (挂载点)：</strong> 通常用于挂载外部设备，如U盘、光盘等，这样的设备会在这些目录下创建子目录以便访问。</p>
-</li>
-<li><p><strong><code>/opt</code> (可选软件)：</strong> 用于存放由第三方提供的附加软件，通常将这些软件安装在这个目录下。</p>
-</li>
-<li><p><strong><code>/proc</code> (进程信息)：</strong> 虚拟文件系统，提供有关正在运行的进程和系统状态的信息，以文件的形式呈现。</p>
-</li>
-<li><p><strong><code>/srv</code> (服务数据)：</strong> 用于存放系统提供的服务的数据文件，如Web服务器的文档。</p>
-</li>
-<li><p><strong><code>/sys</code> (内核文件)：</strong> 用于访问内核的运行时信息，以及与内核模块的交互。</p>
-</li>
-<li><p><strong><code>/snap</code>(包管理器)：</strong>是用于存放使用 Snap 包管理器安装的应用程序和软件包的目录。</p>
-</li>
+<li><p><strong><code>/media</code> 和 <code>/mnt</code>
+(挂载点)：</strong>
+通常用于挂载外部设备，如U盘、光盘等，这样的设备会在这些目录下创建子目录以便访问。</p></li>
+<li><p><strong><code>/opt</code> (可选软件)：</strong>
+用于存放由第三方提供的附加软件，通常将这些软件安装在这个目录下。</p></li>
+<li><p><strong><code>/proc</code> (进程信息)：</strong>
+虚拟文件系统，提供有关正在运行的进程和系统状态的信息，以文件的形式呈现。</p></li>
+<li><p><strong><code>/srv</code> (服务数据)：</strong>
+用于存放系统提供的服务的数据文件，如Web服务器的文档。</p></li>
+<li><p><strong><code>/sys</code> (内核文件)：</strong>
+用于访问内核的运行时信息，以及与内核模块的交互。</p></li>
+<li><p><strong><code>/snap</code>(包管理器)：</strong>是用于存放使用
+Snap 包管理器安装的应用程序和软件包的目录。</p></li>
 </ul>
-<h2 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h2><p>在 Linux 操作系统中，文件路径是用来描述文件在文件系统中位置的字符串。Linux 的文件路径是一个层次化的结构，从根目录开始，通过目录名和斜杠（/）来指示文件的位置。</p>
-<ol>
-<li><strong>绝对路径：</strong> 绝对路径从根目录开始，指示完整的路径。例如：<ul>
-<li><code>/usr/bin</code>：指向根目录下的 <code>/usr/bin</code> 目录。</li>
-<li><code>/home/user/documents/file.txt</code>：指向根目录下的 <code>/home/user/documents</code> 目录中的 <code>file.txt</code> 文件。</li>
-</ul>
-</li>
-<li><strong>相对路径：</strong> 相对路径是<strong>相对于当前工作目录的路径。</strong>例如，如果当前工作目录是 <code>/home/user</code>，那么：<ul>
-<li><code>documents/file.txt</code>：指向 <code>/home/user/documents</code> 目录中的 <code>file.txt</code> 文件。</li>
-</ul>
-</li>
-<li><strong>特殊符号：</strong> 在路径中，一些特殊符号有特殊的含义：<ul>
-<li><code>.</code>：代表当前目录。例如：<code>./file.txt</code> 表示当前目录中的 <code>file.txt</code> 文件。</li>
-<li><code>..</code>：代表上一级目录。例如：<code>../folder/file.txt</code> 表示上一级目录中的 <code>folder</code> 目录下的 <code>file.txt</code> 文件。</li>
-<li><code>~</code>：代表当前用户的主目录。例如：<code>~/documents</code> 表示当前用户的主目录下的 <code>documents</code> 目录。</li>
-</ul>
-</li>
-<li><strong>环境变量：</strong> 有些路径中可能包含环境变量，例如 <code>$HOME</code> 代表当前用户的主目录。例如：<code>$HOME/documents</code> 表示主目录下的 <code>documents</code> 目录。</li>
+<h2 id="文件路径">文件路径</h2>
+<p>在 Linux
+操作系统中，文件路径是用来描述文件在文件系统中位置的字符串。Linux
+的文件路径是一个层次化的结构，从根目录开始，通过目录名和斜杠（/）来指示文件的位置。</p>
+<ol type="1">
+<li><strong>绝对路径：</strong>
+绝对路径从根目录开始，指示完整的路径。例如：
+<ul>
+<li><code>/usr/bin</code>：指向根目录下的 <code>/usr/bin</code>
+目录。</li>
+<li><code>/home/user/documents/file.txt</code>：指向根目录下的
+<code>/home/user/documents</code> 目录中的 <code>file.txt</code>
+文件。</li>
+</ul></li>
+<li><strong>相对路径：</strong>
+相对路径是<strong>相对于当前工作目录的路径。</strong>例如，如果当前工作目录是
+<code>/home/user</code>，那么：
+<ul>
+<li><code>documents/file.txt</code>：指向
+<code>/home/user/documents</code> 目录中的 <code>file.txt</code>
+文件。</li>
+</ul></li>
+<li><strong>特殊符号：</strong> 在路径中，一些特殊符号有特殊的含义：
+<ul>
+<li><code>.</code>：代表当前目录。例如：<code>./file.txt</code>
+表示当前目录中的 <code>file.txt</code> 文件。</li>
+<li><code>..</code>：代表上一级目录。例如：<code>../folder/file.txt</code>
+表示上一级目录中的 <code>folder</code> 目录下的 <code>file.txt</code>
+文件。</li>
+<li><code>~</code>：代表当前用户的主目录。例如：<code>~/documents</code>
+表示当前用户的主目录下的 <code>documents</code> 目录。</li>
+</ul></li>
+<li><strong>环境变量：</strong> 有些路径中可能包含环境变量，例如
+<code>$HOME</code>
+代表当前用户的主目录。例如：<code>$HOME/documents</code> 表示主目录下的
+<code>documents</code> 目录。</li>
 </ol>
-<h2 id="文件命名规则"><a href="#文件命名规则" class="headerlink" title="文件命名规则"></a>文件命名规则</h2><p>常见的 Linux 文件命名规则：</p>
-<ol>
-<li><strong>大小写敏感：</strong> Linux 文件系统是大小写敏感的。例如，<code>file.txt</code> 和 <code>File.txt</code> 被认为是两个不同的文件。</li>
-<li><strong>字母、数字和下划线：</strong> 文件名可以包含字母（大小写）、数字和下划线字符。文件名不能以数字开头。</li>
-<li><strong>连字符和点：</strong> 文件名中可以包含连字符（减号，短划线）和点（句点），但不能以它们开头或结尾。连字符通常用于分隔单词，而点通常用于文件名的扩展名。</li>
-<li><strong>扩展名：</strong> Linux 中的文件命名并不像 Windows 那样依赖于扩展名来识别文件类型。文件名可以没有扩展名，也可以使用任何合法的字符作为扩展名。</li>
-<li><strong>保留字符：</strong> Linux 文件名中不能包含特殊的保留字符，如斜杠（/）、问号（?）等。</li>
+<h2 id="文件命名规则">文件命名规则</h2>
+<p>常见的 Linux 文件命名规则：</p>
+<ol type="1">
+<li><strong>大小写敏感：</strong> Linux
+文件系统是大小写敏感的。例如，<code>file.txt</code> 和
+<code>File.txt</code> 被认为是两个不同的文件。</li>
+<li><strong>字母、数字和下划线：</strong>
+文件名可以包含字母（大小写）、数字和下划线字符。文件名不能以数字开头。</li>
+<li><strong>连字符和点：</strong>
+文件名中可以包含连字符（减号，短划线）和点（句点），但不能以它们开头或结尾。连字符通常用于分隔单词，而点通常用于文件名的扩展名。</li>
+<li><strong>扩展名：</strong> Linux 中的文件命名并不像 Windows
+那样依赖于扩展名来识别文件类型。文件名可以没有扩展名，也可以使用任何合法的字符作为扩展名。</li>
+<li><strong>保留字符：</strong> Linux
+文件名中不能包含特殊的保留字符，如斜杠（/）、问号（?）等。</li>
 <li><strong>长度限制：</strong> 文件名的最大长度为 255 个字符。</li>
 </ol>
 <p>注意：</p>
 <ul>
-<li>以<code>.</code>开头的文件名是隐藏文件，使用<code>ls</code>命令时要添加命令选项<code>-a</code>方可查看。</li>
+<li><p>以<code>.</code>开头的文件名是隐藏文件，使用<code>ls</code>命令时要添加命令选项<code>-a</code>方可查看。</p></li>
+<li><p>虽说Linux可以使用特殊字符作为文件名，但一般不推荐使用特殊字符。</p></li>
 </ul>
-<ul>
-<li>虽说Linux可以使用特殊字符作为文件名，但一般不推荐使用特殊字符。</li>
-</ul>
-<p>例如：用 （空格）当作文件名；在Ubuntu下系统会以引号显示该文件，但有的Linux版本可能会直接不显示该文件。文件名的含义尽量给文件命名以反映其内容、用途或功能，以便其他人能够轻松理解和识别文件。</p>
+<p>例如：用
+（空格）当作文件名；在Ubuntu下系统会以引号显示该文件，但有的Linux版本可能会直接不显示该文件。文件名的含义尽量给文件命名以反映其内容、用途或功能，以便其他人能够轻松理解和识别文件。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">touch</span> <span class="string">&#x27; &#x27;</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line"><span class="string">&#x27; &#x27;</span>   book   gitclone_file   <span class="built_in">test</span>   </span><br></pre></td></tr></table></figure>
-<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><blockquote>
+<h1 id="命令">命令</h1>
+<blockquote>
 <p>Linux是一种类Unix操作系统，近些年来Linux的桌面版本层出不穷，一定程度上极大简化了Linux的个人使用。面对server等版本，掌握shell终端命令的使用可以更加方便快速的操作Linux。</p>
 </blockquote>
-<h2 id="目录操作命令"><a href="#目录操作命令" class="headerlink" title="目录操作命令"></a>目录操作命令</h2><h3 id="查看路径"><a href="#查看路径" class="headerlink" title="查看路径"></a>查看路径</h3><ul>
-<li><code>pwd</code>    查看当前路径，Print Working Directory的缩写</li>
+<h2 id="目录操作命令">目录操作命令</h2>
+<h3 id="查看路径">查看路径</h3>
+<ul>
+<li><code>pwd</code> 查看当前路径，Print Working Directory的缩写</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">pwd</span></span><br><span class="line">/home/exiler</span><br></pre></td></tr></table></figure>
-<h3 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h3><ul>
-<li><code>mkdir</code>    一次建立一个或几个目录</li>
+<h3 id="创建目录">创建目录</h3>
+<ul>
+<li><code>mkdir</code> 一次建立一个或几个目录</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> document picture  <span class="comment">#新建目录</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line">document  picture</span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> ~/picture/temp  <span class="comment">#创建子目录</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> ~/picture/</span><br><span class="line">temp</span><br></pre></td></tr></table></figure>
-<p>创建子目录默认为为已存在的目录创建子目录，若想要完整地创建一个不存在目录结构，请使用<code>mkdir -p</code>    指令：</p>
+<p>创建子目录默认为为已存在的目录创建子目录，若想要完整地创建一个不存在目录结构，请使用<code>mkdir -p</code>
+指令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exiler@localhost:~$ mkdir ~/tempx/job  #error</span><br><span class="line">mkdir: cannot create directory ‘/home/exiler/tempx/job’: No such file or directory  </span><br><span class="line">exiler@localhost:~$ mkdir -p ~/tempx/job   #true</span><br><span class="line">exiler@localhost:~$ ls</span><br><span class="line">document  picture  tempx</span><br><span class="line">exiler@localhost:~$ ls ~/tempx/</span><br><span class="line">job</span><br></pre></td></tr></table></figure>
-<h3 id="移动目录"><a href="#移动目录" class="headerlink" title="移动目录"></a>移动目录</h3><ul>
-<li><code>mv</code>    move的缩写，可以用来移动文件，也可以用于重命名文件</li>
+<h3 id="移动目录">移动目录</h3>
+<ul>
+<li><code>mv</code>
+move的缩写，可以用来移动文件，也可以用于重命名文件</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">mv</span> <span class="built_in">source</span> destination</span></span><br><span class="line">exiler@localhost:~$ tree</span><br><span class="line">.</span><br><span class="line">├── document</span><br><span class="line">├── picture</span><br><span class="line">│   └── temp</span><br><span class="line">└── tempx</span><br><span class="line">    └── job</span><br><span class="line">    </span><br><span class="line">5 directories, 0 files</span><br><span class="line">exiler@localhost:~$ mv ~/picture/temp document/ #移动文件</span><br><span class="line">exiler@localhost:~$ tree</span><br><span class="line">.</span><br><span class="line">├── document</span><br><span class="line">│   └── temp</span><br><span class="line">├── picture</span><br><span class="line">└── tempx</span><br><span class="line">    └── job</span><br></pre></td></tr></table></figure>
 <p>若source文件与的destination目录下的某个文件存在文件名相同的情况，则mv命令会不发出警告地把destination目录下的同名文件替换，导致某些重要文件丢失。</p>
@@ -407,9 +460,11 @@
 <li>重命名</li>
 </ul>
 <p>Linux中并没有专门用来重命名的命令，因为mv命令可以轻松实现文件重命名</p>
-<p>例如，如果要将文件 “oldname.txt” 重命名为 “newname.txt”，你可以使用以下命令：</p>
+<p>例如，如果要将文件 "oldname.txt" 重命名为
+"newname.txt"，你可以使用以下命令：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> oldname.txt newname.txt</span><br></pre></td></tr></table></figure>
-<h3 id="删除目录"><a href="#删除目录" class="headerlink" title="删除目录"></a>删除目录</h3><ul>
+<h3 id="删除目录">删除目录</h3>
+<ul>
 <li><code>rmdir</code>用来<strong>删除空目录</strong>，后跟要删除的空目录名即可。</li>
 <li><code>rm</code>用来删除文件</li>
 </ul>
@@ -422,22 +477,26 @@
 <li>使用<code>rm -r</code>递归删除整个目录：</li>
 </ul>
 <p><code>rm -r</code>命令会递归删除一个目录下的所有文件和子目录下的文件，最后再删除选中的目录。使用该命令时要格外小心，特别是以root身份执行该命令。</p>
-<h3 id="复制目录"><a href="#复制目录" class="headerlink" title="复制目录"></a>复制目录</h3><ul>
-<li><code>cp</code>  </li>
+<h3 id="复制目录">复制目录</h3>
+<ul>
+<li><code>cp</code></li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> <span class="built_in">source</span> destination</span><br></pre></td></tr></table></figure>
 <p>和<code>mv</code>命令一样，<code>cp</code>默认情况下会也会覆盖目标目录中的同名文件。</p>
-<ol>
+<ol type="1">
 <li>可以使用-i选项对这种情况进行提示.</li>
 <li>可以使用-b选项对同名文件改名后再复制。这两个选项的使用和mv命令中一样。</li>
 </ol>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> test.php <span class="built_in">test</span>/  </span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">cp</span> -i hello.php picture/</span><br><span class="line"><span class="built_in">cp</span>: overwrite <span class="string">&#x27;picture/hello.php&#x27;</span>?</span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">cp</span> -b hello.php picture/</span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> picture/</span><br><span class="line">hello.php  hello.php~</span><br></pre></td></tr></table></figure>
-<h3 id="跳转目录"><a href="#跳转目录" class="headerlink" title="跳转目录"></a>跳转目录</h3><ul>
-<li><code>cd</code>命令可以用来切换工作目录，Change Directory的缩写.</li>
+<h3 id="跳转目录">跳转目录</h3>
+<ul>
+<li><code>cd</code>命令可以用来切换工作目录，Change
+Directory的缩写.</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../ <span class="comment">#返回上级目录</span></span><br><span class="line"><span class="built_in">cd</span> ../.. <span class="comment">#返回上级目录的上级目录，以此类推</span></span><br><span class="line"><span class="built_in">cd</span>  <span class="comment">#返回用户目录</span></span><br><span class="line"><span class="built_in">cd</span> ~ <span class="comment">#返回用户目录</span></span><br><span class="line"><span class="built_in">cd</span> /usr/bin <span class="comment">#进入usr目录下的bin目录</span></span><br></pre></td></tr></table></figure>
 <p>使用<code>cd</code>命令时要注意区分相对路径和绝对路径的使用。</p>
-<h2 id="文件操作命令"><a href="#文件操作命令" class="headerlink" title="文件操作命令"></a>文件操作命令</h2>
+<h2 id="文件操作命令">文件操作命令</h2>
+
     </div>
 
     
@@ -557,7 +616,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%AA%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">绪言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">Linux下的文件目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">1.3.</span> <span class="nav-text">文件路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="nav-number">1.4.</span> <span class="nav-text">文件命名规则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">目录操作命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%B7%AF%E5%BE%84"><span class="nav-number">2.1.1.</span> <span class="nav-text">查看路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">移动目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.4.</span> <span class="nav-text">删除目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.5.</span> <span class="nav-text">复制目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E8%BD%AC%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.6.</span> <span class="nav-text">跳转目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">文件操作命令</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%AA%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">绪言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">Linux下的文件目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">1.3.</span> <span class="nav-text">文件路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="nav-number">1.4.</span> <span class="nav-text">文件命名规则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">目录操作命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%B7%AF%E5%BE%84"><span class="nav-number">2.1.1.</span> <span class="nav-text">查看路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">移动目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.4.</span> <span class="nav-text">删除目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.5.</span> <span class="nav-text">复制目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E8%BD%AC%E7%9B%AE%E5%BD%95"><span class="nav-number">2.1.6.</span> <span class="nav-text">跳转目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">文件操作命令</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -573,20 +632,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
