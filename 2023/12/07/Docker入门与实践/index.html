@@ -20,17 +20,25 @@
     var CONFIG = {"hostname":"lgq007.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://lgq007.github.io/tags/index.html">
+  <meta name="description" content="Docker是基于go语言开发实现，基于Linux内核的cgroup和namespace，以及OverlayFS类的Union FS等技术，对进程进行封装隔离，位于操作系统层面的虚拟化技术。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！   工作机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker入门与实践">
+<meta property="og:url" content="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/index.html">
 <meta property="og:site_name" content="exiler&#39;s Blog">
+<meta property="og:description" content="Docker是基于go语言开发实现，基于Linux内核的cgroup和namespace，以及OverlayFS类的Union FS等技术，对进程进行封装隔离，位于操作系统层面的虚拟化技术。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！   工作机制">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-07-14T13:58:11.000Z">
-<meta property="article:modified_time" content="2023-12-05T14:57:08.333Z">
+<meta property="og:image" content="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/111111.jpg">
+<meta property="og:image" content="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/virtualization.png">
+<meta property="og:image" content="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/docker.png">
+<meta property="article:published_time" content="2023-12-07T15:15:49.000Z">
+<meta property="article:modified_time" content="2023-12-07T15:21:02.364Z">
 <meta property="article:author" content="exiler">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="虚拟化">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/111111.jpg">
 
-<link rel="canonical" href="http://lgq007.github.io/tags/">
+<link rel="canonical" href="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
 
 
 <script id="page-configurations">
@@ -38,13 +46,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签 | exiler's Blog
-</title>
+  <title>Docker入门与实践 | exiler's Blog</title>
   
 
 
@@ -195,52 +202,221 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="zh-CN">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="exiler">
+      <meta itemprop="description" content="日行一步，功不唐捐 !">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="exiler's Blog">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker入门与实践
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">标签
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
 
-<div class="post-meta">
+              <time title="创建时间：2023-12-07 23:15:49 / 修改时间：23:21:02" itemprop="dateCreated datePublished" datetime="2023-12-07T23:15:49+08:00">2023-12-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%B9%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">容器</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%B9%E5%99%A8/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
   
 
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Docker是基于go语言开发实现，基于Linux内核的<code>cgroup</code>和<code>namespace</code>，以及<code>OverlayFS</code>类的<code>Union FS</code>等技术，对<strong>进程</strong>进行封装隔离，位于<code>操作系统层面的虚拟化技术</code>。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！</p>
+<figure>
+<img src="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/111111.jpg" alt="工作机制">
+<figcaption aria-hidden="true">工作机制</figcaption>
+</figure>
+<span id="more"></span>
+<p>Docker在容器的基础之上，进一步提高了封装技术，做到从文件系、网络互连到进程隔离等等，极大的简化了容器的创建和维护，使得Docker技术比虚拟机技术更为轻便、快捷。</p>
+<h1 id="docker与virtual-machines技术的区别">Docker与Virtual
+Machines技术的区别</h1>
+<figure>
+<img src="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/virtualization.png" alt="传统虚拟化">
+<figcaption aria-hidden="true">传统虚拟化</figcaption>
+</figure>
+<ul>
+<li>从图中可以看出，在虚拟机技术中，要先在宿主机操作系统中虚拟出一套硬件之后，在其上运行一个完整的操作系统，然后在此操作系统上运行所需的应用进程。</li>
+</ul>
+<figure>
+<img src="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/docker.png" alt="Docker">
+<figcaption aria-hidden="true">Docker</figcaption>
+</figure>
+<ul>
+<li>而在容器中，应用进程直接运行于宿主的内核，容器没有自己的内核，也没有进行硬件虚拟，节约了大量的资源。</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">特性</th>
+<th style="text-align: center;">容器</th>
+<th style="text-align: center;">虚拟机</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">启动速度</td>
+<td style="text-align: center;">秒级</td>
+<td style="text-align: center;">分钟级</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">硬盘使用</td>
+<td style="text-align: center;">一般为MB</td>
+<td style="text-align: center;">一般为GB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">性能</td>
+<td style="text-align: center;">接近原生</td>
+<td style="text-align: center;">更弱</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">系统支持量</td>
+<td style="text-align: center;">单机支持上千个容器</td>
+<td style="text-align: center;">一般几十个</td>
+</tr>
+</tbody>
+</table>
+<h2 id="doker的优点">Doker的优点</h2>
+<ul>
+<li><p>更高效的利用系统资源</p></li>
+<li><p>更快速的启动时间</p></li>
+<li><p>应用开发、测试、部署一致的运行环境</p></li>
+<li><p>持续交付和部署</p></li>
+<li><p>更轻松的迁移</p></li>
+<li><p>更轻松的维护和扩展</p></li>
+</ul>
+<h1 id="docker部署及配置">Docker部署及配置</h1>
+<ul>
+<li>安装Docker工具</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -anptu</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>exiler
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/" title="Docker入门与实践">http://lgq007.github.io/2023/12/07/Docker入门与实践/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
 </div>
 
-</header>
-
-      
-      
-      
-      <div class="post-body">
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              目前共计 10 个标签
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/C/" style="font-size: 24px; color: #4f4f4f">C</a> <a href="/tags/C/" style="font-size: 30px; color: #111">C++</a> <a href="/tags/Docker/" style="font-size: 12px; color: #ccc">Docker</a> <a href="/tags/Linux/" style="font-size: 12px; color: #ccc">Linux</a> <a href="/tags/c/" style="font-size: 12px; color: #ccc">c</a> <a href="/tags/html/" style="font-size: 12px; color: #ccc">html</a> <a href="/tags/%E5%9B%BE/" style="font-size: 24px; color: #4f4f4f">图</a> <a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/" style="font-size: 12px; color: #ccc">并查集</a> <a href="/tags/%E6%A0%91/" style="font-size: 18px; color: #8e8e8e">树</a> <a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 12px; color: #ccc">虚拟化</a>
-            </div>
-          </div>
-          <!-- 友情链接-->
         
-      </div>
-      
-      
-      
-    </div>
-    
 
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-book"></i> Docker</a>
+              <a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" rel="tag"><i class="fa fa-book"></i> 虚拟化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/07/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-%E4%B8%80-%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/" rel="prev" title="算法笔记(一)：并查集">
+      <i class="fa fa-chevron-left"></i> 算法笔记(一)：并查集
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
     
-    
-    
+  </article>
+  
+  
+  
+
 
 
           </div>
@@ -292,6 +468,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E4%B8%8Evirtual-machines%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">Docker与Virtual
+Machines技术的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#doker%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">Doker的优点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E9%83%A8%E7%BD%B2%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Docker部署及配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
