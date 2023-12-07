@@ -201,6 +201,284 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/08/03/C++%20%E5%85%A5%E9%97%A8-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="exiler">
+      <meta itemprop="description" content="日行一步，功不唐捐 !">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="exiler's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/03/C++%20%E5%85%A5%E9%97%A8-2/" class="post-title-link" itemprop="url">C ++入门-2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-03 20:23:37" itemprop="dateCreated datePublished" datetime="2023-08-03T20:23:37+08:00">2023-08-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-04 18:12:10" itemprop="dateModified" datetime="2023-08-04T18:12:10+08:00">2023-08-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/08/03/C++%20%E5%85%A5%E9%97%A8-2/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/08/03/C++%20%E5%85%A5%E9%97%A8-2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="命名空间的using声明">命名空间的using声明</h1>
+<ul>
+<li>使用某个命名空间：例如<code>using std::cin</code>表示使用命名空间<code>std</code>中的名字<code>cin</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//using1.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="comment">// using 声明，当我们使用cin时，从命名空间std中获取</span></span><br><span class="line"><span class="keyword">using</span> std::cin;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	cin &gt;&gt; i;<span class="comment">//正确 cin和std::cin含义相同</span></span><br><span class="line">	<span class="comment">// cout &lt;&lt; i; //错误 没有对应的using声明，必须使用完整的名字</span></span><br><span class="line">    <span class="comment">//[Error] &#x27;cout&#x27; was not declared in this scope; did you mean &#x27;std::cout&#x27;?</span></span><br><span class="line">	std::cout &lt;&lt; i; <span class="comment">//正确 显示地从std中使用cout</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每个名字都需要独立的USING声明</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//using2.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="comment">// using declarations for names from the standard library</span></span><br><span class="line"><span class="keyword">using</span> std::cin;</span><br><span class="line"><span class="keyword">using</span> std::cout;</span><br><span class="line"><span class="keyword">using</span> std::endl;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;Enter two numbers:&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="type">int</span> v1, v2;</span><br><span class="line">	cin &gt;&gt; v1 &gt;&gt; v2;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;The sum of &quot;</span> &lt;&lt; v1 &lt;&lt; <span class="string">&quot; and &quot;</span> &lt;&lt; v2</span><br><span class="line">	     &lt;&lt; <span class="string">&quot; is &quot;</span> &lt;&lt; v1 + v2 &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/03/C++%20%E5%85%A5%E9%97%A8-2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/08/03/C++%20%E5%85%A5%E9%97%A8-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="exiler">
+      <meta itemprop="description" content="日行一步，功不唐捐 !">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="exiler's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/03/C++%20%E5%85%A5%E9%97%A8-1/" class="post-title-link" itemprop="url">C++ 入门-1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-03 00:04:06 / 修改时间：00:07:40" itemprop="dateCreated datePublished" datetime="2023-08-03T00:04:06+08:00">2023-08-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/08/03/C++%20%E5%85%A5%E9%97%A8-1/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/08/03/C++%20%E5%85%A5%E9%97%A8-1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="基本内置类型">基本内置类型</h1>
+<blockquote>
+<p>不同的编译器和平台可能会有差异,下表为在Windows_X64环境下使用MinGw GCC
+9.2.0 32_bit为例:</p>
+</blockquote>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">类型</th>
+<th style="text-align: center;">含义</th>
+<th style="text-align: center;">最小尺寸</th>
+<th style="text-align: center;">范围</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">bool</td>
+<td style="text-align: center;">布尔类型</td>
+<td style="text-align: center;">8bits</td>
+<td style="text-align: center;">true或false</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">char</td>
+<td style="text-align: center;">字符型</td>
+<td style="text-align: center;">8bits</td>
+<td style="text-align: center;">-2^7 ~ 2^7-1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">wchar_t</td>
+<td style="text-align: center;">宽字符</td>
+<td style="text-align: center;">16bits</td>
+<td style="text-align: center;">0 ~ 2^16 - 1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">char16_t</td>
+<td style="text-align: center;">Unicode字符</td>
+<td style="text-align: center;">16bits</td>
+<td style="text-align: center;">0 ~ 2^16 - 1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">char32_t</td>
+<td style="text-align: center;">Unicode字符</td>
+<td style="text-align: center;">32bits</td>
+<td style="text-align: center;">0 ~ 2^32 - 1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">short</td>
+<td style="text-align: center;">短整型</td>
+<td style="text-align: center;">16bits</td>
+<td style="text-align: center;">-2^15 ~ 2^15-1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">int</td>
+<td style="text-align: center;">整型</td>
+<td style="text-align: center;">32bits</td>
+<td style="text-align: center;">-2^31 ~ 2^31-1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">long</td>
+<td style="text-align: center;">长整型</td>
+<td style="text-align: center;">32bits</td>
+<td style="text-align: center;">-2^31 ~ 2^31-1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">long long</td>
+<td style="text-align: center;">长整型</td>
+<td style="text-align: center;">64bits</td>
+<td style="text-align: center;">-2^63 ~ 2^63-1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">float</td>
+<td style="text-align: center;">单精度浮点型</td>
+<td style="text-align: center;">32bits</td>
+<td style="text-align: center;">大约7位有效数字</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">double</td>
+<td style="text-align: center;">双精度浮点型</td>
+<td style="text-align: center;">64bits</td>
+<td style="text-align: center;">大约15位有效数字</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">long double</td>
+<td style="text-align: center;">扩展精度浮点型</td>
+<td style="text-align: center;">96bits</td>
+<td style="text-align: center;">更高的有效数字</td>
+</tr>
+</tbody>
+</table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/03/C++%20%E5%85%A5%E9%97%A8-1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/07/15/C++%E4%B8%AD%E7%9A%84%E5%BC%95%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -467,7 +745,7 @@ Berners-Lee）发明。它的最大特点就是支持超链接，可以跳转到
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
