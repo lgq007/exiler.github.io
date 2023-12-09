@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"lgq007.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="排序：是按关键字的非递增（或非递减）顺序，对一组记录重新进行排列的操作。     排序类型 实现方法     交换类排序 冒泡排序、快速排序   选择类排序 简单选择排序、树形选择排序、堆排序   归并类排序 2-路归并排序   分配类排序 基数排序、桶排序   插入类排序 直接插入排序、折半插入排序、希尔排序    本篇文章主要">
+  <meta name="description" content="按照 Docker 最佳实践的要求，容器不应该向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用数据卷（Volume）、或者绑定宿主目录，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写，其性能和稳定性更高。 数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，使用数据卷后，容器删除或者重新运行之后，数据却不会丢失。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="经典排序算法">
-<meta property="og:url" content="http://lgq007.github.io/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="Docker数据管理">
+<meta property="og:url" content="http://lgq007.github.io/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/index.html">
 <meta property="og:site_name" content="exiler&#39;s Blog">
-<meta property="og:description" content="排序：是按关键字的非递增（或非递减）顺序，对一组记录重新进行排列的操作。     排序类型 实现方法     交换类排序 冒泡排序、快速排序   选择类排序 简单选择排序、树形选择排序、堆排序   归并类排序 2-路归并排序   分配类排序 基数排序、桶排序   插入类排序 直接插入排序、折半插入排序、希尔排序    本篇文章主要">
+<meta property="og:description" content="按照 Docker 最佳实践的要求，容器不应该向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用数据卷（Volume）、或者绑定宿主目录，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写，其性能和稳定性更高。 数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，使用数据卷后，容器删除或者重新运行之后，数据却不会丢失。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-12-05T15:18:04.000Z">
-<meta property="article:modified_time" content="2023-12-08T15:47:57.611Z">
+<meta property="article:published_time" content="2023-12-09T11:14:48.000Z">
+<meta property="article:modified_time" content="2023-12-09T13:59:55.120Z">
 <meta property="article:author" content="exiler">
-<meta property="article:tag" content="排序">
-<meta property="article:tag" content="sort">
+<meta property="article:tag" content="Dokcer">
+<meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://lgq007.github.io/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+<link rel="canonical" href="http://lgq007.github.io/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>经典排序算法 | exiler's Blog</title>
+  <title>Docker数据管理 | exiler's Blog</title>
   
 
 
@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -219,7 +219,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          经典排序算法
+          Docker数据管理
         </h1>
 
         <div class="post-meta">
@@ -228,23 +228,21 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2023-12-05 23:18:04" itemprop="dateCreated datePublished" datetime="2023-12-05T23:18:04+08:00">2023-12-05</time>
+              <time title="创建时间：2023-12-09 19:14:48 / 修改时间：21:59:55" itemprop="dateCreated datePublished" datetime="2023-12-09T19:14:48+08:00">2023-12-09</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-08 23:47:57" itemprop="dateModified" datetime="2023-12-08T23:47:57+08:00">2023-12-08</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Docker/%E8%99%9A%E6%8B%9F%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">虚拟化</span></a>
                 </span>
             </span>
 
@@ -264,8 +262,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -275,7 +273,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>805</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -294,47 +292,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
-<li>排序：是按关键字的非递增（或非递减）顺序，对一组记录重新进行排列的操作。</li>
-</ul>
-<table>
-<thead>
-<tr class="header">
-<th>排序类型</th>
-<th style="text-align: center;">实现方法</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>交换类排序</td>
-<td style="text-align: center;">冒泡排序、快速排序</td>
-</tr>
-<tr class="even">
-<td>选择类排序</td>
-<td style="text-align: center;">简单选择排序、树形选择排序、堆排序</td>
-</tr>
-<tr class="odd">
-<td>归并类排序</td>
-<td style="text-align: center;">2-路归并排序</td>
-</tr>
-<tr class="even">
-<td>分配类排序</td>
-<td style="text-align: center;">基数排序、桶排序</td>
-</tr>
-<tr class="odd">
-<td>插入类排序</td>
-<td style="text-align: center;">直接插入排序、折半插入排序、希尔排序</td>
-</tr>
-</tbody>
-</table>
-<p>本篇文章主要讲解各种排序算法的主题思想以及<code>C/C++</code>代码实现。</p>
+        <blockquote>
+<p>按照 Docker
+最佳实践的要求，容器不应该向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用<code>数据卷（Volume）</code>、或者<code>绑定宿主目录</code>，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写，其性能和稳定性更高。</p>
+<p>数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，使用数据卷后，容器删除或者重新运行之后，数据却不会丢失。</p>
+</blockquote>
 <span id="more"></span>
-<h1 id="插入类排序">插入类排序</h1>
+<h1 id="数据卷">数据卷</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">创建数据卷</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume create &lt;volume_name&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看数据卷</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看数据卷信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume inspect &lt;volume_name&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="创建数据卷">创建数据卷</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume create --name webserver_volume \</span></span><br><span class="line"><span class="language-bash">	--opt <span class="built_in">type</span>=tmpfs \</span></span><br><span class="line"><span class="language-bash">	--opt device=tmpfs \</span></span><br><span class="line"><span class="language-bash">	--opt o=size=100m</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>插入类排序的基本思想是：每次将一个待排序的记录，按其关键字大小插入到前面已经排好序的一组记录中的适当位置，直到所有待排序记录全部插入为止。</li>
+<li>启动</li>
 </ul>
-<h2 id="直接插入排序">直接插入排序</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span>  <span class="title">insertSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;a)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> i, j, temp;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; a.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (a[i - <span class="number">1</span>] &gt; a[i]) &#123;</span><br><span class="line">			temp = a[i];</span><br><span class="line">			<span class="keyword">for</span> ( j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; a[j] &gt; temp; j--) &#123;</span><br><span class="line">				a[j + <span class="number">1</span>] = a[j];</span><br><span class="line">			&#125;</span><br><span class="line">			a[j + <span class="number">1</span>] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">	<span class="type">int</span> n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)&#123;</span><br><span class="line">		<span class="type">int</span> m;</span><br><span class="line">		cin &gt;&gt; m;</span><br><span class="line">		v.<span class="built_in">push_back</span>(m);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">insertSort</span>(v);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; v.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">		cout &lt;&lt; v[i] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker container run </span><br><span class="line">-itd </span><br><span class="line">--name webserver </span><br><span class="line">-p 80:80 </span><br><span class="line">-v webserver_volume:/usr/share/nginx/html nginx:1.21 /bin/bash</span><br></pre></td></tr></table></figure>
+<h2 id="查看数据卷详细信息">查看数据卷详细信息</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume inspect webserver_volume</span></span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;CreatedAt&quot;: &quot;2023-12-09T21:41:28+08:00&quot;,</span><br><span class="line">        &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">        &quot;Labels&quot;: null,</span><br><span class="line">        #&lt;-数据卷的挂载位置-&gt;</span><br><span class="line">        &quot;Mountpoint&quot;:&quot;/var/lib/docker/volumes/docker_volume/_data&quot;,</span><br><span class="line">        &quot;Name&quot;: &quot;webserver_volume&quot;,</span><br><span class="line">        &quot;Options&quot;: &#123;</span><br><span class="line">            &quot;device&quot;: &quot;tmpfs&quot;,</span><br><span class="line">            &quot;o&quot;: &quot;size=100m&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;tmpfs&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Scope&quot;: &quot;local&quot;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">测试：</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;hello docker volume create&quot;</span> &gt;/var/lib/docker/volumes/docker_volume/_data/index.html</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl http://192.168.57.100:80</span></span><br></pre></td></tr></table></figure>
+<h1 id="挂载宿主机目录">挂载宿主机目录</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以安装nginx为例</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1.在宿主机先创建一个目录</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> /usr/local/docker_volume</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2.挂载命令</span></span><br><span class="line"></span><br><span class="line">-v &lt;hostpath&gt;:&lt;containerpath&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">3.挂载到宿主机目录</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container run</span> </span><br><span class="line">-itd </span><br><span class="line">--name webserver </span><br><span class="line">-p 80:80 </span><br><span class="line">-v /usr/local/docker_volume:/usr/share/nginx/html nginx:1.21</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">拉取一个网页主要信息到指定目录</span></span><br><span class="line">wget www.baidu.com -O /usr/local/docker_volume</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-O</code>:
+指定保存下载文件的路径和文件名。在这个例子中，文件将被保存为
+<code>/usr/local/docker_volume</code>。</li>
+</ul>
 
     </div>
 
@@ -350,7 +331,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://lgq007.github.io/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" title="经典排序算法">http://lgq007.github.io/2023/12/05/排序算法/</a>
+    <a href="http://lgq007.github.io/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/" title="Docker数据管理">http://lgq007.github.io/2023/12/09/Docker中数据卷挂载/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -380,8 +361,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag"><i class="fa fa-book"></i> 排序</a>
-              <a href="/tags/sort/" rel="tag"><i class="fa fa-book"></i> sort</a>
+              <a href="/tags/Dokcer/" rel="tag"><i class="fa fa-book"></i> Dokcer</a>
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fa fa-book"></i> 容器</a>
           </div>
 
         
@@ -390,13 +371,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/10/22/Tree-2/" rel="prev" title="Tree-2">
-      <i class="fa fa-chevron-left"></i> Tree-2
+    <a href="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/" rel="prev" title="Docker基本命令">
+      <i class="fa fa-chevron-left"></i> Docker基本命令
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/12/05/%E5%9C%A8Docker%E4%B8%AD%E9%83%A8%E7%BD%B2Hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4/" rel="next" title="在Docker中部署Hadoop完全分布式集群">
-      在Docker中部署Hadoop完全分布式集群 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -456,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E7%B1%BB%E6%8E%92%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">插入类排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="nav-number">1.1.</span> <span class="nav-text">直接插入排序</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="nav-number">1.</span> <span class="nav-text">数据卷</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="nav-number">1.1.</span> <span class="nav-text">创建数据卷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%8D%B7%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.</span> <span class="nav-text">查看数据卷详细信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">挂载宿主机目录</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
