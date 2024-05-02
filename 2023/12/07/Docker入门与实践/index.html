@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"lgq007.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Docker是基于go语言开发实现，基于Linux内核的cgroup和namespace，以及OverlayFS类的Union FS等技术，对进程进行封装隔离，位于操作系统层面的虚拟化技术。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！   工作机制">
+  <meta name="description" content="Docker是基于go语言开发实现，基于Linux内核的cgroup和namespace，以及OverlayFS类的Union FS等技术，对进程进行封装隔离，位于操作系统层面的虚拟化技术。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker基本命令">
 <meta property="og:url" content="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/index.html">
 <meta property="og:site_name" content="exiler&#39;s Blog">
-<meta property="og:description" content="Docker是基于go语言开发实现，基于Linux内核的cgroup和namespace，以及OverlayFS类的Union FS等技术，对进程进行封装隔离，位于操作系统层面的虚拟化技术。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！   工作机制">
+<meta property="og:description" content="Docker是基于go语言开发实现，基于Linux内核的cgroup和namespace，以及OverlayFS类的Union FS等技术，对进程进行封装隔离，位于操作系统层面的虚拟化技术。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/111111.jpg">
 <meta property="og:image" content="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/virtualization.png">
 <meta property="og:image" content="http://lgq007.github.io/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/docker.png">
 <meta property="article:published_time" content="2023-12-07T15:15:49.000Z">
-<meta property="article:modified_time" content="2023-12-08T14:26:14.936Z">
+<meta property="article:modified_time" content="2024-05-02T14:02:04.070Z">
 <meta property="article:author" content="exiler">
 <meta property="article:tag" content="虚拟化">
 <meta property="article:tag" content="Docker">
@@ -240,7 +240,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-08 22:26:14" itemprop="dateModified" datetime="2023-12-08T22:26:14+08:00">2023-12-08</time>
+                <time title="修改时间：2024-05-02 22:02:04" itemprop="dateModified" datetime="2024-05-02T22:02:04+08:00">2024-05-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,14 +283,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.6k</span>
+              <span>5.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -303,24 +303,25 @@
 
       
         <p>Docker是基于go语言开发实现，基于Linux内核的<code>cgroup</code>和<code>namespace</code>，以及<code>OverlayFS</code>类的<code>Union FS</code>等技术，对<strong>进程</strong>进行封装隔离，位于<code>操作系统层面的虚拟化技术</code>。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！</p>
+<span id="more"></span>
 <figure>
-<img src="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/111111.jpg" alt="工作机制">
+<img src="111111.jpg" alt="工作机制">
 <figcaption aria-hidden="true">工作机制</figcaption>
 </figure>
-<span id="more"></span>
+<!--more-->
 <p>[TOC]</p>
 <p>Docker在容器的基础之上，进一步提高了封装技术，做到从文件系、网络互连到进程隔离等等，极大的简化了容器的创建和维护，使得Docker技术比虚拟机技术更为轻便、快捷。</p>
 <h1 id="docker与virtual-machines技术的区别">Docker与Virtual
 Machines技术的区别</h1>
 <figure>
-<img src="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/virtualization.png" alt="传统虚拟化">
+<img src="virtualization.png" alt="传统虚拟化">
 <figcaption aria-hidden="true">传统虚拟化</figcaption>
 </figure>
 <ul>
 <li>从图中可以看出，在虚拟机技术中，要先在宿主机操作系统中虚拟出一套硬件之后，在其上运行一个完整的操作系统，然后在此操作系统上运行所需的应用进程。</li>
 </ul>
 <figure>
-<img src="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/docker.png" alt="Docker">
+<img src="docker.png" alt="Docker">
 <figcaption aria-hidden="true">Docker</figcaption>
 </figure>
 <ul>
@@ -464,6 +465,30 @@ Q），容器将保持运行状态。</p></li>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">容器到宿主机</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">cp</span> &lt;container_id_or_name&gt;:/container_path/ /os_path/</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">cp</span> /os_path/ &lt;container_id_or_name&gt;:/container_path/</span></span><br></pre></td></tr></table></figure>
 <h1 id="repository基本操作">repository基本操作</h1>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker login  <span class="comment">#登陆远程仓库，在这之前要注册一个dockerhub账号</span></span></span><br><span class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don&#x27;t have a Docker ID, head over to https://hub.docker.com to create one.</span><br><span class="line">Username: lgq007</span><br><span class="line">Password:</span><br><span class="line">WARNING! Your password will be stored unencrypted in /root/.docker/config.json.</span><br><span class="line">Configure a credential helper to remove this warning. See</span><br><span class="line">https://docs.docker.com/engine/reference/commandline/login/#credentials-store</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">logout</span>  <span class="comment">#退出仓库</span></span></span><br><span class="line">Removing login credentials for https://index.docker.io/v1/</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>按照 Docker
+最佳实践的要求，容器不应该向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用<code>数据卷（Volume）</code>、或者<code>绑定宿主目录</code>，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写，其性能和稳定性更高。</p>
+<p>数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，使用数据卷后，容器删除或者重新运行之后，数据却不会丢失。</p>
+</blockquote>
+<!--more-->
+<h1 id="数据卷">数据卷</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">创建数据卷</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume create &lt;volume_name&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看数据卷</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看数据卷信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume inspect &lt;volume_name&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="创建数据卷">创建数据卷</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume create --name webserver_volume \</span></span><br><span class="line"><span class="language-bash">	--opt <span class="built_in">type</span>=tmpfs \</span></span><br><span class="line"><span class="language-bash">	--opt device=tmpfs \</span></span><br><span class="line"><span class="language-bash">	--opt o=size=100m</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>启动</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker container run </span><br><span class="line">-itd </span><br><span class="line">--name webserver </span><br><span class="line">-p 80:80 </span><br><span class="line">-v webserver_volume:/usr/share/nginx/html nginx:1.21 /bin/bash</span><br></pre></td></tr></table></figure>
+<h2 id="查看数据卷详细信息">查看数据卷详细信息</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume inspect webserver_volume</span></span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;CreatedAt&quot;: &quot;2023-12-09T21:41:28+08:00&quot;,</span><br><span class="line">        &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">        &quot;Labels&quot;: null,</span><br><span class="line">        #&lt;-数据卷的挂载位置-&gt;</span><br><span class="line">        &quot;Mountpoint&quot;:&quot;/var/lib/docker/volumes/docker_volume/_data&quot;,</span><br><span class="line">        &quot;Name&quot;: &quot;webserver_volume&quot;,</span><br><span class="line">        &quot;Options&quot;: &#123;</span><br><span class="line">            &quot;device&quot;: &quot;tmpfs&quot;,</span><br><span class="line">            &quot;o&quot;: &quot;size=100m&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;tmpfs&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Scope&quot;: &quot;local&quot;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">测试：</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;hello docker volume create&quot;</span> &gt;/var/lib/docker/volumes/docker_volume/_data/index.html</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl http://192.168.57.100:80</span></span><br></pre></td></tr></table></figure>
+<h1 id="挂载宿主机目录">挂载宿主机目录</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以安装nginx为例</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1.在宿主机先创建一个目录</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> /usr/local/docker_volume</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2.挂载命令</span></span><br><span class="line"></span><br><span class="line">-v &lt;hostpath&gt;:&lt;containerpath&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">3.挂载到宿主机目录</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container run</span> </span><br><span class="line">-itd </span><br><span class="line">--name webserver </span><br><span class="line">-p 80:80 </span><br><span class="line">-v /usr/local/docker_volume:/usr/share/nginx/html nginx:1.21</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">拉取一个网页主要信息到指定目录</span></span><br><span class="line">wget www.baidu.com -O /usr/local/docker_volume</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-O</code>:
+指定保存下载文件的路径和文件名。在这个例子中，文件将被保存为
+<code>/usr/local/docker_volume</code>。</li>
+</ul>
 
     </div>
 
@@ -519,12 +544,12 @@ Q），容器将保持运行状态。</p></li>
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/12/07/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-%E4%B8%80-%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/" rel="prev" title="算法笔记(一)：并查集">
-      <i class="fa fa-chevron-left"></i> 算法笔记(一)：并查集
+    <a href="/2023/12/05/%E5%9C%A8Docker%E4%B8%AD%E9%83%A8%E7%BD%B2Hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4/" rel="prev" title="在Docker中部署Hadoop完全分布式集群">
+      <i class="fa fa-chevron-left"></i> 在Docker中部署Hadoop完全分布式集群
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/" rel="next" title="Docker数据管理">
-      Docker数据管理 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/12/22/C++%E4%B8%AD%E7%9A%84%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/" rel="next" title="C++中的高精度运算">
+      C++中的高精度运算 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -586,7 +611,7 @@ Q），容器将保持运行状态。</p></li>
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E4%B8%8Evirtual-machines%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">Docker与Virtual
-Machines技术的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#doker%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">Doker的优点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">Docker配置及部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">Docker基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#image%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">image基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#container%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">container基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%8C%BA%E5%88%AB"><span class="nav-number">5.1.</span> <span class="nav-text">进入容器的两种方法以及区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6"><span class="nav-number">5.2.</span> <span class="nav-text">容器与宿主机之间传输文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#repository%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">repository基本操作</span></a></li></ol></div>
+Machines技术的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#doker%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">Doker的优点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">Docker配置及部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">Docker基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#image%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">image基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#container%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">container基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%8C%BA%E5%88%AB"><span class="nav-number">5.1.</span> <span class="nav-text">进入容器的两种方法以及区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%8E%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6"><span class="nav-number">5.2.</span> <span class="nav-text">容器与宿主机之间传输文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#repository%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">repository基本操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="nav-number">7.</span> <span class="nav-text">数据卷</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="nav-number">7.1.</span> <span class="nav-text">创建数据卷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%8D%B7%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="nav-number">7.2.</span> <span class="nav-text">查看数据卷详细信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">8.</span> <span class="nav-text">挂载宿主机目录</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -602,20 +627,20 @@ Machines技术的区别</span></a><ol class="nav-child"><li class="nav-item nav-
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -656,7 +681,7 @@ Machines技术的区别</span></a><ol class="nav-child"><li class="nav-item nav-
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -665,12 +690,14 @@ Machines技术的区别</span></a><ol class="nav-child"><li class="nav-item nav-
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">94k</span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">15k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:26</span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">14 分钟</span>
 </div>
 
         

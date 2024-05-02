@@ -201,7 +201,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/">
+    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/12/22/C++%E4%B8%AD%E7%9A%84%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -215,7 +215,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/" class="post-title-link" itemprop="url">Docker数据管理</a>
+            <a href="/2023/12/22/C++%E4%B8%AD%E7%9A%84%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/" class="post-title-link" itemprop="url">C++中的高精度运算</a>
         </h2>
 
         <div class="post-meta">
@@ -224,21 +224,27 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-12-09 19:14:48 / 修改时间：21:59:55" itemprop="dateCreated datePublished" datetime="2023-12-09T19:14:48+08:00">2023-12-09</time>
+              <time title="创建时间：2023-12-22 16:30:18" itemprop="dateCreated datePublished" datetime="2023-12-22T16:30:18+08:00">2023-12-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-02 22:01:06" itemprop="dateModified" datetime="2024-05-02T22:01:06+08:00">2024-05-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                  <a href="/categories/%E9%AB%98%E7%B2%BE%E5%BA%A6/" itemprop="url" rel="index"><span itemprop="name">高精度</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker/%E8%99%9A%E6%8B%9F%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">虚拟化</span></a>
+                  <a href="/categories/%E9%AB%98%E7%B2%BE%E5%BA%A6/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
                 </span>
             </span>
 
@@ -251,8 +257,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/12/22/C++%E4%B8%AD%E7%9A%84%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/22/C++%E4%B8%AD%E7%9A%84%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -262,14 +268,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
+              <span>4.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -281,14 +287,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>按照 Docker
-最佳实践的要求，容器不应该向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用<code>数据卷（Volume）</code>、或者<code>绑定宿主目录</code>，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写，其性能和稳定性更高。</p>
-<p>数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，使用数据卷后，容器删除或者重新运行之后，数据却不会丢失。</p>
-</blockquote>
+          <p><code>c++</code>中的几种高精度运算</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/12/09/Docker%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD/#more" rel="contents">
+              <a class="btn" href="/2023/12/22/C++%E4%B8%AD%E7%9A%84%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -343,7 +345,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-08 22:26:14" itemprop="dateModified" datetime="2023-12-08T22:26:14+08:00">2023-12-08</time>
+                <time title="修改时间：2024-05-02 22:02:04" itemprop="dateModified" datetime="2024-05-02T22:02:04+08:00">2024-05-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -379,14 +381,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.6k</span>
+              <span>5.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -399,125 +401,9 @@
 
       
           <p>Docker是基于go语言开发实现，基于Linux内核的<code>cgroup</code>和<code>namespace</code>，以及<code>OverlayFS</code>类的<code>Union FS</code>等技术，对<strong>进程</strong>进行封装隔离，位于<code>操作系统层面的虚拟化技术</code>。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！</p>
-<figure>
-<img src="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/111111.jpg" alt="工作机制">
-<figcaption aria-hidden="true">工作机制</figcaption>
-</figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/12/07/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-%E4%B8%80-%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="exiler">
-      <meta itemprop="description" content="日行一步，功不唐捐 !">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="exiler's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/07/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-%E4%B8%80-%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">算法笔记(一)：并查集</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-12-07 21:17:56 / 修改时间：23:23:48" itemprop="dateCreated datePublished" datetime="2023-12-07T21:17:56+08:00">2023-12-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/12/07/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-%E4%B8%80-%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/07/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-%E4%B8%80-%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>并查集是一种精巧且实用的<strong>数据结构</strong>，常用于处理不相交集合之间的合并、查询问题。</p>
-<ul>
-<li>合并(Union)：把两个不相交的集合合并为一个集合</li>
-<li>查询(Find)：查询两个元素是否在同一集合中</li>
-</ul>
-<figure>
-<img src="/2023/12/07/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-%E4%B8%80-%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/示例图片1.png" alt="示例图片1">
-<figcaption aria-hidden="true">示例图片1</figcaption>
-</figure>
-<p>这里不必把并查集想的太过于复杂，其实这种数据结构用一个一维数组即可实现，<strong>并查集的重要思想在于用集合中的一个特别的元素（一般是一个集合中的祖先，也称为根节点）代表整个集合，参与与其他元素或集合之间的操作。</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/12/07/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0-%E4%B8%80-%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -567,6 +453,13 @@
 
               <time title="创建时间：2023-12-05 23:18:38" itemprop="dateCreated datePublished" datetime="2023-12-05T23:18:38+08:00">2023-12-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-02 21:57:14" itemprop="dateModified" datetime="2024-05-02T21:57:14+08:00">2024-05-02</time>
+              </span>
 
           
   
@@ -588,7 +481,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>4</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -607,625 +500,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h2 id="todo">TODO</h2>
 
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="exiler">
-      <meta itemprop="description" content="日行一步，功不唐捐 !">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="exiler's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">经典排序算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-12-05 23:18:04" itemprop="dateCreated datePublished" datetime="2023-12-05T23:18:04+08:00">2023-12-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-08 23:47:57" itemprop="dateModified" datetime="2023-12-08T23:47:57+08:00">2023-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>805</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li>排序：是按关键字的非递增（或非递减）顺序，对一组记录重新进行排列的操作。</li>
-</ul>
-<table>
-<thead>
-<tr class="header">
-<th>排序类型</th>
-<th style="text-align: center;">实现方法</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>交换类排序</td>
-<td style="text-align: center;">冒泡排序、快速排序</td>
-</tr>
-<tr class="even">
-<td>选择类排序</td>
-<td style="text-align: center;">简单选择排序、树形选择排序、堆排序</td>
-</tr>
-<tr class="odd">
-<td>归并类排序</td>
-<td style="text-align: center;">2-路归并排序</td>
-</tr>
-<tr class="even">
-<td>分配类排序</td>
-<td style="text-align: center;">基数排序、桶排序</td>
-</tr>
-<tr class="odd">
-<td>插入类排序</td>
-<td style="text-align: center;">直接插入排序、折半插入排序、希尔排序</td>
-</tr>
-</tbody>
-</table>
-<p>本篇文章主要讲解各种排序算法的主题思想以及<code>C/C++</code>代码实现。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/12/05/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/10/22/Tree-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="exiler">
-      <meta itemprop="description" content="日行一步，功不唐捐 !">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="exiler's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/22/Tree-2/" class="post-title-link" itemprop="url">Tree-2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-10-22 17:50:03" itemprop="dateCreated datePublished" datetime="2023-10-22T17:50:03+08:00">2023-10-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-05 23:00:16" itemprop="dateModified" datetime="2023-12-05T23:00:16+08:00">2023-12-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/10/22/Tree-2/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/10/22/Tree-2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="树的常考性质">树的常考性质</h1>
-<figure>
-<img src="/2023/10/22/Tree-2/image-20231022174230215.png" alt="image-20231022174230215">
-<figcaption aria-hidden="true">image-20231022174230215</figcaption>
-</figure>
-<hr>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/10/22/Tree-2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/10/22/Tree-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="exiler">
-      <meta itemprop="description" content="日行一步，功不唐捐 !">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="exiler's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/22/Tree-1/" class="post-title-link" itemprop="url">Tree-1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-10-22 16:05:17 / 修改时间：16:07:33" itemprop="dateCreated datePublished" datetime="2023-10-22T16:05:17+08:00">2023-10-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/10/22/Tree-1/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/10/22/Tree-1/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="树tree">树（Tree）</h1>
-<blockquote>
-<p>图是计算机科学与数学领域中一个重要的数据结构，而树是一种特殊类型的图</p>
-</blockquote>
-<p>树有以下特点：</p>
-<ol type="1">
-<li><strong><em>树是一种分层的数据结构，由节点（Node）和边（Edge）组成。</em></strong></li>
-<li><strong><em>树是一种没有环路的图，即无环图，并且它是连通的（每两个节点之间都存在路径）。</em></strong></li>
-<li><strong><em>树通常有一个根节点（Root），从根节点出发，可以沿着边到达其他节点。</em></strong></li>
-<li><strong><em>树中每个节点通常有一个父节点（除去根节点），可以用零个或多个子节点。</em></strong></li>
-<li><strong><em>树可以分为多个子树，每个子树也是一颗树。</em></strong></li>
-</ol>
-<hr>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/10/22/Tree-1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/09/09/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="exiler">
-      <meta itemprop="description" content="日行一步，功不唐捐 !">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="exiler's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/09/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">数据结构基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-09-09 09:13:54 / 修改时间：14:38:35" itemprop="dateCreated datePublished" datetime="2023-09-09T09:13:54+08:00">2023-09-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/09/09/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/09/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="数据结构基础">数据结构基础</h1>
-<h2 id="二维数组">二维数组</h2>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DataType arr[nums][nums];</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> board[<span class="number">10</span>][<span class="number">10</span>];</span><br><span class="line"><span class="comment">//二维数组，第一维度有10个成员，第二维度有10个成员</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> c[<span class="number">4</span>][<span class="number">5</span>][<span class="number">6</span>];</span><br><span class="line"><span class="comment">//三维数组</span></span><br></pre></td></tr></table></figure>
-<p>引用二维数组成员时要使用两个方括号并指定两个维度：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/09/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://lgq007.github.io/2023/09/01/C++%E5%85%A5%E9%97%A8-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="exiler">
-      <meta itemprop="description" content="日行一步，功不唐捐 !">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="exiler's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/01/C++%E5%85%A5%E9%97%A8-3/" class="post-title-link" itemprop="url">C++入门-3</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-09-01 09:13:54" itemprop="dateCreated datePublished" datetime="2023-09-01T09:13:54+08:00">2023-09-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-16 14:10:23" itemprop="dateModified" datetime="2023-09-16T14:10:23+08:00">2023-09-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/09/01/C++%E5%85%A5%E9%97%A8-3/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/01/C++%E5%85%A5%E9%97%A8-3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>18k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>16 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="表达式基础">表达式基础</h1>
-<blockquote>
-<p>表达式是有一个或多个运算对象(operand)所组成的，对表达式求值将得到的是一个结果(result)。字面值和变量是最简单的表达式(expression)，结果是字面值和变量的值。把一个运算符(operator)和一个或者多个运算对象组合起来可以生成复杂的表达式</p>
-</blockquote>
-<ul>
-<li>一元运算符(unary operator)
-<ul>
-<li>作用与一个运算对象</li>
-<li>如取地址符<code>&amp;</code>和解引用符<code>*</code></li>
-</ul></li>
-<li>二元运算符(binary operator)
-<ul>
-<li>作用于两个运算对象</li>
-<li>如相等运算符<code>==</code>，乘法运算符<code>*</code></li>
-</ul></li>
-<li>三元运算符
-<ul>
-<li>作用于三个运算对象</li>
-</ul></li>
-<li>函数也是一种特殊的运算符
-<ul>
-<li>对运算对象数量没有限制</li>
-</ul></li>
-<li>一些符号既能做一元运算符，也能做二元运算符
-<ul>
-<li>由上下文决定</li>
-<li>如<code>*</code>，可用做解引用和乘法</li>
-</ul></li>
-</ul>
-<h2 id="组合运算符和运算对象">组合运算符和运算对象</h2>
-<p>对于含有多个运算符的复杂表达式，要理解：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/01/C++%E5%85%A5%E9%97%A8-3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
@@ -1275,7 +551,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-18 23:55:32" itemprop="dateModified" datetime="2023-08-18T23:55:32+08:00">2023-08-18</time>
+                <time title="修改时间：2024-05-02 22:04:28" itemprop="dateModified" datetime="2024-05-02T22:04:28+08:00">2024-05-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1359,9 +635,6 @@
 
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -1428,20 +701,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1482,7 +755,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1491,12 +764,14 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">94k</span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">15k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:26</span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">14 分钟</span>
 </div>
 
         
