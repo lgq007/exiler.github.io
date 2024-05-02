@@ -1,236 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>在Docker中部署Hadoop完全分布式集群</title>
-    <url>/2023/12/05/%E5%9C%A8Docker%E4%B8%AD%E9%83%A8%E7%BD%B2Hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4/</url>
-    <content><![CDATA[<h2 id="todo">TODO</h2>
-]]></content>
-  </entry>
-  <entry>
-    <title>Docker基本命令</title>
-    <url>/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/</url>
-    <content><![CDATA[<p>Docker是基于go语言开发实现，基于Linux内核的<code>cgroup</code>和<code>namespace</code>，以及<code>OverlayFS</code>类的<code>Union FS</code>等技术，对<strong>进程</strong>进行封装隔离，位于<code>操作系统层面的虚拟化技术</code>。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！</p>
-<span id="more"></span>
-<figure>
-<img src="111111.jpg" alt="工作机制">
-<figcaption aria-hidden="true">工作机制</figcaption>
-</figure>
-<!--more-->
-<p>[TOC]</p>
-<p>Docker在容器的基础之上，进一步提高了封装技术，做到从文件系、网络互连到进程隔离等等，极大的简化了容器的创建和维护，使得Docker技术比虚拟机技术更为轻便、快捷。</p>
-<h1 id="docker与virtual-machines技术的区别">Docker与Virtual
-Machines技术的区别</h1>
-<figure>
-<img src="virtualization.png" alt="传统虚拟化">
-<figcaption aria-hidden="true">传统虚拟化</figcaption>
-</figure>
-<ul>
-<li>从图中可以看出，在虚拟机技术中，要先在宿主机操作系统中虚拟出一套硬件之后，在其上运行一个完整的操作系统，然后在此操作系统上运行所需的应用进程。</li>
-</ul>
-<figure>
-<img src="docker.png" alt="Docker">
-<figcaption aria-hidden="true">Docker</figcaption>
-</figure>
-<ul>
-<li>而在容器中，应用进程直接运行于宿主的内核，容器没有自己的内核，也没有进行硬件虚拟，节约了大量的资源。</li>
-</ul>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">特性</th>
-<th style="text-align: center;">容器</th>
-<th style="text-align: center;">虚拟机</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">启动速度</td>
-<td style="text-align: center;">秒级</td>
-<td style="text-align: center;">分钟级</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">硬盘使用</td>
-<td style="text-align: center;">一般为MB</td>
-<td style="text-align: center;">一般为GB</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">性能</td>
-<td style="text-align: center;">接近原生</td>
-<td style="text-align: center;">更弱</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">系统支持量</td>
-<td style="text-align: center;">单机支持上千个容器</td>
-<td style="text-align: center;">一般几十个</td>
-</tr>
-</tbody>
-</table>
-<h2 id="doker的优点">Doker的优点</h2>
-<ul>
-<li><p>更高效的利用系统资源</p></li>
-<li><p>更快速的启动时间</p></li>
-<li><p>应用开发、测试、部署一致的运行环境</p></li>
-<li><p>持续交付和部署</p></li>
-<li><p>更轻松的迁移</p></li>
-<li><p>更轻松的维护和扩展</p></li>
-</ul>
-<h1 id="docker配置及部署">Docker配置及部署</h1>
-<ul>
-<li>下载Docker的yum源</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> /etc/yum.repos.d  <span class="comment">#yum仓库配置目录</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">wget https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sed -i <span class="string">&#x27;s#download.docker.com#mirrors.ustc.edu.cn/docker-ce#g&#x27;</span> docker-ce.repo</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">yum -y install docker-ce</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>安装Docker Community Edition（Docker CE）即社区版docker</p></li>
-<li><p>配置镜像加速器</p></li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vim /etc/docker/daemon.json</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [</span><br><span class="line">    &quot;http://hub-mirror.c.163.com&quot;,</span><br><span class="line">    &quot;https://docker.mirrors.ustc.edu.cn&quot;,</span><br><span class="line">    &quot;https://mirror.ccs.tencentyun.com&quot;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这将提高我们从docker仓库中拉取镜像的速度和稳定性</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl daemon-reload</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl restart docker.service</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>一些操作指令</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看docker版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker version</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看docker信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker info</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">启动docker服务</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl start docker.service</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">关停docker服务</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl stop docker.service</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">重启docker服务</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl stop docker.service</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看docker运行状态</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl status docker.service</span></span><br></pre></td></tr></table></figure>
-<h1 id="docker基本概念">Docker基本概念</h1>
-<p>Docker的基本概念主要包括</p>
-<ol type="1">
-<li>镜像（<code>image</code>）</li>
-<li>容器（<code>container</code>）</li>
-<li>仓库（<code>repository</code>）</li>
-</ol>
-<p>理解了这三个概念，就理解了Docker的整个生命周期</p>
-<h1 id="image基本操作">image基本操作</h1>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">列出镜像文件</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker image <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">搜索镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker search &lt;iamge_name&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker pull &lt;iamge_name&gt;:&lt;tag&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">导出镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker iamge save &lt;image_name&gt;:&lt;tag&gt; &gt; /path/&lt;image_name&gt;.tar.gz</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">导入镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker iamge load -i /path/&lt;iamge_name&gt;.tar.gz</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker image rmi &lt;iamge_name&gt;:&lt;tag&gt;/&lt;image_id&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看镜像详细信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker image inspect &lt;image_name&gt;:&lt;tag&gt;</span></span><br></pre></td></tr></table></figure>
-<h1 id="container基本操作">container基本操作</h1>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">列出容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">停止/杀死/重启容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container stop/kill/restart &lt;container_name/id&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">删除容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container re &lt;container_name/id&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">退出容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">exit</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">or</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">crtl+p -&gt; crtl+q</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建并启动第一个容器</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container run -itd -p 8080:80 --name websever nginx:1.21</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><code>docker container run</code>: 这是启动 Docker
-容器的命令。</p></li>
-<li><p><code>-itd</code>: 这是一组选项，表示：</p>
-<ul>
-<li><code>-i</code>：与容器的标准输入保持开放（interactive）。</li>
-<li><code>-t</code>：为容器分配一个伪终端（tty）。</li>
-<li><code>-d</code>：在后台运行容器。</li>
-</ul>
-<p>这组选项通常用于在后台运行交互式容器。</p></li>
-<li><p><code>-p 8080:80</code>: 这个选项表示将主机的端口 8080
-映射到容器的端口 80。这样，外部请求通过主机的 8080
-端口可以访问容器内运行的 Nginx 服务。</p></li>
-<li><p><code>--name websever</code>: 这个选项为容器指定一个名称，即
-"websever"。这使得你<strong>可以使用容器名称而不是容器 ID
-来引用该容器。</strong></p></li>
-<li><p><code>nginx:1.21</code>: 这是要运行的 Docker
-镜像的名称及其标签。在这里，它是 Nginx 镜像的版本 1.21。</p></li>
-</ul>
-<p>综合起来，这个命令的作用是在后台运行一个交互式的 Nginx 容器，将主机的
-8080 端口映射到容器的 80 端口，并指定容器的名称为 "websever"。</p>
-<h2 id="进入容器的两种方法以及区别">进入容器的两种方法以及区别</h2>
-<ul>
-<li>进入容器之前，容器要处于运行状态</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第一种</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container <span class="built_in">exec</span> -it &lt;container_name_or_id&gt; /bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第二种</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container attach &lt;container_name_or_id&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>区别：</strong></p>
-<ul>
-<li><p>使用 <code>docker exec</code>
-<strong>不会改变容器主进程，而是在容器的运行时环境中执行一个新的进程。</strong></p></li>
-<li><p>可以多次使用 <code>docker exec</code>
-进入同一个容器，每次进入都是一个新的 shell。</p></li>
-<li><p>如果没有指定 <code>&lt;command&gt;</code>，默认是在容器的默认
-shell 中执行。</p></li>
-<li><p>使用 <code>docker attach</code>
-将连接到容器的主进程（通常是启动容器时指定的主命令，例如
-shell）。</p></li>
-<li><p><code>docker attach</code>
-不支持在容器内启动新的进程，而是将当前终端附加到容器的标准输入、输出和错误流上。</p></li>
-<li><p>如果从容器中断开连接（Ctrl + P, Ctrl +
-Q），容器将保持运行状态。</p></li>
-</ul>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;"></th>
-<th style="text-align: center;"><strong>exit</strong></th>
-<th style="text-align: center;"><strong>ctrl+p-&gt;ctrl+q</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><strong><code>exec</code></strong></td>
-<td style="text-align: center;"><strong>退出不停止容器</strong></td>
-<td style="text-align: center;"><strong>退出不停止容器</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><strong><code>attach</code></strong></td>
-<td style="text-align: center;"><strong>退出停止容器</strong></td>
-<td style="text-align: center;"><strong>退出不停止容器</strong></td>
-</tr>
-</tbody>
-</table>
-<h2 id="容器与宿主机之间传输文件">容器与宿主机之间传输文件</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">容器到宿主机</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">cp</span> &lt;container_id_or_name&gt;:/container_path/ /os_path/</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">cp</span> /os_path/ &lt;container_id_or_name&gt;:/container_path/</span></span><br></pre></td></tr></table></figure>
-<h1 id="repository基本操作">repository基本操作</h1>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker login  <span class="comment">#登陆远程仓库，在这之前要注册一个dockerhub账号</span></span></span><br><span class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don&#x27;t have a Docker ID, head over to https://hub.docker.com to create one.</span><br><span class="line">Username: lgq007</span><br><span class="line">Password:</span><br><span class="line">WARNING! Your password will be stored unencrypted in /root/.docker/config.json.</span><br><span class="line">Configure a credential helper to remove this warning. See</span><br><span class="line">https://docs.docker.com/engine/reference/commandline/login/#credentials-store</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">logout</span>  <span class="comment">#退出仓库</span></span></span><br><span class="line">Removing login credentials for https://index.docker.io/v1/</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>按照 Docker
-最佳实践的要求，容器不应该向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用<code>数据卷（Volume）</code>、或者<code>绑定宿主目录</code>，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写，其性能和稳定性更高。</p>
-<p>数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，使用数据卷后，容器删除或者重新运行之后，数据却不会丢失。</p>
-</blockquote>
-<!--more-->
-<h1 id="数据卷">数据卷</h1>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">创建数据卷</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume create &lt;volume_name&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看数据卷</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看数据卷信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume inspect &lt;volume_name&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="创建数据卷">创建数据卷</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume create --name webserver_volume \</span></span><br><span class="line"><span class="language-bash">	--opt <span class="built_in">type</span>=tmpfs \</span></span><br><span class="line"><span class="language-bash">	--opt device=tmpfs \</span></span><br><span class="line"><span class="language-bash">	--opt o=size=100m</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>启动</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker container run </span><br><span class="line">-itd </span><br><span class="line">--name webserver </span><br><span class="line">-p 80:80 </span><br><span class="line">-v webserver_volume:/usr/share/nginx/html nginx:1.21 /bin/bash</span><br></pre></td></tr></table></figure>
-<h2 id="查看数据卷详细信息">查看数据卷详细信息</h2>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume inspect webserver_volume</span></span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;CreatedAt&quot;: &quot;2023-12-09T21:41:28+08:00&quot;,</span><br><span class="line">        &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">        &quot;Labels&quot;: null,</span><br><span class="line">        #&lt;-数据卷的挂载位置-&gt;</span><br><span class="line">        &quot;Mountpoint&quot;:&quot;/var/lib/docker/volumes/docker_volume/_data&quot;,</span><br><span class="line">        &quot;Name&quot;: &quot;webserver_volume&quot;,</span><br><span class="line">        &quot;Options&quot;: &#123;</span><br><span class="line">            &quot;device&quot;: &quot;tmpfs&quot;,</span><br><span class="line">            &quot;o&quot;: &quot;size=100m&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;tmpfs&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Scope&quot;: &quot;local&quot;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">测试：</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;hello docker volume create&quot;</span> &gt;/var/lib/docker/volumes/docker_volume/_data/index.html</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl http://192.168.57.100:80</span></span><br></pre></td></tr></table></figure>
-<h1 id="挂载宿主机目录">挂载宿主机目录</h1>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以安装nginx为例</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1.在宿主机先创建一个目录</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> /usr/local/docker_volume</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2.挂载命令</span></span><br><span class="line"></span><br><span class="line">-v &lt;hostpath&gt;:&lt;containerpath&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">3.挂载到宿主机目录</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container run</span> </span><br><span class="line">-itd </span><br><span class="line">--name webserver </span><br><span class="line">-p 80:80 </span><br><span class="line">-v /usr/local/docker_volume:/usr/share/nginx/html nginx:1.21</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">拉取一个网页主要信息到指定目录</span></span><br><span class="line">wget www.baidu.com -O /usr/local/docker_volume</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>-O</code>:
-指定保存下载文件的路径和文件名。在这个例子中，文件将被保存为
-<code>/usr/local/docker_volume</code>。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>容器</category>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>虚拟化</tag>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++中的高精度运算</title>
     <url>/2023/12/22/C++%E4%B8%AD%E7%9A%84%E9%AB%98%E7%B2%BE%E5%BA%A6%E8%BF%90%E7%AE%97/</url>
     <content><![CDATA[<p><code>c++</code>中的几种高精度运算</p>
 <span id="more"></span>
-<h1 id="ab-problem">A+B problem</h1>
-<p><a href="https://www.luogu.com.cn/problem/P1601">P1601 A+B
-Problem（高精） - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p>
+<h1 id="A-B-problem"><a href="#A-B-problem" class="headerlink" title="A+B problem"></a>A+B problem</h1><p><a href="https://www.luogu.com.cn/problem/P1601">P1601 A+B Problem（高精） - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">add</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;A , vector&lt;<span class="type">int</span>&gt; &amp;B)</span></span>&#123;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; c;</span><br><span class="line">	<span class="keyword">if</span>(A.<span class="built_in">size</span>()&lt;B.<span class="built_in">size</span>()) <span class="keyword">return</span> <span class="built_in">add</span>(B,A);</span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> t=<span class="number">0</span>; <span class="comment">//进位</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;A.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">		t+=A[i];</span><br><span class="line">		<span class="keyword">if</span>(i&lt;B.<span class="built_in">size</span>()) t+=B[i];</span><br><span class="line">		c.<span class="built_in">push_back</span>(t%<span class="number">10</span>);</span><br><span class="line">		t/=<span class="number">10</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(t) c.<span class="built_in">push_back</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> c;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	string a,b;cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; A,B;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=a.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--) A.<span class="built_in">push_back</span>(a[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=b.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--) B.<span class="built_in">push_back</span>(b[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">auto</span> c = <span class="built_in">add</span>(A,B);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=c.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,c[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="a-b-problem">A-B problem</h1>
-<p><a href="https://www.luogu.com.cn/problem/P2142">P2142 高精度减法 -
-洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p>
+<h1 id="A-B-problem-1"><a href="#A-B-problem-1" class="headerlink" title="A-B problem"></a>A-B problem</h1><p><a href="https://www.luogu.com.cn/problem/P2142">P2142 高精度减法 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断是否有A &gt;= B</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">cmp</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;A,vector&lt;<span class="type">int</span>&gt; &amp;B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(A.<span class="built_in">size</span>()!=B.<span class="built_in">size</span>()) <span class="keyword">return</span> A.<span class="built_in">size</span>() &gt; B.<span class="built_in">size</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=A.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(A[i]!=B[i]) </span><br><span class="line">			<span class="keyword">return</span> A[i]&gt;B[i];</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">sub</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;A, vector&lt;<span class="type">int</span>&gt; &amp;B)</span></span>&#123;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; c;</span><br><span class="line">	<span class="type">int</span> t=<span class="number">0</span>; <span class="comment">//进位</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;A.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">		t = A[i] + t;</span><br><span class="line">		<span class="keyword">if</span>(i&lt;B.<span class="built_in">size</span>()) t-=B[i];</span><br><span class="line">		c.<span class="built_in">push_back</span>((t+<span class="number">10</span>)%<span class="number">10</span>);</span><br><span class="line">		<span class="keyword">if</span>(t&lt;<span class="number">0</span>) t=<span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">else</span> t=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//除去前导0</span></span><br><span class="line">	<span class="keyword">while</span>(c.<span class="built_in">size</span>()&gt;<span class="number">1</span>&amp;&amp;c.<span class="built_in">back</span>()==<span class="number">0</span>) c.<span class="built_in">pop_back</span>();</span><br><span class="line">	<span class="keyword">return</span> c;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	string a,b; cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">	</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; A,B;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=a.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--) A.<span class="built_in">push_back</span>(a[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=b.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--) B.<span class="built_in">push_back</span>(b[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">auto</span> c = <span class="built_in">sub</span>(A,B);</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">cmp</span>(A,B)) &#123;</span><br><span class="line">		<span class="keyword">auto</span> c = <span class="built_in">sub</span>(A,B);</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=c.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--) <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,c[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;-&quot;</span>);</span><br><span class="line">		<span class="keyword">auto</span> c = <span class="built_in">sub</span>(B,A);</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=c.<span class="built_in">size</span>()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--) <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,c[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="ab-problem-1">A*B problem</h1>
-<p><a href="https://www.luogu.com.cn/problem/P1303">P1303 A*B Problem -
-洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p>
+<h1 id="A-B-problem-2"><a href="#A-B-problem-2" class="headerlink" title="A*B problem"></a>A*B problem</h1><p><a href="https://www.luogu.com.cn/problem/P1303">P1303 A*B Problem - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p>
 <ul>
 <li>高精度×高精度</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">mul</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;A, vector&lt;<span class="type">int</span>&gt; &amp;B)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (A.<span class="built_in">size</span>() &lt; B.<span class="built_in">size</span>()) <span class="keyword">return</span> <span class="built_in">mul</span>(B, A);</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; c;</span><br><span class="line">	c.<span class="built_in">assign</span>(A.<span class="built_in">size</span>() + B.<span class="built_in">size</span>(), <span class="number">0</span>);</span><br><span class="line">	<span class="type">int</span> t = <span class="number">0</span>; <span class="comment">//进位</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; B.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; A.<span class="built_in">size</span>() || t; j++) &#123;</span><br><span class="line">			c[i + j] += A[j] * B[i] + t;</span><br><span class="line">			t = c[i + j] / <span class="number">10</span>;</span><br><span class="line">			c[i + j] %= <span class="number">10</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (c.<span class="built_in">size</span>() &gt; <span class="number">1</span> &amp;&amp; c.<span class="built_in">back</span>() == <span class="number">0</span>) c.<span class="built_in">pop_back</span>();</span><br><span class="line">	<span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	string a, b;</span><br><span class="line">	cin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; A, B;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = a.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) A.<span class="built_in">push_back</span>(a[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = b.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) B.<span class="built_in">push_back</span>(b[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">auto</span> c = <span class="built_in">mul</span>(A, B);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = c.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, c[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>高精度×长整数</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">mul</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;A, <span class="type">long</span> <span class="type">long</span> b)</span> </span>&#123;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; c;</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> t = <span class="number">0</span>; <span class="comment">//进位</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; A.<span class="built_in">size</span>() || t; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (i &lt; A.<span class="built_in">size</span>()) t += A[i] * b;</span><br><span class="line">		c.<span class="built_in">push_back</span>(t % <span class="number">10</span>);</span><br><span class="line">		t /= <span class="number">10</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (c.<span class="built_in">size</span>() &gt; <span class="number">1</span> &amp;&amp; c.<span class="built_in">back</span>() == <span class="number">0</span>) c.<span class="built_in">pop_back</span>();</span><br><span class="line">	<span class="keyword">return</span> c;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	string a;</span><br><span class="line">	cin &gt;&gt; a;</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> b;</span><br><span class="line">	cin &gt;&gt; b;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; A;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = a.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) A.<span class="built_in">push_back</span>(a[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">auto</span> c = <span class="built_in">mul</span>(A, b);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = c.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, c[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="ab-problem-2">A/B problem</h1>
-<p><a href="https://www.luogu.com.cn/problem/P1480">P1480 A/B Problem -
-洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p>
+<h1 id="A-B-problem-3"><a href="#A-B-problem-3" class="headerlink" title="A/B problem"></a>A/B problem</h1><p><a href="https://www.luogu.com.cn/problem/P1480">P1480 A/B Problem - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">div</span><span class="params">(vector&lt;<span class="type">int</span>&gt; &amp;A, <span class="type">long</span> <span class="type">long</span> b, <span class="type">long</span> <span class="type">long</span> &amp;r)</span> </span>&#123;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; c;</span><br><span class="line">	r = <span class="number">0</span>;<span class="comment">//余数</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = A.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">		r = r * <span class="number">10</span> + A[i];</span><br><span class="line">		c.<span class="built_in">push_back</span>(r / b);</span><br><span class="line">		r %= b;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">reverse</span>(c.<span class="built_in">begin</span>(), c.<span class="built_in">end</span>());</span><br><span class="line">	<span class="keyword">while</span> (c.<span class="built_in">size</span>() &gt; <span class="number">1</span> &amp;&amp; c.<span class="built_in">back</span>() == <span class="number">0</span>) c.<span class="built_in">pop_back</span>();</span><br><span class="line">	<span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	string a;</span><br><span class="line">	cin &gt;&gt; a;</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> b;</span><br><span class="line">	cin &gt;&gt; b;</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> r = <span class="number">0</span>;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; A;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = a.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) A.<span class="built_in">push_back</span>(a[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	<span class="keyword">auto</span> c = <span class="built_in">div</span>(A, b, r);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = c.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, c[i]);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
@@ -243,170 +29,305 @@ Problem（高精） - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a>
       </tags>
   </entry>
   <entry>
+    <title>Docker基本命令</title>
+    <url>/2023/12/07/Docker%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/</url>
+    <content><![CDATA[<p>Docker是基于go语言开发实现，基于Linux内核的<code>cgroup</code>和<code>namespace</code>，以及<code>OverlayFS</code>类的<code>Union FS</code>等技术，对<strong>进程</strong>进行封装隔离，位于<code>操作系统层面的虚拟化技术</code>。由于隔离的进程独立于其他的隔离的进程，也称之为容器，Docker充当容器引擎。Docker是一个划时代的开源项目，它彻底释放了计算虚拟化的威力！</p>
+<span id="more"></span>
+<p><img src="111111.jpg" alt="工作机制"></p>
+<!--more-->
+<p>[TOC]</p>
+<p>Docker在容器的基础之上，进一步提高了封装技术，做到从文件系、网络互连到进程隔离等等，极大的简化了容器的创建和维护，使得Docker技术比虚拟机技术更为轻便、快捷。</p>
+<h1 id="Docker与Virtual-Machines技术的区别"><a href="#Docker与Virtual-Machines技术的区别" class="headerlink" title="Docker与Virtual Machines技术的区别"></a>Docker与Virtual Machines技术的区别</h1><p> <img src="virtualization.png" alt="传统虚拟化"></p>
+<ul>
+<li>从图中可以看出，在虚拟机技术中，要先在宿主机操作系统中虚拟出一套硬件之后，在其上运行一个完整的操作系统，然后在此操作系统上运行所需的应用进程。</li>
+</ul>
+<p><img src="docker.png" alt="Docker"></p>
+<ul>
+<li>而在容器中，应用进程直接运行于宿主的内核，容器没有自己的内核，也没有进行硬件虚拟，节约了大量的资源。</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">特性</th>
+<th style="text-align:center">容器</th>
+<th style="text-align:center">虚拟机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">启动速度</td>
+<td style="text-align:center">秒级</td>
+<td style="text-align:center">分钟级</td>
+</tr>
+<tr>
+<td style="text-align:center">硬盘使用</td>
+<td style="text-align:center">一般为MB</td>
+<td style="text-align:center">一般为GB</td>
+</tr>
+<tr>
+<td style="text-align:center">性能</td>
+<td style="text-align:center">接近原生</td>
+<td style="text-align:center">更弱</td>
+</tr>
+<tr>
+<td style="text-align:center">系统支持量</td>
+<td style="text-align:center">单机支持上千个容器</td>
+<td style="text-align:center">一般几十个</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Doker的优点"><a href="#Doker的优点" class="headerlink" title="Doker的优点"></a>Doker的优点</h2><ul>
+<li><p>更高效的利用系统资源</p>
+</li>
+<li><p>更快速的启动时间</p>
+</li>
+<li><p>应用开发、测试、部署一致的运行环境</p>
+</li>
+<li><p>持续交付和部署</p>
+</li>
+<li><p>更轻松的迁移</p>
+</li>
+<li><p>更轻松的维护和扩展</p>
+</li>
+</ul>
+<h1 id="Docker配置及部署"><a href="#Docker配置及部署" class="headerlink" title="Docker配置及部署"></a>Docker配置及部署</h1><ul>
+<li>下载Docker的yum源</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> /etc/yum.repos.d  <span class="comment">#yum仓库配置目录</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">wget https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sed -i <span class="string">&#x27;s#download.docker.com#mirrors.ustc.edu.cn/docker-ce#g&#x27;</span> docker-ce.repo</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">yum -y install docker-ce</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>安装Docker Community Edition（Docker CE）即社区版docker</p>
+</li>
+<li><p>配置镜像加速器</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">vim /etc/docker/daemon.json</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [</span><br><span class="line">    &quot;http://hub-mirror.c.163.com&quot;,</span><br><span class="line">    &quot;https://docker.mirrors.ustc.edu.cn&quot;,</span><br><span class="line">    &quot;https://mirror.ccs.tencentyun.com&quot;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这将提高我们从docker仓库中拉取镜像的速度和稳定性</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl daemon-reload</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl restart docker.service</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>一些操作指令</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看docker版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker version</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看docker信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker info</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">启动docker服务</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl start docker.service</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">关停docker服务</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl stop docker.service</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">重启docker服务</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl stop docker.service</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看docker运行状态</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">systemctl status docker.service</span></span><br></pre></td></tr></table></figure>
+<h1 id="Docker基本概念"><a href="#Docker基本概念" class="headerlink" title="Docker基本概念"></a>Docker基本概念</h1><p>Docker的基本概念主要包括</p>
+<ol>
+<li>镜像（<code>image</code>）</li>
+<li>容器（<code>container</code>）</li>
+<li>仓库（<code>repository</code>）</li>
+</ol>
+<p>理解了这三个概念，就理解了Docker的整个生命周期</p>
+<h1 id="image基本操作"><a href="#image基本操作" class="headerlink" title="image基本操作"></a>image基本操作</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">列出镜像文件</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker image <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">搜索镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker search &lt;iamge_name&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">拉取镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker pull &lt;iamge_name&gt;:&lt;tag&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">导出镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker iamge save &lt;image_name&gt;:&lt;tag&gt; &gt; /path/&lt;image_name&gt;.tar.gz</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">导入镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker iamge load -i /path/&lt;iamge_name&gt;.tar.gz</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">删除镜像</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker image rmi &lt;iamge_name&gt;:&lt;tag&gt;/&lt;image_id&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看镜像详细信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker image inspect &lt;image_name&gt;:&lt;tag&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="container基本操作"><a href="#container基本操作" class="headerlink" title="container基本操作"></a>container基本操作</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">列出容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">停止/杀死/重启容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container stop/kill/restart &lt;container_name/id&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">删除容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container re &lt;container_name/id&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">退出容器</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">exit</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">or</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">crtl+p -&gt; crtl+q</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建并启动第一个容器</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container run -itd -p 8080:80 --name websever nginx:1.21</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>docker container run</code>: 这是启动 Docker 容器的命令。</p>
+</li>
+<li><p><code>-itd</code>: 这是一组选项，表示：</p>
+<ul>
+<li><code>-i</code>：与容器的标准输入保持开放（interactive）。</li>
+<li><code>-t</code>：为容器分配一个伪终端（tty）。</li>
+<li><p><code>-d</code>：在后台运行容器。</p>
+<p>这组选项通常用于在后台运行交互式容器。</p>
+</li>
+</ul>
+</li>
+<li><p><code>-p 8080:80</code>: 这个选项表示将主机的端口 8080 映射到容器的端口 80。这样，外部请求通过主机的 8080 端口可以访问容器内运行的 Nginx 服务。</p>
+</li>
+<li><p><code>--name websever</code>: 这个选项为容器指定一个名称，即 “websever”。这使得你<strong>可以使用容器名称而不是容器 ID 来引用该容器。</strong></p>
+</li>
+<li><p><code>nginx:1.21</code>: 这是要运行的 Docker 镜像的名称及其标签。在这里，它是 Nginx 镜像的版本 1.21。</p>
+</li>
+</ul>
+<p>综合起来，这个命令的作用是在后台运行一个交互式的 Nginx 容器，将主机的 8080 端口映射到容器的 80 端口，并指定容器的名称为 “websever”。</p>
+<h2 id="进入容器的两种方法以及区别"><a href="#进入容器的两种方法以及区别" class="headerlink" title="进入容器的两种方法以及区别"></a>进入容器的两种方法以及区别</h2><ul>
+<li>进入容器之前，容器要处于运行状态</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第一种</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container <span class="built_in">exec</span> -it &lt;container_name_or_id&gt; /bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">第二种</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container attach &lt;container_name_or_id&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>区别：</strong></p>
+<ul>
+<li>使用 <code>docker exec</code> <strong>不会改变容器主进程，而是在容器的运行时环境中执行一个新的进程。</strong></li>
+<li>可以多次使用 <code>docker exec</code> 进入同一个容器，每次进入都是一个新的 shell。</li>
+<li>如果没有指定 <code>&lt;command&gt;</code>，默认是在容器的默认 shell 中执行。</li>
+</ul>
+<ul>
+<li>使用 <code>docker attach</code> 将连接到容器的主进程（通常是启动容器时指定的主命令，例如 shell）。</li>
+<li><code>docker attach</code> 不支持在容器内启动新的进程，而是将当前终端附加到容器的标准输入、输出和错误流上。</li>
+<li>如果从容器中断开连接（Ctrl + P, Ctrl + Q），容器将保持运行状态。</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"><strong>exit</strong></th>
+<th style="text-align:center"><strong>ctrl+p-&gt;ctrl+q</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong><code>exec</code></strong></td>
+<td style="text-align:center"><strong>退出不停止容器</strong></td>
+<td style="text-align:center"><strong>退出不停止容器</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong><code>attach</code></strong></td>
+<td style="text-align:center"><strong>退出停止容器</strong></td>
+<td style="text-align:center"><strong>退出不停止容器</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="容器与宿主机之间传输文件"><a href="#容器与宿主机之间传输文件" class="headerlink" title="容器与宿主机之间传输文件"></a>容器与宿主机之间传输文件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">容器到宿主机</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">cp</span> &lt;container_id_or_name&gt;:/container_path/ /os_path/</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">cp</span> /os_path/ &lt;container_id_or_name&gt;:/container_path/</span></span><br></pre></td></tr></table></figure>
+<h1 id="repository基本操作"><a href="#repository基本操作" class="headerlink" title="repository基本操作"></a>repository基本操作</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker login  <span class="comment">#登陆远程仓库，在这之前要注册一个dockerhub账号</span></span></span><br><span class="line">Login with your Docker ID to push and pull images from Docker Hub. If you don&#x27;t have a Docker ID, head over to https://hub.docker.com to create one.</span><br><span class="line">Username: lgq007</span><br><span class="line">Password:</span><br><span class="line">WARNING! Your password will be stored unencrypted in /root/.docker/config.json.</span><br><span class="line">Configure a credential helper to remove this warning. See</span><br><span class="line">https://docs.docker.com/engine/reference/commandline/login/#credentials-store</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker <span class="built_in">logout</span>  <span class="comment">#退出仓库</span></span></span><br><span class="line">Removing login credentials for https://index.docker.io/v1/</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>按照 Docker 最佳实践的要求，容器不应该向其存储层内写入任何数据，容器存储层要保持无状态化。所有的文件写入操作，都应该使用<code>数据卷（Volume）</code>、或者<code>绑定宿主目录</code>，在这些位置的读写会跳过容器存储层，直接对宿主（或网络存储）发生读写，其性能和稳定性更高。</p>
+<p>数据卷的生存周期独立于容器，容器消亡，数据卷不会消亡。因此，使用数据卷后，容器删除或者重新运行之后，数据却不会丢失。</p>
+</blockquote>
+<!--more-->
+<h1 id="数据卷"><a href="#数据卷" class="headerlink" title="数据卷"></a>数据卷</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">创建数据卷</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume create &lt;volume_name&gt;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看数据卷</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看数据卷信息</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume inspect &lt;volume_name&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="创建数据卷"><a href="#创建数据卷" class="headerlink" title="创建数据卷"></a>创建数据卷</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume create --name webserver_volume \</span></span><br><span class="line"><span class="language-bash">	--opt <span class="built_in">type</span>=tmpfs \</span></span><br><span class="line"><span class="language-bash">	--opt device=tmpfs \</span></span><br><span class="line"><span class="language-bash">	--opt o=size=100m</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>启动</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker container run </span><br><span class="line">-itd </span><br><span class="line">--name webserver </span><br><span class="line">-p 80:80 </span><br><span class="line">-v webserver_volume:/usr/share/nginx/html nginx:1.21 /bin/bash</span><br></pre></td></tr></table></figure>
+<h2 id="查看数据卷详细信息"><a href="#查看数据卷详细信息" class="headerlink" title="查看数据卷详细信息"></a>查看数据卷详细信息</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker volume inspect webserver_volume</span></span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;CreatedAt&quot;: &quot;2023-12-09T21:41:28+08:00&quot;,</span><br><span class="line">        &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">        &quot;Labels&quot;: null,</span><br><span class="line">        #&lt;-数据卷的挂载位置-&gt;</span><br><span class="line">        &quot;Mountpoint&quot;:&quot;/var/lib/docker/volumes/docker_volume/_data&quot;,</span><br><span class="line">        &quot;Name&quot;: &quot;webserver_volume&quot;,</span><br><span class="line">        &quot;Options&quot;: &#123;</span><br><span class="line">            &quot;device&quot;: &quot;tmpfs&quot;,</span><br><span class="line">            &quot;o&quot;: &quot;size=100m&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;tmpfs&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Scope&quot;: &quot;local&quot;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">测试：</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;hello docker volume create&quot;</span> &gt;/var/lib/docker/volumes/docker_volume/_data/index.html</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl http://192.168.57.100:80</span></span><br></pre></td></tr></table></figure>
+<h1 id="挂载宿主机目录"><a href="#挂载宿主机目录" class="headerlink" title="挂载宿主机目录"></a>挂载宿主机目录</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以安装nginx为例</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1.在宿主机先创建一个目录</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mkdir</span> /usr/local/docker_volume</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2.挂载命令</span></span><br><span class="line"></span><br><span class="line">-v &lt;hostpath&gt;:&lt;containerpath&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">3.挂载到宿主机目录</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker container run</span> </span><br><span class="line">-itd </span><br><span class="line">--name webserver </span><br><span class="line">-p 80:80 </span><br><span class="line">-v /usr/local/docker_volume:/usr/share/nginx/html nginx:1.21</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">拉取一个网页主要信息到指定目录</span></span><br><span class="line">wget www.baidu.com -O /usr/local/docker_volume</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-O</code>: 指定保存下载文件的路径和文件名。在这个例子中，文件将被保存为 <code>/usr/local/docker_volume</code>。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>容器</category>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>虚拟化</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在Docker中部署Hadoop完全分布式集群</title>
+    <url>/2023/12/05/%E5%9C%A8Docker%E4%B8%AD%E9%83%A8%E7%BD%B2Hadoop%E5%AE%8C%E5%85%A8%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4/</url>
+    <content><![CDATA[<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2>]]></content>
+  </entry>
+  <entry>
     <title>Linux基础</title>
     <url>/2023/08/14/Linux%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="文件">文件</h1>
-<h2 id="绪言">绪言</h2>
-<p>在Linux操作系统中秉持着<strong>一切皆文件</strong>的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中</p>
-<ol type="1">
-<li><p><code>/dev/sdX</code>：这个文件表示U盘设备，"X"代表具体的设备标识，例如<code>/dev/sda</code>、<code>/dev/sdb</code>等。你可以通过这个文件来访问整个U盘。</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> /media/usb-drive</span><br><span class="line">sudo mount /dev/sdX /media/usb-drive</span><br></pre></td></tr></table></figure></li>
-<li><p><code>/media/username/usb-drive</code>：这个文件夹是U盘挂载的地方，"username"是你的用户名，"usb-drive"是挂载点。在这个文件夹中，你可以通过普通的文件操作来访问U盘中的文件和文件夹。</p></li>
+    <content><![CDATA[<h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><h2 id="绪言"><a href="#绪言" class="headerlink" title="绪言"></a>绪言</h2><p>在Linux操作系统中秉持着<strong>一切皆文件</strong>的原则，在windows中是文件的，在Linux下也是文件；在Windows中不是文件的，在Linux下同样是文件，它意味着各种设备、资源和数据都可以通过文件系统的方式进行访问和操作。最常见的例子便是用U盘插入电脑中读取信息，在Linux系统中</p>
+<ol>
+<li><p><code>/dev/sdX</code>：这个文件表示U盘设备，”X”代表具体的设备标识，例如<code>/dev/sda</code>、<code>/dev/sdb</code>等。你可以通过这个文件来访问整个U盘。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> /media/usb-drive</span><br><span class="line">sudo mount /dev/sdX /media/usb-drive</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>/media/username/usb-drive</code>：这个文件夹是U盘挂载的地方，”username”是你的用户名，”usb-drive”是挂载点。在这个文件夹中，你可以通过普通的文件操作来访问U盘中的文件和文件夹。</p>
+</li>
 </ol>
 <p>而在windows操作系统下，U盘通常会被视为两个不同的实体：一个是设备，另一个是文件系统中的一个文件夹</p>
-<ol type="1">
+<ol>
 <li>设备：可以在Windows设备管理器中看到，通常显示为一个可移动设备。</li>
 <li>文件夹：windows会自动为U盘分配一个盘符，可以用过windows资源管理器访问U盘内的文件。</li>
 </ol>
-<h2 id="linux下的文件目录结构">Linux下的文件目录结构</h2>
-<p><img src="Linux基础\Linux文件目录.png"></p>
-<p>以Ubuntu 22.04 LTS
-为例，输入<code>ll / -a</code>查看<code>/</code>目录下的文件目录：</p>
-<ol type="1">
+<h2 id="Linux下的文件目录结构"><a href="#Linux下的文件目录结构" class="headerlink" title="Linux下的文件目录结构"></a>Linux下的文件目录结构</h2><p><img src="Linux基础\fs.png" alt></p>
+<p>以Ubuntu 22.04 LTS 为例，输入<code>ll / -a</code>查看<code>/</code>目录下的文件目录：</p>
+<ol>
 <li>常见的目录：</li>
 </ol>
 <ul>
-<li><strong><code>/</code> (根目录)：</strong>
-Linux文件系统的根目录，所有其他目录都是从这里开始的。</li>
-<li><strong><code>/bin</code> (基本命令)：</strong>
-全称<code>binary</code>，存放系统启动和维护所需的基本命令，如<code>ls</code>、<code>cp</code>、<code>mv</code>等。</li>
-<li><strong><code>/boot</code> (开机引导)：</strong>
-存放包含引导启动Linux系统所需的文件，如内核映像文件、引导加载程序以及启动配置文件。</li>
-<li><strong><code>/dev</code> (设备文件)：</strong>
-包含与系统硬件设备和外部设备的文件，Linux将这些设备抽象为文件，通过这些文件来进行访问和交互。在其中的外接设备是不能直接被使用的，需要<strong>挂载（类似windows下的分配盘符）</strong>。</li>
-<li><strong><code>/etc</code> (系统配置)：</strong>
-存放系统的配置文件，包括网络配置、用户账户配置、软件配置等。</li>
-<li><strong><code>/home</code> (用户主目录)：</strong>
-存放用户的主目录，每个用户都有一个独立的子目录，用于存放个人文件、文档和配置文件。</li>
-<li><strong><code>/root</code> (root用户主目录)：</strong>
-超级用户（root用户）的主目录。</li>
-<li><strong><code>/run</code> (运行时数据)：</strong>
-用于存放系统启动后运行时需要的临时文件，即进程的运行数据存放目录。</li>
-<li><strong><code>/sbin</code> (系统命令)：</strong>
-存放系统管理员使用的系统管理命令，这些命令通常需要root权限，如<code>fdisk</code>、<code>iptables</code>等。</li>
-<li><strong><code>/tmp</code> (临时文件)：</strong>
-用于存放临时文件，系统重新启动后会清空该目录。</li>
-<li><strong><code>/usr</code>(用户目录)：</strong>包含用户程序和文件，通常将大部分软件安装到这个目录下。
-<ul>
-<li><strong><code>/usr/bin</code>：</strong>
-存放系统中的大部分用户级别的可执行命令。这些命令通常是系统的标准工具和应用程序，但不是必须在系统启动阶段使用的基本命令。</li>
+<li><strong><code>/</code> (根目录)：</strong> Linux文件系统的根目录，所有其他目录都是从这里开始的。</li>
+<li><strong><code>/bin</code> (基本命令)：</strong> 全称<code>binary</code>，存放系统启动和维护所需的基本命令，如<code>ls</code>、<code>cp</code>、<code>mv</code>等。</li>
+<li><strong><code>/boot</code> (开机引导)：</strong> 存放包含引导启动Linux系统所需的文件，如内核映像文件、引导加载程序以及启动配置文件。</li>
+<li><strong><code>/dev</code> (设备文件)：</strong> 包含与系统硬件设备和外部设备的文件，Linux将这些设备抽象为文件，通过这些文件来进行访问和交互。在其中的外接设备是不能直接被使用的，需要<strong>挂载（类似windows下的分配盘符）</strong>。</li>
+<li><strong><code>/etc</code> (系统配置)：</strong> 存放系统的配置文件，包括网络配置、用户账户配置、软件配置等。</li>
+<li><strong><code>/home</code> (用户主目录)：</strong> 存放用户的主目录，每个用户都有一个独立的子目录，用于存放个人文件、文档和配置文件。</li>
+<li><strong><code>/root</code> (root用户主目录)：</strong> 超级用户（root用户）的主目录。</li>
+<li><strong><code>/run</code> (运行时数据)：</strong> 用于存放系统启动后运行时需要的临时文件，即进程的运行数据存放目录。</li>
+<li><strong><code>/sbin</code> (系统命令)：</strong> 存放系统管理员使用的系统管理命令，这些命令通常需要root权限，如<code>fdisk</code>、<code>iptables</code>等。</li>
+<li><strong><code>/tmp</code> (临时文件)：</strong> 用于存放临时文件，系统重新启动后会清空该目录。</li>
+<li><strong><code>/usr</code>(用户目录)：</strong>包含用户程序和文件，通常将大部分软件安装到这个目录下。<ul>
+<li><strong><code>/usr/bin</code>：</strong> 存放系统中的大部分用户级别的可执行命令。这些命令通常是系统的标准工具和应用程序，但不是必须在系统启动阶段使用的基本命令。</li>
 <li><strong><code>/usr/local</code>：</strong>程序安装目录。</li>
-<li><strong><code>/usr/sbin</code>：</strong>存放系统管理员（root用户）使用的系统管理命令。与
-<code>/sbin</code> 目录类似，但 <code>/usr/sbin</code>
-中的命令通常是不需要在系统启动阶段使用的，因此可以被认为是更为次要的系统命令。</li>
+<li><strong><code>/usr/sbin</code>：</strong>存放系统管理员（root用户）使用的系统管理命令。与 <code>/sbin</code> 目录类似，但 <code>/usr/sbin</code> 中的命令通常是不需要在系统启动阶段使用的，因此可以被认为是更为次要的系统命令。</li>
 <li><strong><code>/usr/tmp</code>：</strong>被抛弃临时文件目录。</li>
-<li><strong><code>/usr/lib</code>，<code>/usr/lib32</code>，<code>/usr/lib64</code>，<code>/usr/libx32</code>：</strong>
-存放系统所需的共享库文件，这些库文件被可执行文件在运行时动态链接以实现代码重用。</li>
-<li><strong><code>/usr/src</code> ：</strong>是用于存放内核源代码（Linux
-内核）的目录。这个目录通常包含了系统所使用的内核版本的源代码，以及相关的文件和文档。</li>
-</ul></li>
-<li><strong><code>/var</code> (变量数据)：</strong>
-包含变量数据，如日志文件、数据库文件等会变化的数据。
-<ul>
-<li><strong><code>/var/tmp</code>：</strong>临时文件目录；存放周期更长</li>
-</ul></li>
+<li><strong><code>/usr/lib</code>，<code>/usr/lib32</code>，<code>/usr/lib64</code>，<code>/usr/libx32</code>：</strong> 存放系统所需的共享库文件，这些库文件被可执行文件在运行时动态链接以实现代码重用。</li>
+<li><strong><code>/usr/src</code>  ：</strong>是用于存放内核源代码（Linux 内核）的目录。这个目录通常包含了系统所使用的内核版本的源代码，以及相关的文件和文档。</li>
 </ul>
-<ol start="2" type="1">
+</li>
+<li><strong><code>/var</code> (变量数据)：</strong> 包含变量数据，如日志文件、数据库文件等会变化的数据。<ul>
+<li><strong><code>/var/tmp</code>：</strong>临时文件目录；存放周期更长</li>
+</ul>
+</li>
+</ul>
+<ol>
 <li>其他命令：</li>
 </ol>
 <ul>
-<li><p><strong><code>/media</code> 和 <code>/mnt</code>
-(挂载点)：</strong>
-通常用于挂载外部设备，如U盘、光盘等，这样的设备会在这些目录下创建子目录以便访问。</p></li>
-<li><p><strong><code>/opt</code> (可选软件)：</strong>
-用于存放由第三方提供的附加软件，通常将这些软件安装在这个目录下。</p></li>
-<li><p><strong><code>/proc</code> (进程信息)：</strong>
-虚拟文件系统，提供有关正在运行的进程和系统状态的信息，以文件的形式呈现。</p></li>
-<li><p><strong><code>/srv</code> (服务数据)：</strong>
-用于存放系统提供的服务的数据文件，如Web服务器的文档。</p></li>
-<li><p><strong><code>/sys</code> (内核文件)：</strong>
-用于访问内核的运行时信息，以及与内核模块的交互。</p></li>
-<li><p><strong><code>/snap</code>(包管理器)：</strong>是用于存放使用
-Snap 包管理器安装的应用程序和软件包的目录。</p></li>
+<li><p><strong><code>/media</code> 和 <code>/mnt</code> (挂载点)：</strong> 通常用于挂载外部设备，如U盘、光盘等，这样的设备会在这些目录下创建子目录以便访问。</p>
+</li>
+<li><p><strong><code>/opt</code> (可选软件)：</strong> 用于存放由第三方提供的附加软件，通常将这些软件安装在这个目录下。</p>
+</li>
+<li><p><strong><code>/proc</code> (进程信息)：</strong> 虚拟文件系统，提供有关正在运行的进程和系统状态的信息，以文件的形式呈现。</p>
+</li>
+<li><p><strong><code>/srv</code> (服务数据)：</strong> 用于存放系统提供的服务的数据文件，如Web服务器的文档。</p>
+</li>
+<li><p><strong><code>/sys</code> (内核文件)：</strong> 用于访问内核的运行时信息，以及与内核模块的交互。</p>
+</li>
+<li><p><strong><code>/snap</code>(包管理器)：</strong>是用于存放使用 Snap 包管理器安装的应用程序和软件包的目录。</p>
+</li>
 </ul>
-<h2 id="文件路径">文件路径</h2>
-<p>在 Linux
-操作系统中，文件路径是用来描述文件在文件系统中位置的字符串。Linux
-的文件路径是一个层次化的结构，从根目录开始，通过目录名和斜杠（/）来指示文件的位置。</p>
-<ol type="1">
-<li><strong>绝对路径：</strong>
-绝对路径从根目录开始，指示完整的路径。例如：
-<ul>
-<li><code>/usr/bin</code>：指向根目录下的 <code>/usr/bin</code>
-目录。</li>
-<li><code>/home/user/documents/file.txt</code>：指向根目录下的
-<code>/home/user/documents</code> 目录中的 <code>file.txt</code>
-文件。</li>
-</ul></li>
-<li><strong>相对路径：</strong>
-相对路径是<strong>相对于当前工作目录的路径。</strong>例如，如果当前工作目录是
-<code>/home/user</code>，那么：
-<ul>
-<li><code>documents/file.txt</code>：指向
-<code>/home/user/documents</code> 目录中的 <code>file.txt</code>
-文件。</li>
-</ul></li>
-<li><strong>特殊符号：</strong> 在路径中，一些特殊符号有特殊的含义：
-<ul>
-<li><code>.</code>：代表当前目录。例如：<code>./file.txt</code>
-表示当前目录中的 <code>file.txt</code> 文件。</li>
-<li><code>..</code>：代表上一级目录。例如：<code>../folder/file.txt</code>
-表示上一级目录中的 <code>folder</code> 目录下的 <code>file.txt</code>
-文件。</li>
-<li><code>~</code>：代表当前用户的主目录。例如：<code>~/documents</code>
-表示当前用户的主目录下的 <code>documents</code> 目录。</li>
-</ul></li>
-<li><strong>环境变量：</strong> 有些路径中可能包含环境变量，例如
-<code>$HOME</code>
-代表当前用户的主目录。例如：<code>$HOME/documents</code> 表示主目录下的
-<code>documents</code> 目录。</li>
+<h2 id="文件路径"><a href="#文件路径" class="headerlink" title="文件路径"></a>文件路径</h2><p>在 Linux 操作系统中，文件路径是用来描述文件在文件系统中位置的字符串。Linux 的文件路径是一个层次化的结构，从根目录开始，通过目录名和斜杠（/）来指示文件的位置。</p>
+<ol>
+<li><strong>绝对路径：</strong> 绝对路径从根目录开始，指示完整的路径。例如：<ul>
+<li><code>/usr/bin</code>：指向根目录下的 <code>/usr/bin</code> 目录。</li>
+<li><code>/home/user/documents/file.txt</code>：指向根目录下的 <code>/home/user/documents</code> 目录中的 <code>file.txt</code> 文件。</li>
+</ul>
+</li>
+<li><strong>相对路径：</strong> 相对路径是<strong>相对于当前工作目录的路径。</strong>例如，如果当前工作目录是 <code>/home/user</code>，那么：<ul>
+<li><code>documents/file.txt</code>：指向 <code>/home/user/documents</code> 目录中的 <code>file.txt</code> 文件。</li>
+</ul>
+</li>
+<li><strong>特殊符号：</strong> 在路径中，一些特殊符号有特殊的含义：<ul>
+<li><code>.</code>：代表当前目录。例如：<code>./file.txt</code> 表示当前目录中的 <code>file.txt</code> 文件。</li>
+<li><code>..</code>：代表上一级目录。例如：<code>../folder/file.txt</code> 表示上一级目录中的 <code>folder</code> 目录下的 <code>file.txt</code> 文件。</li>
+<li><code>~</code>：代表当前用户的主目录。例如：<code>~/documents</code> 表示当前用户的主目录下的 <code>documents</code> 目录。</li>
+</ul>
+</li>
+<li><strong>环境变量：</strong> 有些路径中可能包含环境变量，例如 <code>$HOME</code> 代表当前用户的主目录。例如：<code>$HOME/documents</code> 表示主目录下的 <code>documents</code> 目录。</li>
 </ol>
-<h2 id="文件命名规则">文件命名规则</h2>
-<p>常见的 Linux 文件命名规则：</p>
-<ol type="1">
-<li><strong>大小写敏感：</strong> Linux
-文件系统是大小写敏感的。例如，<code>file.txt</code> 和
-<code>File.txt</code> 被认为是两个不同的文件。</li>
-<li><strong>字母、数字和下划线：</strong>
-文件名可以包含字母（大小写）、数字和下划线字符。文件名不能以数字开头。</li>
-<li><strong>连字符和点：</strong>
-文件名中可以包含连字符（减号，短划线）和点（句点），但不能以它们开头或结尾。连字符通常用于分隔单词，而点通常用于文件名的扩展名。</li>
-<li><strong>扩展名：</strong> Linux 中的文件命名并不像 Windows
-那样依赖于扩展名来识别文件类型。文件名可以没有扩展名，也可以使用任何合法的字符作为扩展名。</li>
-<li><strong>保留字符：</strong> Linux
-文件名中不能包含特殊的保留字符，如斜杠（/）、问号（?）等。</li>
+<h2 id="文件命名规则"><a href="#文件命名规则" class="headerlink" title="文件命名规则"></a>文件命名规则</h2><p>常见的 Linux 文件命名规则：</p>
+<ol>
+<li><strong>大小写敏感：</strong> Linux 文件系统是大小写敏感的。例如，<code>file.txt</code> 和 <code>File.txt</code> 被认为是两个不同的文件。</li>
+<li><strong>字母、数字和下划线：</strong> 文件名可以包含字母（大小写）、数字和下划线字符。文件名不能以数字开头。</li>
+<li><strong>连字符和点：</strong> 文件名中可以包含连字符（减号，短划线）和点（句点），但不能以它们开头或结尾。连字符通常用于分隔单词，而点通常用于文件名的扩展名。</li>
+<li><strong>扩展名：</strong> Linux 中的文件命名并不像 Windows 那样依赖于扩展名来识别文件类型。文件名可以没有扩展名，也可以使用任何合法的字符作为扩展名。</li>
+<li><strong>保留字符：</strong> Linux 文件名中不能包含特殊的保留字符，如斜杠（/）、问号（?）等。</li>
 <li><strong>长度限制：</strong> 文件名的最大长度为 255 个字符。</li>
 </ol>
 <p>注意：</p>
 <ul>
-<li><p>以<code>.</code>开头的文件名是隐藏文件，使用<code>ls</code>命令时要添加命令选项<code>-a</code>方可查看。</p></li>
-<li><p>虽说Linux可以使用特殊字符作为文件名，但一般不推荐使用特殊字符。</p></li>
+<li>以<code>.</code>开头的文件名是隐藏文件，使用<code>ls</code>命令时要添加命令选项<code>-a</code>方可查看。</li>
 </ul>
-<p>例如：用
-（空格）当作文件名；在Ubuntu下系统会以引号显示该文件，但有的Linux版本可能会直接不显示该文件。文件名的含义尽量给文件命名以反映其内容、用途或功能，以便其他人能够轻松理解和识别文件。</p>
+<ul>
+<li>虽说Linux可以使用特殊字符作为文件名，但一般不推荐使用特殊字符。</li>
+</ul>
+<p>例如：用 （空格）当作文件名；在Ubuntu下系统会以引号显示该文件，但有的Linux版本可能会直接不显示该文件。文件名的含义尽量给文件命名以反映其内容、用途或功能，以便其他人能够轻松理解和识别文件。</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">touch</span> <span class="string">&#x27; &#x27;</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line"><span class="string">&#x27; &#x27;</span>   book   gitclone_file   <span class="built_in">test</span>   </span><br></pre></td></tr></table></figure>
-<h1 id="命令">命令</h1>
-<blockquote>
+<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><blockquote>
 <p>Linux是一种类Unix操作系统，近些年来Linux的桌面版本层出不穷，一定程度上极大简化了Linux的个人使用。面对server等版本，掌握shell终端命令的使用可以更加方便快速的操作Linux。</p>
 </blockquote>
-<h2 id="目录操作命令">目录操作命令</h2>
-<h3 id="查看路径">查看路径</h3>
-<ul>
-<li><code>pwd</code> 查看当前路径，Print Working Directory的缩写</li>
+<h2 id="目录操作命令"><a href="#目录操作命令" class="headerlink" title="目录操作命令"></a>目录操作命令</h2><h3 id="查看路径"><a href="#查看路径" class="headerlink" title="查看路径"></a>查看路径</h3><ul>
+<li><code>pwd</code>    查看当前路径，Print Working Directory的缩写</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">pwd</span></span><br><span class="line">/home/exiler</span><br></pre></td></tr></table></figure>
-<h3 id="创建目录">创建目录</h3>
-<ul>
-<li><code>mkdir</code> 一次建立一个或几个目录</li>
+<h3 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h3><ul>
+<li><code>mkdir</code>    一次建立一个或几个目录</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> document picture  <span class="comment">#新建目录</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span></span><br><span class="line">document  picture</span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">mkdir</span> ~/picture/temp  <span class="comment">#创建子目录</span></span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> ~/picture/</span><br><span class="line">temp</span><br></pre></td></tr></table></figure>
-<p>创建子目录默认为为已存在的目录创建子目录，若想要完整地创建一个不存在目录结构，请使用<code>mkdir -p</code>
-指令：</p>
+<p>创建子目录默认为为已存在的目录创建子目录，若想要完整地创建一个不存在目录结构，请使用<code>mkdir -p</code>    指令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">exiler@localhost:~$ mkdir ~/tempx/job  #error</span><br><span class="line">mkdir: cannot create directory ‘/home/exiler/tempx/job’: No such file or directory  </span><br><span class="line">exiler@localhost:~$ mkdir -p ~/tempx/job   #true</span><br><span class="line">exiler@localhost:~$ ls</span><br><span class="line">document  picture  tempx</span><br><span class="line">exiler@localhost:~$ ls ~/tempx/</span><br><span class="line">job</span><br></pre></td></tr></table></figure>
-<h3 id="移动目录">移动目录</h3>
-<ul>
-<li><code>mv</code>
-move的缩写，可以用来移动文件，也可以用于重命名文件</li>
+<h3 id="移动目录"><a href="#移动目录" class="headerlink" title="移动目录"></a>移动目录</h3><ul>
+<li><code>mv</code>    move的缩写，可以用来移动文件，也可以用于重命名文件</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">mv</span> <span class="built_in">source</span> destination</span></span><br><span class="line">exiler@localhost:~$ tree</span><br><span class="line">.</span><br><span class="line">├── document</span><br><span class="line">├── picture</span><br><span class="line">│   └── temp</span><br><span class="line">└── tempx</span><br><span class="line">    └── job</span><br><span class="line">    </span><br><span class="line">5 directories, 0 files</span><br><span class="line">exiler@localhost:~$ mv ~/picture/temp document/ #移动文件</span><br><span class="line">exiler@localhost:~$ tree</span><br><span class="line">.</span><br><span class="line">├── document</span><br><span class="line">│   └── temp</span><br><span class="line">├── picture</span><br><span class="line">└── tempx</span><br><span class="line">    └── job</span><br></pre></td></tr></table></figure>
 <p>若source文件与的destination目录下的某个文件存在文件名相同的情况，则mv命令会不发出警告地把destination目录下的同名文件替换，导致某些重要文件丢失。</p>
@@ -419,11 +340,9 @@ move的缩写，可以用来移动文件，也可以用于重命名文件</li>
 <li>重命名</li>
 </ul>
 <p>Linux中并没有专门用来重命名的命令，因为mv命令可以轻松实现文件重命名</p>
-<p>例如，如果要将文件 "oldname.txt" 重命名为
-"newname.txt"，你可以使用以下命令：</p>
+<p>例如，如果要将文件 “oldname.txt” 重命名为 “newname.txt”，你可以使用以下命令：</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mv</span> oldname.txt newname.txt</span><br></pre></td></tr></table></figure>
-<h3 id="删除目录">删除目录</h3>
-<ul>
+<h3 id="删除目录"><a href="#删除目录" class="headerlink" title="删除目录"></a>删除目录</h3><ul>
 <li><code>rmdir</code>用来<strong>删除空目录</strong>，后跟要删除的空目录名即可。</li>
 <li><code>rm</code>用来删除文件</li>
 </ul>
@@ -436,26 +355,22 @@ move的缩写，可以用来移动文件，也可以用于重命名文件</li>
 <li>使用<code>rm -r</code>递归删除整个目录：</li>
 </ul>
 <p><code>rm -r</code>命令会递归删除一个目录下的所有文件和子目录下的文件，最后再删除选中的目录。使用该命令时要格外小心，特别是以root身份执行该命令。</p>
-<h3 id="复制目录">复制目录</h3>
-<ul>
-<li><code>cp</code></li>
+<h3 id="复制目录"><a href="#复制目录" class="headerlink" title="复制目录"></a>复制目录</h3><ul>
+<li><code>cp</code>  </li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> <span class="built_in">source</span> destination</span><br></pre></td></tr></table></figure>
 <p>和<code>mv</code>命令一样，<code>cp</code>默认情况下会也会覆盖目标目录中的同名文件。</p>
-<ol type="1">
+<ol>
 <li>可以使用-i选项对这种情况进行提示.</li>
 <li>可以使用-b选项对同名文件改名后再复制。这两个选项的使用和mv命令中一样。</li>
 </ol>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> test.php <span class="built_in">test</span>/  </span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">cp</span> -i hello.php picture/</span><br><span class="line"><span class="built_in">cp</span>: overwrite <span class="string">&#x27;picture/hello.php&#x27;</span>?</span><br><span class="line"></span><br><span class="line">exiler@localhost:~$ <span class="built_in">cp</span> -b hello.php picture/</span><br><span class="line">exiler@localhost:~$ <span class="built_in">ls</span> picture/</span><br><span class="line">hello.php  hello.php~</span><br></pre></td></tr></table></figure>
-<h3 id="跳转目录">跳转目录</h3>
-<ul>
-<li><code>cd</code>命令可以用来切换工作目录，Change
-Directory的缩写.</li>
+<h3 id="跳转目录"><a href="#跳转目录" class="headerlink" title="跳转目录"></a>跳转目录</h3><ul>
+<li><code>cd</code>命令可以用来切换工作目录，Change Directory的缩写.</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../ <span class="comment">#返回上级目录</span></span><br><span class="line"><span class="built_in">cd</span> ../.. <span class="comment">#返回上级目录的上级目录，以此类推</span></span><br><span class="line"><span class="built_in">cd</span>  <span class="comment">#返回用户目录</span></span><br><span class="line"><span class="built_in">cd</span> ~ <span class="comment">#返回用户目录</span></span><br><span class="line"><span class="built_in">cd</span> /usr/bin <span class="comment">#进入usr目录下的bin目录</span></span><br></pre></td></tr></table></figure>
 <p>使用<code>cd</code>命令时要注意区分相对路径和绝对路径的使用。</p>
-<h2 id="文件操作命令">文件操作命令</h2>
-]]></content>
+<h2 id="文件操作命令"><a href="#文件操作命令" class="headerlink" title="文件操作命令"></a>文件操作命令</h2>]]></content>
       <categories>
         <category>Linux</category>
       </categories>
